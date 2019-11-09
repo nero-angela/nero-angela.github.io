@@ -8,11 +8,10 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/2019/11/09/hello-world/</loc>
+        <loc>https://nero.devstory.co.kr/categories/Blog/</loc>
         <lastmod>2019-11-09T06:08:35.988Z</lastmod>
         <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
+        <priority>0.2</priority>
     </url>
 
 </urlset>

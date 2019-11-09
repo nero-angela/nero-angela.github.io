@@ -4,12 +4,22 @@
 
     <sitemap>
         <loc>https://nero.devstory.co.kr/post-sitemap.xml</loc>
-        <lastmod>2019-11-09T03:32:51.035Z</lastmod>
+        <lastmod>2019-11-09T06:08:35.988Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>https://nero.devstory.co.kr/page-sitemap.xml</loc>
         <lastmod>2019-11-09T03:46:04.558Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://nero.devstory.co.kr/category-sitemap.xml</loc>
+        <lastmod>2019-11-09T06:08:35.988Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://nero.devstory.co.kr/tag-sitemap.xml</loc>
+        <lastmod>2019-11-09T06:08:35.988Z</lastmod>
     </sitemap>
 
 </sitemapindex>
