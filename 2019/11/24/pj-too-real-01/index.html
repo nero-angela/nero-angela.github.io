@@ -16,7 +16,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela"],"image":"profile.jpeg"},"articleBody":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 4부에 걸쳐서 공유합니다.\n\n목차\n\n\n✔︎ 1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. ARKit과 SceneKit을 이용하여\u001d iOS 앱 만들기\n3부. YOLO v3를 이용하여 조명 인식 딥러닝 모델 만들기\n4부. CoreML을 이용하여 iOS 앱에 딥러닝 모델 올리기\n\n\n1. 프로젝트 소개\n시작하기에 앞서 프로젝트에 사용된 어플리케이션은 Apple에서 제공하는 Sample Code인 Placing Objects and Handling 3D Interaction의 일부 코드를 이용하여 만들었음을 밝힙니다.\n\n\n1.1 프로젝트 목표AR(Augmented Reality)을 이용한 다양한 서비스들이 출시되고 있습니다.\nApple의 Sample Code에 사용된 램프 모델출처 - Placing Objects and Handling 3D Interaction\n\n\n✔︎ 문제인식현실 조명의 위치와 밝기 정보가 반영되지 않아 가상 오브젝트의 질감과 그림자가 주변 물체와 이질감이 느껴짐\n\n대부분 어떠한 상황에서도 어색하지 않을만한 범용적인 형태의 그림자를 가지고 있지만, 주변 물체들의 그림자와 다른 방향과 색상으로 인해 현실감이 떨어지기 때문에 다음과 같은 목표를 설정하였습니다.\n\n✔︎ 프로젝트 목표현실의 조명의 위치와 밝기 정보를 반영한 AR 어플리케이션을 만들자.\n\n\n2. 프로젝트 결과물전체 개발 기간은 3개월이 소요되었고, 5개 class를 실시간으로 추적하고 구분하는 Object Detection 모델인 YOLO v3를 학습시켜 iOS 기반의 AR 어플리케이션에 탑재하였습니다.\n\n✔︎ 개발 환경IDE : XCode / Jupyter NotebookiOS : ARKit / SceneKit / Vision / CoreMLObject Detection : YOLO v3 / Keras / Tensorflow\n\niOS 앱은 App Store에 게시해 두었습니다.\n\n2.1 기능소개백문이 불여일견이니 먼저 어플리케이션 작동 영상을 보시겠습니다.\n\n\n현실 공간을 스캔하고, 가상의 3D Object를 설치하는것 까지는 IKEA의 PLACE 앱과 동일합니다.하지만 추가적으로 YOLO v3라는 실시간 물체추적(Object Detection) 딥러닝 모델을 이용하여 현실에 있는 조명의 상태와 위치를 실시간으로 파악하여 가상 오브젝트의 그림자와 질감을 더욱 현실감 있게 만들어주는 기능을 추가하였습니다.\n전체적인 기능을 나열하면 다음과 같습니다.\n\n✔︎ 기능명세\n\n벽과 바닥 탐지\n벽과 바닥에 설치가능한 제품 추천\n가상 오브젝트 설치 및 인터렉션\n5개 class의 실시간 조명 탐지(Bounding Box, Confidence)\n범용적인 조명 탐지를 위한 Google Vision API 연동\n\n\n앞으로 4부에 걸쳐 개발 후기를 공유하도록 하겠습니다.\n","dateCreated":"2019-11-24T16:44:28+09:00","dateModified":"2019-12-01T00:48:29+09:00","datePublished":"2019-11-24T16:44:28+09:00","description":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 4부에 걸쳐서 공유합니다.","headline":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기 - 1부","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/","keywords":"iOS, Object Detection, Deep Learning, YOLO v3, AR"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela"],"image":"profile.jpeg"},"articleBody":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 4부에 걸쳐서 공유합니다.\n\n목차\n\n\n✔︎ 1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. ARKit과 SceneKit을 이용하여\u001d iOS 앱 만들기 - 작성중\n3부. YOLO v3를 이용하여 조명 인식 딥러닝 모델 만들기 - 작성중\n4부. CoreML을 이용하여 iOS 앱에 딥러닝 모델 올리기 - 작성중\n\n\n1. 프로젝트 소개\n시작하기에 앞서 프로젝트에 사용된 어플리케이션은 Apple에서 제공하는 Sample Code인 Placing Objects and Handling 3D Interaction의 일부 코드를 이용하여 만들었음을 밝힙니다.\n\n\n1.1 프로젝트 목표AR(Augmented Reality)을 이용한 다양한 서비스들이 출시되고 있습니다.\nApple의 Sample Code에 사용된 램프 모델출처 - Placing Objects and Handling 3D Interaction\n\n\n✔︎ 문제인식현실 조명의 위치와 밝기 정보가 반영되지 않아 가상 오브젝트의 질감과 그림자가 주변 물체와 이질감이 느껴짐\n\n대부분 어떠한 상황에서도 어색하지 않을만한 범용적인 형태의 그림자를 가지고 있지만, 주변 물체들의 그림자와 다른 방향과 색상으로 인해 현실감이 떨어지기 때문에 다음과 같은 목표를 설정하였습니다.\n\n✔︎ 프로젝트 목표현실의 조명의 위치와 밝기 정보를 반영한 AR 어플리케이션을 만들자.\n\n\n2. 프로젝트 결과물전체 개발 기간은 3개월이 소요되었고, 5개 class를 실시간으로 추적하고 구분하는 Object Detection 모델인 YOLO v3를 학습시켜 iOS 기반의 AR 어플리케이션에 탑재하였습니다.\n\n✔︎ 개발 환경IDE : XCode / Jupyter NotebookiOS : ARKit / SceneKit / Vision / CoreMLObject Detection : YOLO v3 / Keras / Tensorflow\n\niOS 앱은 App Store에 게시해 두었습니다.\n\n2.1 기능소개백문이 불여일견이니 먼저 어플리케이션 작동 영상을 보시겠습니다.\n\n\n현실 공간을 스캔하고, 가상의 3D Object를 설치하는것 까지는 IKEA의 PLACE 앱과 동일합니다.하지만 추가적으로 YOLO v3라는 실시간 물체추적(Object Detection) 딥러닝 모델을 이용하여 현실에 있는 조명의 상태와 위치를 실시간으로 파악하여 가상 오브젝트의 그림자와 질감을 더욱 현실감 있게 만들어주는 기능을 추가하였습니다.\n전체적인 기능을 나열하면 다음과 같습니다.\n\n✔︎ 기능명세\n\n벽과 바닥 탐지\n벽과 바닥에 설치가능한 제품 추천\n가상 오브젝트 설치 및 인터렉션\n5개 class의 실시간 조명 탐지(Bounding Box, Confidence)\n범용적인 조명 탐지를 위한 Google Vision API 연동\n\n\n앞으로 4부에 걸쳐 개발 후기를 공유하도록 하겠습니다.\n\n목차\n\n\n✔︎ 1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. ARKit과 SceneKit을 이용하여\u001d iOS 앱 만들기 - 작성중\n3부. YOLO v3를 이용하여 조명 인식 딥러닝 모델 만들기 - 작성중\n4부. CoreML을 이용하여 iOS 앱에 딥러닝 모델 올리기 - 작성중\n\n","dateCreated":"2019-11-24T16:44:28+09:00","dateModified":"2019-12-01T00:53:50+09:00","datePublished":"2019-11-24T16:44:28+09:00","description":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 4부에 걸쳐서 공유합니다.","headline":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기 - 1부","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/","keywords":"iOS, Object Detection, Deep Learning, YOLO v3, AR"}</script>
     <meta name="description" content="딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 4부에 걸쳐서 공유합니다.">
 <meta name="keywords" content="iOS,Object Detection,Deep Learning,YOLO v3,AR">
 <meta property="og:type" content="blog">
@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;69536166-d2067f00-0fc0-11ea-8883-b9ae5509869a.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;69901403-6d826000-13c4-11ea-9282-4b58dac120ac.png">
-<meta property="og:updated_time" content="2019-11-30T15:48:29.543Z">
+<meta property="og:updated_time" content="2019-11-30T15:53:50.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;69536166-d2067f00-0fc0-11ea-8883-b9ae5509869a.png">
     
@@ -223,9 +223,9 @@
 </blockquote>
 <ul>
 <li><a href="#">✔︎ 1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
-<li><a href>2부. ARKit과 SceneKit을 이용하여 iOS 앱 만들기</a></li>
-<li><a href>3부. YOLO v3를 이용하여 조명 인식 딥러닝 모델 만들기</a></li>
-<li><a href>4부. CoreML을 이용하여 iOS 앱에 딥러닝 모델 올리기</a></li>
+<li><a href>2부. ARKit과 SceneKit을 이용하여 iOS 앱 만들기 - 작성중</a></li>
+<li><a href>3부. YOLO v3를 이용하여 조명 인식 딥러닝 모델 만들기 - 작성중</a></li>
+<li><a href>4부. CoreML을 이용하여 iOS 앱에 딥러닝 모델 올리기 - 작성중</a></li>
 </ul>
 <hr>
 <h1 id="1-프로젝트-소개"><a href="#1-프로젝트-소개" class="headerlink" title="1. 프로젝트 소개"></a>1. 프로젝트 소개</h1><blockquote>
@@ -268,6 +268,15 @@
 </ul>
 </blockquote>
 <p>앞으로 4부에 걸쳐 개발 후기를 공유하도록 하겠습니다.</p>
+<blockquote>
+<p><strong>목차</strong></p>
+</blockquote>
+<ul>
+<li><a href="#">✔︎ 1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
+<li><a href>2부. ARKit과 SceneKit을 이용하여 iOS 앱 만들기 - 작성중</a></li>
+<li><a href>3부. YOLO v3를 이용하여 조명 인식 딥러닝 모델 만들기 - 작성중</a></li>
+<li><a href>4부. CoreML을 이용하여 iOS 앱에 딥러닝 모델 올리기 - 작성중</a></li>
+</ul>
 
             
 
