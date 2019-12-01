@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nero.devstory.co.kr/"/>
-  <updated>2019-12-01T13:23:30.692Z</updated>
+  <updated>2019-12-01T15:26:32.941Z</updated>
   <id>https://nero.devstory.co.kr/</id>
   
   <author>
@@ -15,37 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>iOS AR 어플리케이션 만들기 - 2부</title>
-    <link href="https://nero.devstory.co.kr/2019/11/25/pj-too-real-02/"/>
-    <id>https://nero.devstory.co.kr/2019/11/25/pj-too-real-02/</id>
-    <published>2019-11-25T10:06:24.000Z</published>
-    <updated>2019-12-01T13:23:30.692Z</updated>
-    
-    <content type="html"><![CDATA[<p>iOS에서 제공하는 ARKit과 SceneKit을 이용하여 AR 어플리케이션을 만들어 보도록 하겠습니다.<br><a id="more"></a></p><p>iOS 어플리케이션 개발을 위해 맥북과 아이폰까지 구매하였기 때문에 무조건 iOS 앱을 만들 계획입니다.<br>기본적으로 Apple에서 제공하는 <a href="https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction" target="_blank" rel="external nofollow noopener noreferrer">Sample Code - Placing Objects and Handling 3D Interaction</a>를 이용해서 구현하도록 하겠습니다.</p><ul><li>Swift</li><li>ARKit</li><li>SceneKit</li><li>CoreML</li><li>Vision</li></ul><div class="figure " style><video class="fig-video" autoplay playsinline loop controls alt="ARKit plane detection"><source src="/assets/videos/01.plane_detection.mp4" type="video/mp4"><p>Your browser doesn't support HTML5 Video :/</p></video><span class="caption">ARKit plane detection</span></div><div class="figure " style><video class="fig-video" autoplay playsinline loop controls alt="object recommendation"><source src="/assets/videos/02.object_recommendation.mp4" type="video/mp4"><p>Your browser doesn't support HTML5 Video :/</p></video><span class="caption">object recommendation</span></div><div class="figure " style><video class="fig-video" autoplay playsinline loop controls alt="install object"><source src="/assets/videos/03.install_object.mp4" type="video/mp4"><p>Your browser doesn't support HTML5 Video :/</p></video><span class="caption">install object</span></div><div class="figure " style><video class="fig-video" autoplay playsinline loop controls alt="install scnlight"><source src="/assets/videos/04.install_scnlight.mp4" type="video/mp4"><p>Your browser doesn't support HTML5 Video :/</p></video><span class="caption">install scnlight</span></div><div class="figure " style><video class="fig-video" autoplay playsinline loop controls alt="remove scnlight"><source src="/assets/videos/05.remove_scnlight.mp4" type="video/mp4"><p>Your browser doesn't support HTML5 Video :/</p></video><span class="caption">remove scnlight</span></div><div class="figure " style><video class="fig-video" autoplay playsinline loop controls alt="shadow rendering and object interaction"><source src="/assets/videos/06.shadow_rendering_and_object_interaction.mp4" type="video/mp4"><p>Your browser doesn't support HTML5 Video :/</p></video><span class="caption">shadow rendering and object interaction</span></div><h1 id="1부-조명의-위치와-밝기를-인식하여-AR-가상물체를-더욱-현실감있게-표현하는-iOS-앱만들기"><a href="#1부-조명의-위치와-밝기를-인식하여-AR-가상물체를-더욱-현실감있게-표현하는-iOS-앱만들기" class="headerlink" title="1부. 조명의 위치와 밝기를 인식하여 AR 가상물체를 더욱 현실감있게 표현하는 iOS 앱만들기"></a>1부. 조명의 위치와 밝기를 인식하여 AR 가상물체를 더욱 현실감있게 표현하는 iOS 앱만들기</h1><h2 id="목표"><a href="#목표" class="headerlink" title="목표"></a>목표</h2><ul><li>3d model은 정적인 그림자를 가지고 있어 현실감이 떨어짐</li><li>이를 현실 조명에 기반하여 동적이게 그림자를 랜더링하는 iOS AR 앱을 만드는것이 목표!</li><li>완성 동영상 및 기능 보여주기</li><li>ARKit, SceneKit, CoreML, Vision 이용</li></ul><h3 id="기능"><a href="#기능" class="headerlink" title="기능"></a>기능</h3><ul><li>기능 명세<ul><li>벽과 바닥 인지 및 구분</li></ul></li></ul><h2 id="구현"><a href="#구현" class="headerlink" title="구현"></a>구현</h2><ul><li><a href>sample</a> 이거를 기본으로 함</li></ul><h3 id="virtual-object-설치"><a href="#virtual-object-설치" class="headerlink" title="virtual object 설치"></a>virtual object 설치</h3><ul><li><p>3D 모델 추가</p><ul><li>여기서 다운 &amp; 이 프로그램으로 스케일 조정 및 scn으로 추출</li></ul></li><li><p>벽과 바닥용 object 나누기</p></li><li><p>설치완료!</p></li><li><p>문제</p><ul><li>sample도 그렇고 대부분의 3d model은 정적인 그림자를 가지고 있음.</li><li>이렇게이렇게 해결할거임</li></ul></li></ul><h3 id="가상-조명-설치"><a href="#가상-조명-설치" class="headerlink" title="가상 조명 설치"></a>가상 조명 설치</h3><ul><li><p>현실 조명의 위치와 밝기를 virtual world에 그대로 표현하는게 목표</p></li><li><p>조명의 위치 탐지</p><ul><li>google vision api -&gt; 이미지상에 조명 존재여부 확인</li><li>조명 존재시 중앙으로 레이를 쏴서 ar world tracking의 feature 좌표를 받아옴</li></ul></li><li><p>조명의 밝기 탐지</p><ul><li>ARKit의 Light Estimation에 두개의 값이 있음</li></ul></li><li><p>이렇게 확보한 위치와 밝기에 해당하는 조명을 SceneKit의 SCNLight를 설치</p><ul><li>짠! 위치에 따라서 조명이 현실과 같이 변함</li></ul></li><li><p>개선 필요사항</p><ul><li>google vision으로 설치하는 조명 위치는 부정확함</li><li>프로세스가 리얼타임이 아님</li><li>이를 yolo v3 딥러닝 모델을 이용하여 해결할거임</li></ul></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;iOS에서 제공하는 ARKit과 SceneKit을 이용하여 AR 어플리케이션을 만들어 보도록 하겠습니다.&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Project" scheme="https://nero.devstory.co.kr/categories/Project/"/>
-    
-    
-      <category term="iOS" scheme="https://nero.devstory.co.kr/tags/iOS/"/>
-    
-      <category term="Object Detection" scheme="https://nero.devstory.co.kr/tags/Object-Detection/"/>
-    
-      <category term="Deep Learning" scheme="https://nero.devstory.co.kr/tags/Deep-Learning/"/>
-    
-      <category term="YOLO v3" scheme="https://nero.devstory.co.kr/tags/YOLO-v3/"/>
-    
-      <category term="AR" scheme="https://nero.devstory.co.kr/tags/AR/"/>
-    
-  </entry>
   
   <entry>
     <title>딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기 - 1부</title>
