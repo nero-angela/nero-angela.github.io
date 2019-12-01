@@ -9379,7 +9379,9 @@ figure.highlight,
 
 .figure .fig-video {
   width: 100%;
-  height: auto; }
+  height: auto;
+  max-height: 400px;
+  outline: none; }
 
 .figure.fig-20 {
   width: calc(20% - 4px); }
