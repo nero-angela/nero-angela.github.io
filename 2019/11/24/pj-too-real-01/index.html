@@ -16,7 +16,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 공유합니다.\n\n# 프로젝트 소개AR(Augmented Reality)을 이용한 다양한 어플리케이션들이 출시되고 있습니다. 이러한 AR 어플리케이션들은 Android에서는 ARCore를 그리고 iOS에서는 ARKit를 통해 구현할 수 있습니다.\nApple의 Sample Code에 사용된 램프 모델출처 - Placing Objects and Handling 3D Interaction\n\n가끔 고정된 그림자 이미지가 아닌, 임의의 가상 조명을 생성하여 오브젝트에 그림자를 그려주는 몇몇 AR 어플리케이션들이 있지만, 가상 조명의 위치나 밝기가 현실에 존재하는 광원과 달라 몰입감이 떨어지는건 마찬가지였습니다.\n가상 오브젝트의 색감 또는 그림자가 주변 물체와 이질감이 느껴지는 원인은, 현실에 있는 조명들의 위치와 밝기 정보가 가상 오브젝트에 반영되어 랜더링 되지 않았기 때문이라고 생각하였습니다. 따라서 이번 프로젝트의 목표를 다음과 같이 정의하였습니다.\n\n✔︎ 프로젝트 목표현실의 조명의 위치와 밝기 정보를 반영하여, 더욱 현실감 있는 AR 어플리케이션 만들어보자!\n\n\n\n\n# 프로젝트 결과물백문이 불여일견이니 먼저 어플리케이션 작동 영상을 보겠습니다.\n\n\n\n\n\n개발환경다음과 같은 개발 환경에서 작업하였습니다.\n","dateCreated":"2019-11-24T16:44:28+09:00","dateModified":"2019-12-07T15:38:32+09:00","datePublished":"2019-11-24T16:44:28+09:00","description":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 공유합니다.","headline":"1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/","keywords":"iOS, AR, Object Detection, Deep Learning, YOLO v3"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 공유합니다.\n\n# 프로젝트 소개AR(Augmented Reality)을 이용한 다양한 어플리케이션들이 출시되고 있습니다. 그런데 AR 어플리케이션 속의 가상 오브젝트들은 여러가지 이유로 현실감이 많이 떨어져 서비스 몰입도를 낮추는 것 같습니다.\n\n  \n\n\nYour browser doesn't support HTML5 Video :/\n부자가 되려면 AR을 개발해라(?)출처 : http://www.etoland.co.kr/\n\n\n\n대부분의 AR 어플리케이션에서 사용되는 3D 모델들은 아래 Apple Sample Code인 Placing Objects and Handling 3D Interaction에 사용된 램프 모델과 같이 고정된 그림자 이미지를 가지고 있습니다. 이러한 고정된 그림자는 보통 어떠한 상황에서도 어색하지 않을 범용적인 형태의 그림자를 가지고 있지만, 상황에 따라 주변 물체와의 이질감을 유발하는 원인 중 하나입니다.\n개발에 사용된 언어, 프레임워크 및 툴\n\n\n✔︎ Development environment and frameworks\n\n\nIDE : XCode / Jupyter Notebook\nLanguage : Swift / Python3\niOS : ARKit / SceneKit / Vision / CoreML\nDeep Learning : YOLO v3 / Keras / Tensorflow\n\n\n# 기능소개전체적인 어플리케이션은 다음과 같이 여섯 단계로 서비스 로직이 진행됩니다.\n\n✔︎ ARKit &amp; SceneKit을 이용한 AR앱 구현\n\n\n평면 탐지(Plane detection)\n설치가능한 가상 오브젝트 추천\n가상 오브젝트 설치 및 인터랙션\n\n\n✔︎ 딥러닝을 이용한 조명 인식\n\n\n조명 인식\nGoogle Vision API 방식\nYOLO v3 방식\n\n\n\n\nARKit &amp; SceneKit을 이용한 AR앱 구현\n  \n\n\nYour browser doesn't support HTML5 Video :/\n1. 평면 탐지(Plane detection)\n\n  \n\n\nYour browser doesn't support HTML5 Video :/\n2. 설치가능한 가상 오브젝트 추천\n\n  \n\n\nYour browser doesn't support HTML5 Video :/\n3. 가상 오브젝트 설치 및 인터랙션\n\n\n\n\n어플리케이션이 현실 공간을 인식하여 벽면이나 바닥을 인식합니다. 공간이 인식되면 현재 바라보고 있는 장소에 설치 가능한 가구를 목록을 보여주고, 원하는 가구를 선택하여 설치할 수 있습니다. 또한 설치된 가구를 원하는 장소로 이동하거나 회전하는 등의 기본적인 인터랙션이 가능합니다.\n\n딥러닝을 이용한 조명 인식본 어플리케이션에서는 두 가지 조명 인식 방식을 구현하였습니다. 하나는 Google Vision API를 이용한 방법이고, 다른 방법은 YOLO v3라는 딥러닝 모델을 이용한 방법으로 다음과 같은 특징을 가지고있습니다.\n\n\n\n✔︎ Google Vision API 방식\n✔︎ YOLO v3 방식\n\n\n\n• 네트워크 통신 필요\n• 네트워크 통신 불필요\n\n\n• 실시간 조명 추적 불가능\n• 실시간 조명 추적 가능\n\n\n• 조명의 정확한 좌표를 얻을 수 없음\n• 조명의 2차원 좌표 획득 가능\n\n\n• 조명의 온오프 상태를 알 수 없음\n• 조명의 온오프 상태 구분가능\n\n\n• 범용적인 조명 인식이 가능\n• 학습된 5개의 조명만 인식가능\n\n\n\n1. Google Vision API 방식\n  \n    \n\n\nYour browser doesn't support HTML5 Video :/\nGoogle Vision API를 이용한 가상조명 설치\n\n  \n\n\n이 방식의 경우 사용자가 조명을 바라보고 인식 버튼을 한번 더 누르면 해당 프레임 이미지를 Google Vision API 서버로 전달하여 조명 존재여부를 요청하고, 이미지 중앙좌표를 hitTest 메소드로 입력하여 조명의 3차원 좌표를 획득합니다. 그리고 Google Vision API에서 조명이 존재한다고 반환하는 경우, 앞서 얻은 3차원 좌표에 가상 조명을 설치하는 방식입니다.\n이 방법의 경우 조명의 실제 3차원 좌표가 아닌 곳에 가상 조명이 설치된 가능성이 있고, 실시간으로 조명을 인식하는 것이 아니라 사용자가 인식하고자 하는 조명 개수만큼 인식 버튼을 눌러야한다는 단점이 있습니다. 그럼에도 불구하고 Google에서 학습한 방대한 모델을 이용하기 때문에 범용적인 조명을 인식할 수 있다는 장점을 가지고 있습니다.\n\n2. YOLO v3 방식\n  \n\n\nYour browser doesn't support HTML5 Video :/\nYOLO v3 조명 on 상태 인식\n\n  \n\n\nYour browser doesn't support HTML5 Video :/\nYOLO v3 조명 off 상태 인식\n\n\n\n이 방식은 Realtime Object Detection 모델 중 하나인 YOLO v3 모델을 이용한 방식입니다. YOLO v3 모델은, 해당 이미지 안에 존재하는 조명의 온오프 상태, 종류, 신뢰도(confidence) 그리고 바운딩 박스(2차원 박스의 대각선 두 점의 좌표)를 반환합니다. 매프레임마다 바운딩 박스 좌표를 hitTest 메소드에 입력하여 조명의 3차원 좌표를 계산하고, 조명의 상태에 따라 경우 해당 좌표에 가상 조명을 추가하거나 삭제합니다.\n모바일에 탑재한 YOLO v3 딥러닝 모델을 이용하기 때문에 네트워크 통신이 필요하지 않으며, 실시간으로 조명의 상태 및 좌표를 인식할 수 있다는 장점을 가지고 있습니다. 하지만 학습된 조명만 인식이 가능하다는 단점을 가지고 있습니다.\n\n# 기대효과현실 조명에 대한 정보가 가상 오브젝트에 반영되었으므로, 아래 영상과 같이 오브젝트의 그림자가 조명과의 상대적 위치에 따라 현실감 있게 랜더링 되는 것을 보실 수 있습니다.\n\n  \n\n\nYour browser doesn't support HTML5 Video :/\n그림자가 조명을 중심으로 랜더링 됩니다.\n\n  \n\n\n그 뿐만 아니라 카메라를 통해 들어오는 밝기(lm)과 색 온도(Kelvin)를 매프레임마다 가상 조명에 실시간으로 반영해주고 있기 때문에 가상 오브젝트가 주변과 유사한 텍스쳐로 표현되어 더욱 현실감을 높여줍니다.\n","dateCreated":"2019-11-24T16:44:28+09:00","dateModified":"2019-12-07T21:14:03+09:00","datePublished":"2019-11-24T16:44:28+09:00","description":"딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 공유합니다.","headline":"1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/2019/11/24/pj-too-real-01/","keywords":"iOS, AR, Object Detection, Deep Learning, YOLO v3"}</script>
     <meta name="description" content="딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 공유합니다.">
 <meta name="keywords" content="iOS,AR,Object Detection,Deep Learning,YOLO v3">
 <meta property="og:type" content="blog">
@@ -25,12 +25,12 @@
 <meta property="og:site_name" content="🐈 Nero&#39;s Blog">
 <meta property="og:description" content="딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 공유합니다.">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;69536166-d2067f00-0fc0-11ea-8883-b9ae5509869a.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;69901403-6d826000-13c4-11ea-9282-4b58dac120ac.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70038098-10bcba80-15fb-11ea-94d2-314f8d598601.png">
-<meta property="og:updated_time" content="2019-12-07T06:38:32.832Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70371587-496cd480-1918-11ea-839e-93f5f3402969.png">
+<meta property="og:updated_time" content="2019-12-07T12:14:03.973Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;69536166-d2067f00-0fc0-11ea-8883-b9ae5509869a.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;69901403-6d826000-13c4-11ea-9282-4b58dac120ac.png">
     
     
         
@@ -42,7 +42,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-zredo0hxiehb8dterhs0el4n3gmnb7ukdaqeye6w0vedmwfwe8f5cyefkai4.min.css">
+    <link rel="stylesheet" href="/assets/css/style-gnnbu8on1w4aeaqh1ygtizhbks1fu6aljjgjoapcnp7rf7i2uiwhmsfacr6h.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
@@ -232,7 +232,7 @@
             <blockquote>
                 <strong>목차</strong>
             </blockquote>
-            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#프로젝트-소개"><span class="nero-toc-text"># 프로젝트 소개</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#프로젝트-목표"><span class="nero-toc-text">프로젝트 목표</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#프로젝트-결과물"><span class="nero-toc-text"># 프로젝트 결과물</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#개발환경"><span class="nero-toc-text">개발환경</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#기능소개"><span class="nero-toc-text">기능소개</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#1-ARKit-amp-SceneKit을-이용한-AR앱-구현"><span class="nero-toc-text">1. ARKit &amp; SceneKit을 이용한 AR앱 구현</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#2-딥러닝을-이용한-조명-인식"><span class="nero-toc-text">2. 딥러닝을 이용한 조명 인식</span></a></li></ol></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#결론"><span class="nero-toc-text"># 결론</span></a></li></ol>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#프로젝트-소개"><span class="nero-toc-text"># 프로젝트 소개</span></a></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#프로젝트-결과물"><span class="nero-toc-text"># 프로젝트 결과물</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#데모-영상"><span class="nero-toc-text">데모 영상</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#개발-환경"><span class="nero-toc-text">개발 환경</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#기능소개"><span class="nero-toc-text"># 기능소개</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#ARKit-amp-SceneKit을-이용한-AR앱-구현"><span class="nero-toc-text">ARKit &amp; SceneKit을 이용한 AR앱 구현</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#딥러닝을-이용한-조명-인식"><span class="nero-toc-text">딥러닝을 이용한 조명 인식</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#1-Google-Vision-API-방식"><span class="nero-toc-text">1. Google Vision API 방식</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#2-YOLO-v3-방식"><span class="nero-toc-text">2. YOLO v3 방식</span></a></li></ol></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#기대효과"><span class="nero-toc-text"># 기대효과</span></a></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#마무리"><span class="nero-toc-text"># 마무리</span></a></li></ol>
             <hr class="nero-toc-line">
             <style>
                 .nero-toc-line {
@@ -250,33 +250,35 @@
             <!-- NERO -->
             <p>딥러닝을 이용하여 더욱 현실감 있는 AR 앱을 개발한 이야기를 공유합니다.<br><a id="more"></a></p>
 <hr>
-<h1 id="프로젝트-소개"><a href="#프로젝트-소개" class="headerlink" title="# 프로젝트 소개"></a># 프로젝트 소개</h1><p><strong>AR(Augmented Reality)</strong>을 이용한 다양한 어플리케이션들이 출시되고 있습니다. 이러한 AR 어플리케이션들은 Android에서는 <a href="https://developers.google.com/ar" target="_blank" rel="external nofollow noopener noreferrer">ARCore</a>를 그리고 iOS에서는 <a href="https://developer.apple.com/kr/augmented-reality/arkit/" target="_blank" rel="external nofollow noopener noreferrer">ARKit</a>를 통해 구현할 수 있습니다.</p>
-<div class="figure " style="width:;"><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/69536166-d2067f00-0fc0-11ea-8883-b9ae5509869a.png" target="_blank" rel="external nofollow noopener noreferrer" title="IKEA에서 출시한 AR 어플리케이션 Place<br>출처 : <a href=https://mobile-ar.reality.news/>https://mobile-ar.reality.news</a>" data-caption="IKEA에서 출시한 AR 어플리케이션 Place<br>출처 : <a href=https://mobile-ar.reality.news/>https://mobile-ar.reality.news</a>" data-fancybox="default style=" visible: hidden"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/69536166-d2067f00-0fc0-11ea-8883-b9ae5509869a.png" alt="IKEA에서 출시한 AR 어플리케이션 Place<br>출처 : <a href=https://mobile-ar.reality.news/>https://mobile-ar.reality.news</a>"></a><span class="caption">IKEA에서 출시한 AR 어플리케이션 Place<br>출처 : <a href="https://mobile-ar.reality.news/" rel="external nofollow noopener noreferrer" target="_blank">https://mobile-ar.reality.news</a></span></div>
+<h1 id="프로젝트-소개"><a href="#프로젝트-소개" class="headerlink" title="# 프로젝트 소개"></a># 프로젝트 소개</h1><p><strong>AR(Augmented Reality)</strong>을 이용한 다양한 어플리케이션들이 출시되고 있습니다. 그런데 AR 어플리케이션 속의 가상 오브젝트들은 여러가지 이유로 현실감이 많이 떨어져 서비스 몰입도를 낮추는 것 같습니다.</p>
+<div class="nero-video">
+  <div><div class="figure " style>
+<video class="fig-video" autoplay playsinline loop muted controls alt="부자가 되려면 AR을 개발해라(?)<br>출처 : <a href=http://www.etoland.co.kr/plugin/mobile/board.php?bo_table=etohumor01&wr_id=1589967>http://www.etoland.co.kr/</a>">
+<source src="/assets/videos/pj-too-real/ar-example.mp4" type="video/mp4">
+<p>Your browser doesn't support HTML5 Video :/</p></video>
+<span class="caption">부자가 되려면 AR을 개발해라(?)<br>출처 : <a href="http://www.etoland.co.kr/plugin/mobile/board.php?bo_table=etohumor01&wr_id=1589967" rel="external nofollow noopener noreferrer" target="_blank">http://www.etoland.co.kr/</a></span>
+</div></div>
+</div>
 
-<p>이번 프로젝트는 iOS의 ARKit를 이용하여 AR 어플리케이션을 구현하였는데, 추가로 딥러닝을 이용하여 AR 오브젝트들의 그림자를 더욱 현실감 있게 구현해보았습니다.</p>
-<blockquote>
-<p>시작하기에 앞서 프로젝트에 사용된 어플리케이션은 Apple에서 제공하는 Sample Code인 <a href="https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction" target="_blank" rel="external nofollow noopener noreferrer">Placing Objects and Handling 3D Interaction</a>의 일부 코드를 이용하여 만들었음을 밝힙니다.</p>
-</blockquote>
-<hr>
-<h2 id="프로젝트-목표"><a href="#프로젝트-목표" class="headerlink" title="프로젝트 목표"></a>프로젝트 목표</h2><p>대부분의 AR에 사용되는 3D 모델들은 아래 Apple Sample Code인 <a href="https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction" target="_blank" rel="external nofollow noopener noreferrer">Placing Objects and Handling 3D Interaction</a>에 사용된 램프 모델과 같이 고정된 그림자 이미지를 가지고 있습니다. 이러한 고정된 그림자는 보통 어떠한 상황에서도 어색하지 않을 범용적인 형태의 그림자를 가지고 있지만, 상황에 따라 주변 물체들과 이질감이 느껴집니다.</p>
-<div class="figure " style="width:;"><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/69901403-6d826000-13c4-11ea-9282-4b58dac120ac.png" target="_blank" rel="external nofollow noopener noreferrer" title="Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href=https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction>Placing Objects and Handling 3D Interaction</a>" data-caption="Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href=https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction>Placing Objects and Handling 3D Interaction</a>" data-fancybox="default style=" visible: hidden"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/69901403-6d826000-13c4-11ea-9282-4b58dac120ac.png" alt="Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href=https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction>Placing Objects and Handling 3D Interaction</a>"></a><span class="caption">Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href="https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction" rel="external nofollow noopener noreferrer" target="_blank">Placing Objects and Handling 3D Interaction</a></span></div>
+<p>대부분의 AR 어플리케이션에서 사용되는 3D 모델들은 아래 Apple Sample Code인 <a href="https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction" target="_blank" rel="external nofollow noopener noreferrer">Placing Objects and Handling 3D Interaction</a>에 사용된 램프 모델과 같이 고정된 그림자 이미지를 가지고 있습니다. 이러한 고정된 그림자는 보통 어떠한 상황에서도 어색하지 않을 범용적인 형태의 그림자를 가지고 있지만, 상황에 따라 주변 물체와의 이질감을 유발하는 원인 중 하나입니다.</p>
+<div class="figure " style="width:;"><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/69901403-6d826000-13c4-11ea-9282-4b58dac120ac.png" target="_blank" rel="external nofollow noopener noreferrer" title="Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href=https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction>Placing Objects and Handling 3D Interaction</a>" data-caption="Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href=https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction>Placing Objects and Handling 3D Interaction</a>" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/69901403-6d826000-13c4-11ea-9282-4b58dac120ac.png" alt="Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href=https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction>Placing Objects and Handling 3D Interaction</a>"></a><span class="caption">Apple의 Sample Code에 사용된 램프 모델<br>출처 - <a href="https://developer.apple.com/documentation/arkit/placing_objects_and_handling_3d_interaction" rel="external nofollow noopener noreferrer" target="_blank">Placing Objects and Handling 3D Interaction</a></span></div>
 
-<p>가끔 고정된 그림자 이미지가 아닌, 임의의 가상 조명을 생성하여 오브젝트에 그림자를 그려주는 몇몇 AR 어플리케이션들이 있지만, 가상 조명의 위치나 밝기가 현실에 존재하는 광원과 달라 몰입감이 떨어지는건 마찬가지였습니다.</p>
-<p>가상 오브젝트의 색감 또는 그림자가 주변 물체와 이질감이 느껴지는 원인은, 현실에 있는 조명들의 <strong>위치</strong>와 <strong>밝기</strong> 정보가 가상 오브젝트에 반영되어 랜더링 되지 않았기 때문이라고 생각하였습니다. 따라서 이번 프로젝트의 목표를 다음과 같이 정의하였습니다.</p>
+<p>가끔 고정된 그림자 이미지가 아닌, 임의의 가상 조명을 생성하여 오브젝트에 그림자를 랜더링하는 몇몇 AR 어플리케이션들이 있었지만, 가상 조명의 위치나 밝기가 현실에 존재하는 실제 조명과 달라 오히려 오브젝트에 부조화스러운 그림자를 생성해 현실감을 떨어뜨렸습니다.</p>
+<p>주변 물체와 다르게 랜더링 된 가상 오브젝트의 그림자가 이질감의 원인 중 하나라는 사실을 알게되었고, 따라서 현실에 있는 조명의 <strong>위치</strong>와 <strong>밝기</strong> 정보를 가상 오브젝트에 반영하여 이를 해결해 보자라는 프로젝트의 목표를 설정하였습니다.</p>
 <blockquote>
-<p>✔︎ 프로젝트 목표<br>현실의 조명의 위치와 밝기 정보를 반영하여, 더욱 현실감 있는 AR 어플리케이션 만들어보자!</p>
+<p>✔︎ 프로젝트 목표<br>현실의 조명의 위치와 밝기 정보가 반영된, 더욱 현실감 있는 AR 어플리케이션 만들어보자!</p>
 </blockquote>
 <!-- TODO :: before와 after 이미지 넣고 이걸 이렇게! 추가하기 -->
 
 <hr>
-<h1 id="프로젝트-결과물"><a href="#프로젝트-결과물" class="headerlink" title="# 프로젝트 결과물"></a># 프로젝트 결과물</h1><p>백문이 불여일견이니 먼저 어플리케이션 작동 영상을 보겠습니다.</p>
+<h1 id="프로젝트-결과물"><a href="#프로젝트-결과물" class="headerlink" title="# 프로젝트 결과물"></a># 프로젝트 결과물</h1><h2 id="데모-영상"><a href="#데모-영상" class="headerlink" title="데모 영상"></a>데모 영상</h2><p>백문이 불여일견이니 먼저 어플리케이션 작동 영상을 보겠습니다.</p>
 <iframe width="100%" height="500" src="https://www.youtube.com/embed/1RMhd_r3AuQ?cc_load_policy=1&mute=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <!-- iOS 앱은 [App Store](https://apps.apple.com/kr/app/tooreal/id1473239669)에 게시해 두었습니다. -->
 
 <hr>
-<h2 id="개발환경"><a href="#개발환경" class="headerlink" title="개발환경"></a>개발환경</h2><p>다음과 같은 개발 환경에서 작업하였습니다.</p>
-<div class="figure " style="width:;"><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70038098-10bcba80-15fb-11ea-94d2-314f8d598601.png" target="_blank" rel="external nofollow noopener noreferrer" title="개발에 사용된 언어, 프레임워크 및 툴" data-caption="개발에 사용된 언어, 프레임워크 및 툴" data-fancybox="default style=" visible: hidden"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70038098-10bcba80-15fb-11ea-94d2-314f8d598601.png" alt="개발에 사용된 언어, 프레임워크 및 툴"></a><span class="caption">개발에 사용된 언어, 프레임워크 및 툴</span></div>
+<h2 id="개발-환경"><a href="#개발-환경" class="headerlink" title="개발 환경"></a>개발 환경</h2><p>전체 개발 기간은 3개월이 소요되었으며, 다음과 같은 환경에서 개발하였습니다.</p>
+<div class="figure " style="width:;"><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70038098-10bcba80-15fb-11ea-94d2-314f8d598601.png" target="_blank" rel="external nofollow noopener noreferrer" title="개발에 사용된 언어, 프레임워크 및 툴" data-caption="개발에 사용된 언어, 프레임워크 및 툴" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70038098-10bcba80-15fb-11ea-94d2-314f8d598601.png" alt="개발에 사용된 언어, 프레임워크 및 툴"></a><span class="caption">개발에 사용된 언어, 프레임워크 및 툴</span></div>
 
 <blockquote>
 <p>✔︎ Development environment and frameworks</p>
@@ -288,74 +290,51 @@
 <li>Deep Learning : YOLO v3 / Keras / Tensorflow</li>
 </ul>
 <hr>
-<h2 id="기능소개"><a href="#기능소개" class="headerlink" title="기능소개"></a>기능소개</h2><p>전체적인 어플리케이션은 다음과 같이 여섯 단계로 서비스 로직이 진행됩니다.</p>
+<h1 id="기능소개"><a href="#기능소개" class="headerlink" title="# 기능소개"></a># 기능소개</h1><p>전체적인 어플리케이션은 다음과 같이 여섯 단계로 서비스 로직이 진행됩니다.</p>
 <blockquote>
 <p>✔︎ ARKit &amp; SceneKit을 이용한 AR앱 구현</p>
 </blockquote>
-<ol>
+<ul>
 <li>평면 탐지(Plane detection)</li>
 <li>설치가능한 가상 오브젝트 추천</li>
 <li>가상 오브젝트 설치 및 인터랙션</li>
-</ol>
+</ul>
 <blockquote>
 <p>✔︎ 딥러닝을 이용한 조명 인식</p>
 </blockquote>
-<ol start="4">
-<li>가상조명 설치</li>
-<li>가상조명 삭제</li>
-<li>현실감 있는 그림자 랜더링</li>
-</ol>
-<p>1 ~ 3단계는 <strong>ARKit &amp; SceneKit을 이용한 AR앱 구현</strong> 부분이고, 4 ~ 6단계인 <strong>딥러닝을 이용한 조명 인식</strong> 부분으로 나눌 수 있습니다.</p>
+<ul>
+<li>조명 인식<ul>
+<li>Google Vision API 방식</li>
+<li>YOLO v3 방식</li>
+</ul>
+</li>
+</ul>
 <hr>
-<h3 id="1-ARKit-amp-SceneKit을-이용한-AR앱-구현"><a href="#1-ARKit-amp-SceneKit을-이용한-AR앱-구현" class="headerlink" title="1. ARKit &amp; SceneKit을 이용한 AR앱 구현"></a>1. ARKit &amp; SceneKit을 이용한 AR앱 구현</h3><div class="service-flow">
+<h2 id="ARKit-amp-SceneKit을-이용한-AR앱-구현"><a href="#ARKit-amp-SceneKit을-이용한-AR앱-구현" class="headerlink" title="ARKit &amp; SceneKit을 이용한 AR앱 구현"></a>ARKit &amp; SceneKit을 이용한 AR앱 구현</h2><div class="nero-video">
   <div><div class="figure " style>
 <video class="fig-video" autoplay playsinline loop muted controls alt="1. 평면 탐지(Plane detection)">
-<source src="/assets/videos/01.plane_detection.mp4" type="video/mp4">
+<source src="/assets/videos/pj-too-real/01.plane_detection.mp4" type="video/mp4">
 <p>Your browser doesn't support HTML5 Video :/</p></video>
 <span class="caption">1. 평면 탐지(Plane detection)</span>
 </div></div>
   <div><div class="figure " style>
 <video class="fig-video" autoplay playsinline loop muted controls alt="2. 설치가능한 가상 오브젝트 추천">
-<source src="/assets/videos/02.object_recommendation.mp4" type="video/mp4">
+<source src="/assets/videos/pj-too-real/02.object_recommendation.mp4" type="video/mp4">
 <p>Your browser doesn't support HTML5 Video :/</p></video>
 <span class="caption">2. 설치가능한 가상 오브젝트 추천</span>
 </div></div>
   <div><div class="figure " style>
 <video class="fig-video" autoplay playsinline loop muted controls alt="3. 가상 오브젝트 설치 및 인터랙션">
-<source src="/assets/videos/03.install_object.mp4" type="video/mp4">
+<source src="/assets/videos/pj-too-real/03.install_object.mp4" type="video/mp4">
 <p>Your browser doesn't support HTML5 Video :/</p></video>
 <span class="caption">3. 가상 오브젝트 설치 및 인터랙션</span>
 </div></div>
-  </div>
+</div>
 
 
 <p>어플리케이션이 현실 공간을 인식하여 벽면이나 바닥을 인식합니다. 공간이 인식되면 현재 바라보고 있는 장소에 설치 가능한 가구를 목록을 보여주고, 원하는 가구를 선택하여 설치할 수 있습니다. 또한 설치된 가구를 원하는 장소로 이동하거나 회전하는 등의 기본적인 인터랙션이 가능합니다.</p>
 <hr>
-<h3 id="2-딥러닝을-이용한-조명-인식"><a href="#2-딥러닝을-이용한-조명-인식" class="headerlink" title="2. 딥러닝을 이용한 조명 인식"></a>2. 딥러닝을 이용한 조명 인식</h3><div class="service-flow">
-  <div><div class="figure " style>
-<video class="fig-video" autoplay playsinline loop muted controls alt="4. 가상조명 설치">
-<source src="/assets/videos/04.install_scnlight.mp4" type="video/mp4">
-<p>Your browser doesn't support HTML5 Video :/</p></video>
-<span class="caption">4. 가상조명 설치</span>
-</div></div>
-  <div><div class="figure " style>
-<video class="fig-video" autoplay playsinline loop muted controls alt="5. 가상조명 삭제">
-<source src="/assets/videos/05.remove_scnlight.mp4" type="video/mp4">
-<p>Your browser doesn't support HTML5 Video :/</p></video>
-<span class="caption">5. 가상조명 삭제</span>
-</div></div>
-  <div><div class="figure " style>
-<video class="fig-video" autoplay playsinline loop muted controls alt="6. 현실감 있는 그림자 랜더링">
-<source src="/assets/videos/06.shadow_rendering_and_object_interaction.mp4" type="video/mp4">
-<p>Your browser doesn't support HTML5 Video :/</p></video>
-<span class="caption">6. 현실감 있는 그림자 랜더링</span>
-</div>
-  </div>
-</div>
-
-<p>본 어플리케이션에서는 두 가지 조명 인식 방식을 구현하였습니다. 하나는 <a href="https://cloud.google.com/vision" target="_blank" rel="external nofollow noopener noreferrer">Google Vision API</a>를 이용한 방법이고, 다른 방법은 <a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external nofollow noopener noreferrer">YOLO v3</a>라는 딥러닝 모델을 이용한 방법입니다.</p>
-<p><strong>Google Vision API 방식</strong>의 경우 사용자가 조명을 바라보고 인식 버튼을 한번 더 누르면 해당 프레임 이미지를 Google 서버로 전달하여 조명 존재여부를 요청하고, 이미지 중앙좌표를 <a href="https://developer.apple.com/documentation/arkit/arframe/2875718-hittest" target="_blank" rel="external nofollow noopener noreferrer">hitTest</a> 메소드로 입력하여 조명의 3차원 좌표를 획득합니다. 그리고 <code>Google Vision API</code>에서 조명이 존재한다고 반환하는 경우, 앞서 얻은 3차원 좌표에 가상 조명을 설치하는 방식입니다.<br>이 방법의 경우 조명의 실제 3차원 좌표가 아닌 곳에 가상 조명이 설치된 가능성이 있고, 실시간으로 조명을 인식하는 것이 아니라 사용자가 인식하고자 하는 조명 개수만큼 인식 버튼을 눌러야한다는 단점이 있습니다. 그럼에도 불구하고 Google에서 학습한 방대한 모델을 이용하기 때문에 범용적인 조명을 인식할 수 있다는 장점을 가지고 있습니다.</p>
-<p><strong>YOLO v3 방식</strong>은 사용자가 조명 인식모드로 진입한 뒤, 카메라로 주변을 비추면 매프레임 정보를 <code>YOLO v3</code> 모델이 해석합니다. <code>YOLO v3</code> 모델은, 해당 이미지 안에 존재하는 조명의 온오프 상태, 종류, 신뢰도(confidence) 그리고 바운딩 박스(2차원 박스의 대각선 두 점의 좌표)를 반환합니다. 매프레임마다 바운딩 박스 좌표를 <a href="https://developer.apple.com/documentation/arkit/arframe/2875718-hittest" target="_blank" rel="external nofollow noopener noreferrer">hitTest</a> 메소드에 입력하여 조명의 3차원 좌표를 계산하고, 조명의 상태에 따라 경우 해당 좌표에 가상 조명을 추가하거나 삭제합니다.<br>이 방식은 <code>CoreML</code>을 이용하여 모바일에 탑재한 <code>YOLO v3</code> 모델을 이용하기 때문에 별도의 네트워크가 필요하지 않으며, 실시간으로 조명의 상태 및 좌표를 인식할 수 있다는 장점을 가지고 있습니다. 하지만 학습된 조명만 인식이 가능하다는 단점을 가지고 있습니다.<br><br></p>
+<h2 id="딥러닝을-이용한-조명-인식"><a href="#딥러닝을-이용한-조명-인식" class="headerlink" title="딥러닝을 이용한 조명 인식"></a>딥러닝을 이용한 조명 인식</h2><p>본 어플리케이션에서는 두 가지 조명 인식 방식을 구현하였습니다. 하나는 <a href="https://cloud.google.com/vision" target="_blank" rel="external nofollow noopener noreferrer">Google Vision API</a>를 이용한 방법이고, 다른 방법은 <a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external nofollow noopener noreferrer">YOLO v3</a>라는 딥러닝 모델을 이용한 방법으로 다음과 같은 특징을 가지고있습니다.</p>
 <table>
 <thead>
 <tr>
@@ -364,12 +343,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>• 범용적인 조명 인식이 가능</td>
-<td>• 학습된 5개의 조명만 인식가능</td>
-</tr>
-<tr>
-<td>• 조명의 온오프 상태를 알 수 없음</td>
-<td>• 조명의 온오프 상태 구분가능</td>
+<td>• 네트워크 통신 필요</td>
+<td>• 네트워크 통신 불필요</td>
 </tr>
 <tr>
 <td>• 실시간 조명 추적 불가능</td>
@@ -380,14 +355,64 @@
 <td>• 조명의 2차원 좌표 획득 가능</td>
 </tr>
 <tr>
-<td>• 네트워크 통신 필요</td>
-<td>• 네트워크 통신 불필요</td>
+<td>• 조명의 온오프 상태를 알 수 없음</td>
+<td>• 조명의 온오프 상태 구분가능</td>
+</tr>
+<tr>
+<td>• 범용적인 조명 인식이 가능</td>
+<td>• 학습된 5개의 조명만 인식가능</td>
 </tr>
 </tbody></table>
-<p>위와 같은 방식들로 설치된 조명들은 <code>ARKit</code>의 <a href="https://developer.apple.com/documentation/arkit/arlightestimate" target="_blank" rel="external nofollow noopener noreferrer">LightEstimation</a> 클래스에 들어있는 루멘(lm)과 색 온도(Kelvin) 값을 매프레임마다 계산하여 실시간으로 반영해주고 있습니다.</p>
-<p>이렇게 설치된 가상 조명들은 현실 조명의 위치, 조도, 색온도 정보를 반영하였기 때문에 가상 오브젝트의 텍스쳐가 더욱 현실감 있게 표현되고 조명과 오브젝트의 상태적 위치에 따라 현실적인 방향의 그림자가 실시간으로 랜더링되어 <u>더욱 현실적인 AR 어플리케이션 구현</u>이라는 목표를 달성할 수 있습니다.</p>
 <hr>
-<h1 id="결론"><a href="#결론" class="headerlink" title="# 결론"></a># 결론</h1><p>이번 프로젝트는 홀로 3개월 동안 진행하였는데, iOS도 Object Detection 딥러닝 모델 개발도 처음이었던 터라 많이 헤맷지만 예전부터 딥러닝 모델을 모바일에 올려보고 싶었기에 너무 즐겁게 진행할 수 있었습니다.</p>
+<h3 id="1-Google-Vision-API-방식"><a href="#1-Google-Vision-API-방식" class="headerlink" title="1. Google Vision API 방식"></a>1. Google Vision API 방식</h3><div class="nero-video">
+  <div>
+    <div class="figure " style>
+<video class="fig-video" autoplay playsinline loop muted controls alt="Google Vision API를 이용한 가상조명 설치">
+<source src="/assets/videos/pj-too-real/07.install_scnlight_by_google_vision_api.mp4" type="video/mp4">
+<p>Your browser doesn't support HTML5 Video :/</p></video>
+<span class="caption">Google Vision API를 이용한 가상조명 설치</span>
+</div>
+  </div>
+</div>
+
+<p>이 방식의 경우 사용자가 조명을 바라보고 인식 버튼을 한번 더 누르면 해당 프레임 이미지를 Google Vision API 서버로 전달하여 조명 존재여부를 요청하고, 이미지 중앙좌표를 <a href="https://developer.apple.com/documentation/arkit/arframe/2875718-hittest" target="_blank" rel="external nofollow noopener noreferrer">hitTest</a> 메소드로 입력하여 조명의 3차원 좌표를 획득합니다. 그리고 <code>Google Vision API</code>에서 조명이 존재한다고 반환하는 경우, 앞서 얻은 3차원 좌표에 가상 조명을 설치하는 방식입니다.</p>
+<p>이 방법의 경우 조명의 실제 3차원 좌표가 아닌 곳에 가상 조명이 설치된 가능성이 있고, 실시간으로 조명을 인식하는 것이 아니라 사용자가 인식하고자 하는 조명 개수만큼 인식 버튼을 눌러야한다는 단점이 있습니다. 그럼에도 불구하고 Google에서 학습한 방대한 모델을 이용하기 때문에 범용적인 조명을 인식할 수 있다는 장점을 가지고 있습니다.</p>
+<hr>
+<h3 id="2-YOLO-v3-방식"><a href="#2-YOLO-v3-방식" class="headerlink" title="2. YOLO v3 방식"></a>2. YOLO v3 방식</h3><div class="nero-video">
+  <div><div class="figure " style>
+<video class="fig-video" autoplay playsinline loop muted controls alt="YOLO v3 조명 on 상태 인식">
+<source src="/assets/videos/pj-too-real/04.install_scnlight.mp4" type="video/mp4">
+<p>Your browser doesn't support HTML5 Video :/</p></video>
+<span class="caption">YOLO v3 조명 on 상태 인식</span>
+</div></div>
+  <div><div class="figure " style>
+<video class="fig-video" autoplay playsinline loop muted controls alt="YOLO v3 조명 off 상태 인식">
+<source src="/assets/videos/pj-too-real/05.remove_scnlight.mp4" type="video/mp4">
+<p>Your browser doesn't support HTML5 Video :/</p></video>
+<span class="caption">YOLO v3 조명 off 상태 인식</span>
+</div></div>
+</div>
+
+<p>이 방식은 Realtime Object Detection 모델 중 하나인 <a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external nofollow noopener noreferrer">YOLO v3</a> 모델을 이용한 방식입니다. <code>YOLO v3</code> 모델은, 해당 이미지 안에 존재하는 조명의 온오프 상태, 종류, 신뢰도(confidence) 그리고 바운딩 박스(2차원 박스의 대각선 두 점의 좌표)를 반환합니다. 매프레임마다 바운딩 박스 좌표를 <a href="https://developer.apple.com/documentation/arkit/arframe/2875718-hittest" target="_blank" rel="external nofollow noopener noreferrer">hitTest</a> 메소드에 입력하여 조명의 3차원 좌표를 계산하고, 조명의 상태에 따라 경우 해당 좌표에 가상 조명을 추가하거나 삭제합니다.</p>
+<p>모바일에 탑재한 <code>YOLO v3</code> 딥러닝 모델을 이용하기 때문에 네트워크 통신이 필요하지 않으며, 실시간으로 조명의 상태 및 좌표를 인식할 수 있다는 장점을 가지고 있습니다. 하지만 학습된 조명만 인식이 가능하다는 단점을 가지고 있습니다.<br><br></p>
+<hr>
+<h1 id="기대효과"><a href="#기대효과" class="headerlink" title="# 기대효과"></a># 기대효과</h1><p>현실 조명에 대한 정보가 가상 오브젝트에 반영되었으므로, 아래 영상과 같이 오브젝트의 그림자가 조명과의 상대적 위치에 따라 현실감 있게 랜더링 되는 것을 보실 수 있습니다.<br><br></p>
+<div class="nero-video">
+  <div><div class="figure " style>
+<video class="fig-video" autoplay playsinline loop muted controls alt="그림자가 조명을 중심으로 랜더링 됩니다.">
+<source src="/assets/videos/pj-too-real/06.shadow_rendering_and_object_interaction.mp4" type="video/mp4">
+<p>Your browser doesn't support HTML5 Video :/</p></video>
+<span class="caption">그림자가 조명을 중심으로 랜더링 됩니다.</span>
+</div>
+  </div>
+</div>
+
+<p>그 뿐만 아니라 카메라를 통해 들어오는 밝기(lm)과 색 온도(Kelvin)를 매프레임마다 가상 조명에 실시간으로 반영해주고 있기 때문에 가상 오브젝트가 주변과 유사한 텍스쳐로 표현되어 더욱 현실감을 높여줍니다.<br><br></p>
+<div class="figure " style="width:;"><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70371587-496cd480-1918-11ea-839e-93f5f3402969.png" target="_blank" rel="external nofollow noopener noreferrer" title="에디슨 전구의 따뜻한 색 온도가 반영되어 오브젝트를 더욱 현실감 있게 표현해줍니다.<br>- 왼쪽 : 조명인식 전(前) / 오른쪽 : 조명인식 후(後)" data-caption="에디슨 전구의 따뜻한 색 온도가 반영되어 오브젝트를 더욱 현실감 있게 표현해줍니다.<br>- 왼쪽 : 조명인식 전(前) / 오른쪽 : 조명인식 후(後)" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70371587-496cd480-1918-11ea-839e-93f5f3402969.png" alt="에디슨 전구의 따뜻한 색 온도가 반영되어 오브젝트를 더욱 현실감 있게 표현해줍니다.<br>- 왼쪽 : 조명인식 전(前) / 오른쪽 : 조명인식 후(後)"></a><span class="caption">에디슨 전구의 따뜻한 색 온도가 반영되어 오브젝트를 더욱 현실감 있게 표현해줍니다.<br>- 왼쪽 : 조명인식 전(前) / 오른쪽 : 조명인식 후(後)</span></div>
+
+<p>현실 조명의 위치와 밝기 그리고 색 온도 정보를 그대로 가상 조명으로 재현하여 <u>더욱 현실감 있는 AR 어플리케이션 구현</u>이라는 목표를 달성하였습니다. 🎉</p>
+<hr>
+<h1 id="마무리"><a href="#마무리" class="headerlink" title="# 마무리"></a># 마무리</h1><p>사실 iOS도 영상처리 관련 딥러닝 모델 개발도 처음이었던 터라 많이 헤맷지만 예전부터 딥러닝 모델을 모바일에 올려보고 싶었기에 너무 즐겁게 진행할 수 있었습니다.</p>
 <blockquote>
 <p>앞으로 총 4부작에 걸쳐 프로젝트를 개발 내용을 공유하도록 하겠습니다.</p>
 </blockquote>
@@ -399,7 +424,7 @@
 </ul>
 <!-- CSS -->
 <style type="text/css">
-  .service-flow {
+  .nero-video {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -407,18 +432,19 @@
     align-content: space-around;
   }
 
-  .service-flow>div {
+  .nero-video>div {
     max-width: 250px;
     margin-bottom: 16px;
   }
 
   @media (min-width: 320px) and (max-width: 480px) {
-    .service-flow>div {
+    .nero-video>div {
       max-width: none;
       width: 100%;
     }
   }
 </style>
+
             
 
 
@@ -642,7 +668,7 @@
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
-<script src="/assets/js/script-hrmw3syrdm4kcpvyb6xkftyea0uhpmvbp7oomyeg75rarumqlb9ivnsnwdph.min.js"></script>
+<script src="/assets/js/script-tzdmnpdb0ijel2fk3zocvmohzdl2ptlcv9pan8mumq1tthrxifnlkq3w6jru.min.js"></script>
 <!--SCRIPTS END-->
 
 
