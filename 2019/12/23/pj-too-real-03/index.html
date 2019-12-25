@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>3부. Custom YOLO 모델 만들기 - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <link rel="canonical" href="https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.\n\n목차\n\n\n1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. 현실감 있는 iOS AR앱 만들기\n✔︎ 3부. Custom YOLO 모델 만들기\n4부. iOS에 YOLO 모델 탑재하기\n\n\n# What is the YOLO?시작하기에 앞서 YOLO에 대한 간단한 설명과 어떻게 Training 방법에 대해 알아보도록 하겠습니다.\n\n✔︎ 진행 순서\n\n\nYOLO Architecture &amp; Output\nObject Detection Data 준비\nTransfer Learning\n\n\n본 포스팅은 YOLO 모델 활용에 대한 글이므로, YOLO에 대한 자세한 설명은 다른 글을 참고하시기 바랍니다.\n\n영문 : Closer Look at YOLOv3\n한글 : [분석] YOLO\n\n\n\nYOLO ArchitectureYOLO (You Only Look Once)는 학습한 물체의 종류와 위치를 실시간으로 파악 할 수 있는 Real-Time Object Detection 모델로 다음과 같은 아키텍쳐로 구성되어 있습니다.\nYOLO output출처 - https://www.cyberailab.com\n\n다음으로 YOLO 모델을 학습을 위한 데이터 준비 방법을 알아보도록 하겠습니다.\n\n# 학습 데이터 준비Object Detection 모델을 만들기 위해서는 오브젝트가 담긴 이미지와 이미지 상의 오브젝트의 위치와 종류를 나타내는 라벨이 필요합니다. 이번 프로젝트에서는 다음과 같은 순서로 데이터를 준비하였습니다.\n\n✔︎ 데이터 준비 순서\n\n\nImage Gathering\nImage Labeling\nImage Resizing\nImage Generating\n\n\nImage Gathering이번 프로젝트에서는 램프, 전구, 형광등 총 3개의 물체를 학습하였고 이를 위해 다음과 같은 이미지를 수집하였습니다. 램프와 전구의 경우 ON/OFF 상태를 구분할 수 있도록 다른 클래스로 분리하였기 때문에 총 클래스 수는 5개입니다.\nsample image : dog.jpg출처 : darknet\n\ntiny YOLO v3 converted model test1234567891011from IPython.display import displayfrom PIL import Imagefrom yolo import YOLOdef objectDetection(file, model_path, class_path):    yolo = YOLO(model_path=model_path, classes_path=class_path, anchors_path=\"model_data/tiny_yolo_anchors.txt\")    image = Image.open(file)    result_image = yolo.detect_image(image)    display(result_image)objectDetection('dog.jpg', 'model_data/yolo_tiny.h5', 'model_data/coco_classes.txt')\n\nYOLO 모델이 적절한 bounding box와 confidence 그리고 class를 반환하는 것을 보니 변환에 성공한 것 같습니다.\n전이학습이 완료된 tiny YOLO v3 output\n\n이미지에 담긴 조명의 정확한 Bounding Box와 신뢰도 그리고 종류를 잘 탐지하고 있습니다. 테스트까지 완료된 모델을 파일로 저장하기 위해 Keras-yolo3의 yolo.py 파일에 학습된 모델을 반환하는 함수를 추가하였습니다.\nyolo.py 파일에 학습된 모델을 반환하는 함수를 추가12def get_model(self):    return self.yolo_model\n\n그리고 모델의 save함수를 이용하여 학습이 완료된 모델을 저장하였습니다.\nsave keras h5 model12model = yolo.get_model()model.save('model_data/light_tiny_model.h5')\n\n\n# 마무리다음 4부에서는 학습한 YOLO Model을 iOS 어플리케이션에 올리는 방법에 대해 설명하도록 하겠습니다.\n\n목차\n\n\n1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. 현실감 있는 iOS AR앱 만들기\n✔︎ 3부. Custom YOLO 모델 만들기\n4부. iOS에 YOLO 모델 탑재하기\n\n","dateCreated":"2019-12-23T16:44:28+09:00","dateModified":"2019-12-25T22:20:34+09:00","datePublished":"2019-12-23T16:44:28+09:00","description":"실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.","headline":"3부. Custom YOLO 모델 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/","keywords":"Too Real"}</script>
+    <meta name="description" content="실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.">
+<meta name="keywords" content="Too Real">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="3부. Custom YOLO 모델 만들기">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;2019&#x2F;12&#x2F;23&#x2F;pj-too-real-03&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70716343-8e857200-1d2f-11ea-8e60-9c75f24ca9ce.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70857358-09b57680-1f30-11ea-961a-0f9a401bc788.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70859476-81e36280-1f57-11ea-976b-697018feb25d.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70893892-5338bb00-202f-11ea-8c72-e7d48f83f2a9.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70894441-5aac9400-2030-11ea-8f65-adeb4dd2f779.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70910091-509b8d00-2052-11ea-8305-d4e810eebcad.png">
+<meta property="og:updated_time" content="2019-12-25T13:20:34.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70716343-8e857200-1d2f-11ea-8e60-9c75f24ca9ce.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-ht1ihqdkbyyouh3rkfrhhrmfoskuqft03ddy64x4imjnoqhubfqbnxfrobgl.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script>
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            3부. Custom YOLO 모델 만들기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-12-23T16:44:28+09:00">
+	
+		    Dec 23, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Project/">Project</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#What-is-the-YOLO"><span class="nero-toc-text"># What is the YOLO?</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#YOLO-Architecture"><span class="nero-toc-text">YOLO Architecture</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#YOLO-Output"><span class="nero-toc-text">YOLO Output</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#학습-데이터-준비"><span class="nero-toc-text"># 학습 데이터 준비</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Image-Gathering"><span class="nero-toc-text">Image Gathering</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Image-Labeling"><span class="nero-toc-text">Image Labeling</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Image-Resizing"><span class="nero-toc-text">Image Resizing</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Image-Generating"><span class="nero-toc-text">Image Generating</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#YOLO-Training"><span class="nero-toc-text"># YOLO Training</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Convert-Darknet-Model-To-Keras-Model"><span class="nero-toc-text">Convert Darknet Model To Keras Model</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Convert-Annotation"><span class="nero-toc-text">Convert Annotation</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Transfer-Learning"><span class="nero-toc-text">Transfer Learning</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#마무리"><span class="nero-toc-text"># 마무리</span></a></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            <p>실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.<br><a id="more"></a></p>
+<blockquote>
+<p>목차</p>
+</blockquote>
+<ul>
+<li><a href="/2019/12/25/pj-too-real-01/">1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
+<li><a href="/2019/12/24/pj-too-real-02/">2부. 현실감 있는 iOS AR앱 만들기</a></li>
+<li>✔︎ 3부. Custom YOLO 모델 만들기</li>
+<li><a href="/2019/12/22/pj-too-real-04/">4부. iOS에 YOLO 모델 탑재하기</a></li>
+</ul>
+<hr>
+<h1 id="What-is-the-YOLO"><a href="#What-is-the-YOLO" class="headerlink" title="# What is the YOLO?"></a># What is the YOLO?</h1><p>시작하기에 앞서 YOLO에 대한 간단한 설명과 어떻게 Training 방법에 대해 알아보도록 하겠습니다.</p>
+<blockquote>
+<p>✔︎ 진행 순서</p>
+</blockquote>
+<ul>
+<li>YOLO Architecture &amp; Output</li>
+<li>Object Detection Data 준비</li>
+<li>Transfer Learning</li>
+</ul>
+<blockquote>
+<p>본 포스팅은 YOLO 모델 활용에 대한 글이므로, YOLO에 대한 자세한 설명은 다른 글을 참고하시기 바랍니다.</p>
+<ul>
+<li>영문 : <a href="https://www.cyberailab.com/home/a-closer-look-at-yolov3" target="_blank" rel="external nofollow noopener noreferrer">Closer Look at YOLOv3</a></li>
+<li>한글 : <a href="https://curt-park.github.io/2017-03-26/yolo/" target="_blank" rel="external nofollow noopener noreferrer">[분석] YOLO</a></li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="YOLO-Architecture"><a href="#YOLO-Architecture" class="headerlink" title="YOLO Architecture"></a>YOLO Architecture</h2><p><a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external nofollow noopener noreferrer">YOLO (You Only Look Once)</a>는 학습한 물체의 종류와 위치를 실시간으로 파악 할 수 있는 Real-Time Object Detection 모델로 다음과 같은 아키텍쳐로 구성되어 있습니다.<br><br></p>
+<div class="figure " style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70716343-8e857200-1d2f-11ea-8e60-9c75f24ca9ce.png" target="_blank" rel="external nofollow noopener noreferrer" title="YOLO v3 Architecture<br>출처 - <a href=https://www.cyberailab.com/home/a-closer-look-at-yolov3>https://www.cyberailab.com</a>" data-caption="YOLO v3 Architecture<br>출처 - <a href=https://www.cyberailab.com/home/a-closer-look-at-yolov3>https://www.cyberailab.com</a>" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70716343-8e857200-1d2f-11ea-8e60-9c75f24ca9ce.png" alt="YOLO v3 Architecture<br>출처 - <a href=https://www.cyberailab.com/home/a-closer-look-at-yolov3>https://www.cyberailab.com</a>"></a><span class="caption">YOLO v3 Architecture<br>출처 - <a href="https://www.cyberailab.com/home/a-closer-look-at-yolov3" rel="external nofollow noopener noreferrer" target="_blank">https://www.cyberailab.com</a></span></div>
+
+<hr>
+<h2 id="YOLO-Output"><a href="#YOLO-Output" class="headerlink" title="YOLO Output"></a>YOLO Output</h2><p>YOLO 모델의 output은 <code>N x N x (C + 5) x B)</code> 형태의 텐서(tensor)를 반환하며, 이 정보를 이용하여 이미지 상에 존재하는 물체의 종류와 2D 좌표를 획득할 수 있습니다.</p>
+<blockquote>
+<p>N x N x (C + 5) x B)</p>
+</blockquote>
+<ul>
+<li>N x N : Grid</li>
+<li>C : 학습한 Object 수(Classes)</li>
+<li>5 : 탐지한 Object의 Bounding Box 정보(x, y, w, h, confidence)</li>
+<li>B : Grid cell당 박스 수</li>
+</ul>
+<br>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70857358-09b57680-1f30-11ea-961a-0f9a401bc788.png" target="_blank" rel="external nofollow noopener noreferrer" title="YOLO output<br>출처 - <a href=https://www.cyberailab.com/home/a-closer-look-at-yolov3>https://www.cyberailab.com</a>" data-caption="YOLO output<br>출처 - <a href=https://www.cyberailab.com/home/a-closer-look-at-yolov3>https://www.cyberailab.com</a>" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70857358-09b57680-1f30-11ea-961a-0f9a401bc788.png" alt="YOLO output<br>출처 - <a href=https://www.cyberailab.com/home/a-closer-look-at-yolov3>https://www.cyberailab.com</a>"></a><span class="caption">YOLO output<br>출처 - <a href="https://www.cyberailab.com/home/a-closer-look-at-yolov3" rel="external nofollow noopener noreferrer" target="_blank">https://www.cyberailab.com</a></span></div>
+
+<p>다음으로 YOLO 모델을 학습을 위한 데이터 준비 방법을 알아보도록 하겠습니다.</p>
+<hr>
+<h1 id="학습-데이터-준비"><a href="#학습-데이터-준비" class="headerlink" title="# 학습 데이터 준비"></a># 학습 데이터 준비</h1><p>Object Detection 모델을 만들기 위해서는 오브젝트가 담긴 <strong>이미지</strong>와 이미지 상의 오브젝트의 위치와 종류를 나타내는 <strong>라벨</strong>이 필요합니다. 이번 프로젝트에서는 다음과 같은 순서로 데이터를 준비하였습니다.</p>
+<blockquote>
+<p>✔︎ 데이터 준비 순서</p>
+</blockquote>
+<ul>
+<li>Image Gathering</li>
+<li>Image Labeling</li>
+<li>Image Resizing</li>
+<li>Image Generating</li>
+</ul>
+<hr>
+<h2 id="Image-Gathering"><a href="#Image-Gathering" class="headerlink" title="Image Gathering"></a>Image Gathering</h2><p>이번 프로젝트에서는 램프, 전구, 형광등 총 3개의 물체를 학습하였고 이를 위해 다음과 같은 이미지를 수집하였습니다. 램프와 전구의 경우 <u>ON/OFF 상태를 구분</u>할 수 있도록 다른 클래스로 분리하였기 때문에 총 클래스 수는 5개입니다.</p>
+<div class="figure " style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70859476-81e36280-1f57-11ea-976b-697018feb25d.png" target="_blank" rel="external nofollow noopener noreferrer" title="조명 인식 모델을 만들기 위해 사용된 이미지" data-caption="조명 인식 모델을 만들기 위해 사용된 이미지" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70859476-81e36280-1f57-11ea-976b-697018feb25d.png" alt="조명 인식 모델을 만들기 위해 사용된 이미지"></a><span class="caption">조명 인식 모델을 만들기 위해 사용된 이미지</span></div>
+
+<p>동영상으로 해당 오브젝트들을 촬영한 뒤 각 프레임들을 이미지로 변환하는 방법으로 총 5천장의 이미지를 수집하였습니다.</p>
+<figure class="highlight python"><figcaption><span>OpenCV를 이용한 video to image</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(videoFiles)):</span><br><span class="line">    cam = cv2.VideoCapture(videoFile)</span><br><span class="line">    currentFrame = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">        ret, frame = cam.read()</span><br><span class="line">        <span class="keyword">if</span> ret:</span><br><span class="line">            cv2.imwrite(currentFrame + <span class="string">'.jpg'</span>, frame)</span><br><span class="line">            currentFrame += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    cam.release()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Image-Labeling"><a href="#Image-Labeling" class="headerlink" title="Image Labeling"></a>Image Labeling</h2><p>Object Detection 모델을 만들기 위해서는 학습하고자 하는 물체가 담긴 이미지와 해당 물체의 종류 그리고 위치 정보가 기록된 <strong>label</strong>이 필요합니다. <strong>label</strong>의 경우 직접 수작업으로 데이터를 생성해야 하는데, 작업을 편하게 하기 위해 <a href="https://github.com/tzutalin/labelImg" target="_blank" rel="external nofollow noopener noreferrer">labelImg</a>라는 오픈소스 툴을 이용하였습니다.</p>
+<figure class="highlight xml"><figcaption><span>labelImg는 이미지 상의 오브젝트의 위치와 종류를 xml 형태로 반환합니다.</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">annotation</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">folder</span>&gt;</span>lamp_on<span class="tag">&lt;/<span class="name">folder</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filename</span>&gt;</span>0.jpg<span class="tag">&lt;/<span class="name">filename</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">path</span>&gt;</span>/lamp_on/0.jpg<span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">source</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">database</span>&gt;</span>Unknown<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">size</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">width</span>&gt;</span>1920<span class="tag">&lt;/<span class="name">width</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">height</span>&gt;</span>1080<span class="tag">&lt;/<span class="name">height</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">depth</span>&gt;</span>3<span class="tag">&lt;/<span class="name">depth</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">size</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">segmented</span>&gt;</span>0<span class="tag">&lt;/<span class="name">segmented</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">object</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>lamp_on<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">pose</span>&gt;</span>Unspecified<span class="tag">&lt;/<span class="name">pose</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">truncated</span>&gt;</span>0<span class="tag">&lt;/<span class="name">truncated</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">difficult</span>&gt;</span>0<span class="tag">&lt;/<span class="name">difficult</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">bndbox</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">xmin</span>&gt;</span>704<span class="tag">&lt;/<span class="name">xmin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">ymin</span>&gt;</span>384<span class="tag">&lt;/<span class="name">ymin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">xmax</span>&gt;</span>970<span class="tag">&lt;/<span class="name">xmax</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">ymax</span>&gt;</span>546<span class="tag">&lt;/<span class="name">ymax</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">bndbox</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">annotation</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Image-Resizing"><a href="#Image-Resizing" class="headerlink" title="Image Resizing"></a>Image Resizing</h2><p>수집한 이미지의 원본은 <code>1920 x 1080</code>로 학습 시간이 많이 소요되기 때문에, <a href="https://pillow.readthedocs.io/en/stable/" target="_blank" rel="external nofollow noopener noreferrer">Pillow</a> 라이브러리를 이용하여 이미지의 크기를 10분의 1 크기인 <code>192 x 108</code>로 줄였습니다.</p>
+<figure class="highlight python"><figcaption><span>image resizing</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">for</span> image_file <span class="keyword">in</span> images:</span><br><span class="line">  image = Image.open(image_file)</span><br><span class="line">  resize_image = image.resize((<span class="number">192</span>, <span class="number">108</span>))</span><br><span class="line">  resize_image.save(new_path)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>label resizing</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changeLabel</span><span class="params">(xmlPath, newXmlPath, imgPath, boxes)</span>:</span></span><br><span class="line">    tree = elemTree.parse(xmlPath)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># path 변경</span></span><br><span class="line">    path = tree.find(<span class="string">'./path'</span>)</span><br><span class="line">    path.text = imgPath[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bounding box 변경</span></span><br><span class="line">    objects = tree.findall(<span class="string">'./object'</span>)</span><br><span class="line">    <span class="keyword">for</span> i, object_ <span class="keyword">in</span> enumerate(objects):</span><br><span class="line">        bndbox = object_.find(<span class="string">'./bndbox'</span>)</span><br><span class="line">        bndbox.find(<span class="string">'./xmin'</span>).text = str(boxes[i][<span class="number">0</span>])</span><br><span class="line">        bndbox.find(<span class="string">'./ymin'</span>).text = str(boxes[i][<span class="number">1</span>])</span><br><span class="line">        bndbox.find(<span class="string">'./xmax'</span>).text = str(boxes[i][<span class="number">2</span>])</span><br><span class="line">        bndbox.find(<span class="string">'./ymax'</span>).text = str(boxes[i][<span class="number">3</span>])</span><br><span class="line">    tree.write(newXmlPath, encoding=<span class="string">'utf8'</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Image-Generating"><a href="#Image-Generating" class="headerlink" title="Image Generating"></a>Image Generating</h2><p>양질의 데이터가 많을수록 모델의 성능은 좋아지지만, 너무 많은 데이터는 직접 라벨링을 하기가 힘들기 때문에 라벨링을 완료한 5천장의 이미지를 이용하여 추가 이미지를 생성하였습니다. 이미지를 생성하는 다양한 방법들이 있지만, <code>rotation</code>의 경우 Bounding Box의 표기법의 한계로 인해 오차가 커지기 때문에, <code>horizontal flip</code>을 이용한 방법으로 이미지를 1만장으로 늘렸습니다.</p>
+<figure class="highlight python"><figcaption><span>horizontal flip</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomHorizontalFlip</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, p=<span class="number">0.5</span>)</span>:</span></span><br><span class="line">        self.p = p</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, img, bboxes)</span>:</span></span><br><span class="line">        img_center = np.array(img.shape[:<span class="number">2</span>])[::<span class="number">-1</span>]/<span class="number">2</span></span><br><span class="line">        img_center = img_center.astype(int)</span><br><span class="line">        img_center = np.hstack((img_center, img_center))</span><br><span class="line">        <span class="keyword">if</span> random.random() &lt; self.p:</span><br><span class="line">            img = img[:, ::<span class="number">-1</span>, :]</span><br><span class="line">            bboxes[:, [<span class="number">0</span>, <span class="number">2</span>]] += <span class="number">2</span>*(img_center[[<span class="number">0</span>, <span class="number">2</span>]] - bboxes[:, [<span class="number">0</span>, <span class="number">2</span>]])</span><br><span class="line">            box_w = abs(bboxes[:, <span class="number">0</span>] - bboxes[:, <span class="number">2</span>])</span><br><span class="line">            bboxes[:, <span class="number">0</span>] -= box_w</span><br><span class="line">            bboxes[:, <span class="number">2</span>] += box_w</span><br><span class="line">        <span class="keyword">return</span> img, bboxes</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>image와 함께 label도 generating 하고있다.</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> imgFile <span class="keyword">in</span> imgFiles:</span><br><span class="line">    fileName = imgFile.split(<span class="string">'.'</span>)[<span class="number">0</span>]</span><br><span class="line">    label = <span class="string">f'<span class="subst">&#123;labelPath&#125;</span><span class="subst">&#123;fileName&#125;</span>.xml'</span></span><br><span class="line">    w, h = getSizeFromXML(label)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># opencv loads images in bgr. the [:,:,::-1] does bgr -&gt; rgb</span></span><br><span class="line">    image = cv2.imread(imgPath + imgFile)[:,:,::<span class="number">-1</span>]</span><br><span class="line">    bboxes = getRectFromXML(classes, label)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># HorizontalFlip image</span></span><br><span class="line">    image, bboxes = RandomHorizontalFlip(<span class="number">1</span>)(image.copy(), bboxes.copy())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save image</span></span><br><span class="line">    image = Image.fromarray(image, <span class="string">'RGB'</span>)</span><br><span class="line">    newImgPath = <span class="string">f'./data/light/image/train/<span class="subst">&#123;className&#125;</span>/'</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(newImgPath):</span><br><span class="line">        os.makedirs(newImgPath)</span><br><span class="line">    image.save(newImgPath + imgFile)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save label</span></span><br><span class="line">    newXmlPath = <span class="string">f'./data/light/label/train/<span class="subst">&#123;className&#125;</span>/'</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(newXmlPath):</span><br><span class="line">        os.makedirs(newXmlPath)</span><br><span class="line">    newXmlPath = newXmlPath + fileName + <span class="string">'.xml'</span></span><br><span class="line">    changeLabel(label, newXmlPath, newImgPath, bboxes)</span><br></pre></td></tr></table></figure>
+
+<p>이렇게 라벨링된 이미지 준비를 끝마쳤습니다. 다음으로 데이터를 이용하여 YOLO 모델을 학습시키는 방법에 대해 설명하도록 하겠습니다.</p>
+<hr>
+<h1 id="YOLO-Training"><a href="#YOLO-Training" class="headerlink" title="# YOLO Training"></a># YOLO Training</h1><p><a href="https://github.com/qqwweee/keras-yolo3" target="_blank" rel="external nofollow noopener noreferrer">Keras-yolo3</a> 라이브러리를 이용하여 YOLO 모델을 학습시켰습니다.</p>
+<p>✔︎ 진행순서</p>
+<ul>
+<li>Convert Darknet Model To Keras Model</li>
+<li>Convert Annotation</li>
+<li>Training</li>
+</ul>
+<hr>
+<h2 id="Convert-Darknet-Model-To-Keras-Model"><a href="#Convert-Darknet-Model-To-Keras-Model" class="headerlink" title="Convert Darknet Model To Keras Model"></a>Convert Darknet Model To Keras Model</h2><p>YOLO v3 모델의 경우 모바일 기기에 올리기에는 너무 무거움으로 경량화 버전인 Tiny YOLO v3 모델을 이용하였고, 기존에 학습된 weight를 그대로 사용할 수 있는 전이학습(transfer learning)을 이용하여 학습을 진행하였습니다.</p>
+<figure class="highlight shell"><figcaption><span>tiny yolov3 pretrained weights 다운로드</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://pjreddie.com/media/files/yolov3-tiny.weights</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어를 실행하면 <code>yolov3-tiny.weights</code>라는 35.4MB의 weights를 다운받을 수 있습니다. YOLO3 자체는 C/C++로 구현된 DarkNet 프레임워크로 구현되어 있습니다. 이를 Keras에서 사용할 수 있는 <code>.h5</code> 포멧으로 변환해야합니다. 변환 방법은 <a href="https://github.com/qqwweee/keras-yolo3" target="_blank" rel="external nofollow noopener noreferrer">Keras-yolo3</a>의 <code>convert.py</code> 파일을 이용합니다.</p>
+<figure class="highlight python"><figcaption><span>Convert darknet model to keras model</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python convert.py yolov3-tiny.cfg yolov3-tiny.weights model_data/yolo_tiny.h5</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>✔︎ Convert darknet model to keras model</p>
+</blockquote>
+<ul>
+<li>convert.py : 변환명령 수행 파일</li>
+<li>yolov3.cfg : Darknet에서 사용하는 모델 구조 정의 파일</li>
+<li>yolov3.weight : Darknet으로 학습된 모델 파일</li>
+</ul>
+<p>완료가 되면 <code>.h5</code>형태로 weights 파일이 변환됩니다. 다음으로 변환된 모델이 잘 작동하는지 테스트를 위해 아래 샘플 이미지를 이용해보도록 하겠습니다.</p>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70893892-5338bb00-202f-11ea-8c72-e7d48f83f2a9.png" target="_blank" rel="external nofollow noopener noreferrer" title="sample image : dog.jpg<br>출처 : <a href=https://github.com/pjreddie/darknet>darknet</a>" data-caption="sample image : dog.jpg<br>출처 : <a href=https://github.com/pjreddie/darknet>darknet</a>" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70893892-5338bb00-202f-11ea-8c72-e7d48f83f2a9.png" style="width:500px;" alt="sample image : dog.jpg<br>출처 : <a href=https://github.com/pjreddie/darknet>darknet</a>"></a><span class="caption">sample image : dog.jpg<br>출처 : <a href="https://github.com/pjreddie/darknet" rel="external nofollow noopener noreferrer" target="_blank">darknet</a></span></div>
+
+<figure class="highlight python"><figcaption><span>tiny YOLO v3 converted model test</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> yolo <span class="keyword">import</span> YOLO</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">objectDetection</span><span class="params">(file, model_path, class_path)</span>:</span></span><br><span class="line">    yolo = YOLO(model_path=model_path, classes_path=class_path, anchors_path=<span class="string">"model_data/tiny_yolo_anchors.txt"</span>)</span><br><span class="line">    image = Image.open(file)</span><br><span class="line">    result_image = yolo.detect_image(image)</span><br><span class="line">    display(result_image)</span><br><span class="line"></span><br><span class="line">objectDetection(<span class="string">'dog.jpg'</span>, <span class="string">'model_data/yolo_tiny.h5'</span>, <span class="string">'model_data/coco_classes.txt'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>YOLO 모델이 적절한 bounding box와 confidence 그리고 class를 반환하는 것을 보니 변환에 성공한 것 같습니다.</p>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70894441-5aac9400-2030-11ea-8f65-adeb4dd2f779.png" target="_blank" rel="external nofollow noopener noreferrer" title="자전거, 개, 자동차를 탐지한 YOLO model<br>출처 : <a href=https://github.com/pjreddie/darknet>darknet</a>" data-caption="자전거, 개, 자동차를 탐지한 YOLO model<br>출처 : <a href=https://github.com/pjreddie/darknet>darknet</a>" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70894441-5aac9400-2030-11ea-8f65-adeb4dd2f779.png" style="width:500px;" alt="자전거, 개, 자동차를 탐지한 YOLO model<br>출처 : <a href=https://github.com/pjreddie/darknet>darknet</a>"></a><span class="caption">자전거, 개, 자동차를 탐지한 YOLO model<br>출처 : <a href="https://github.com/pjreddie/darknet" rel="external nofollow noopener noreferrer" target="_blank">darknet</a></span></div>
+
+<hr>
+<h2 id="Convert-Annotation"><a href="#Convert-Annotation" class="headerlink" title="Convert Annotation"></a>Convert Annotation</h2><p><a href="https://github.com/qqwweee/keras-yolo3" target="_blank" rel="external nofollow noopener noreferrer">Keras-yolo3</a>에서 데이터를 학습하기 위해선 위에서 labeling한 데이터를 아래와 같은 형태로 변환해야합니다. <code>voc_annotation.py</code> 파일을 참고하여 아래와 같은 형태로 변환하시면 됩니다.</p>
+<blockquote>
+<p>✔︎ Annotation Format</p>
+</blockquote>
+<ul>
+<li>Row format: image_file_path box1 box2 … boxN</li>
+<li>Box format: x_min,y_min,x_max,y_max,class_id (no space)</li>
+</ul>
+<figure class="highlight python"><figcaption><span>Annotation example</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path/to/img1.jpg <span class="number">50</span>,<span class="number">100</span>,<span class="number">150</span>,<span class="number">200</span>,<span class="number">0</span> <span class="number">30</span>,<span class="number">50</span>,<span class="number">200</span>,<span class="number">120</span>,<span class="number">3</span></span><br><span class="line">path/to/img2.jpg <span class="number">120</span>,<span class="number">300</span>,<span class="number">250</span>,<span class="number">600</span>,<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>Convert annotation</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> getcwd</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_annotation</span><span class="params">(annotation_voc, train_all_file)</span>:</span></span><br><span class="line">    tree = ET.parse(annotation_voc)</span><br><span class="line">    root = tree.getroot()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> obj <span class="keyword">in</span> root.iter(<span class="string">'object'</span>):</span><br><span class="line">        difficult = obj.find(<span class="string">'difficult'</span>).text</span><br><span class="line">        cls = obj.find(<span class="string">'name'</span>).text</span><br><span class="line">        <span class="keyword">if</span> cls <span class="keyword">not</span> <span class="keyword">in</span> classes <span class="keyword">or</span> int(difficult)==<span class="number">1</span>: <span class="keyword">continue</span></span><br><span class="line">        cls_id = classes.index(cls)</span><br><span class="line">        xmlbox = obj.find(<span class="string">'bndbox'</span>)</span><br><span class="line">        b = (int(xmlbox.find(<span class="string">'xmin'</span>).text), int(xmlbox.find(<span class="string">'ymin'</span>).text), int(xmlbox.find(<span class="string">'xmax'</span>).text), int(xmlbox.find(<span class="string">'ymax'</span>).text))</span><br><span class="line">        train_all_file.write(<span class="string">" "</span> + <span class="string">","</span>.join([str(a) <span class="keyword">for</span> a <span class="keyword">in</span> b]) + <span class="string">','</span> + str(cls_id))</span><br><span class="line"></span><br><span class="line">train_all_file = open(<span class="string">'./data/light/train_all.txt'</span>, <span class="string">'w'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get annotations_voc list</span></span><br><span class="line"><span class="keyword">for</span> className <span class="keyword">in</span> classes:</span><br><span class="line">    annotations_voc = glob.glob(<span class="string">f'./data/light/label/train/<span class="subst">&#123;className&#125;</span>/*.xml'</span>)</span><br><span class="line">    <span class="keyword">for</span> annotation_voc <span class="keyword">in</span> annotations_voc:</span><br><span class="line">        image_id = annotation_voc.split(<span class="string">'/'</span>)[<span class="number">-1</span>].split(<span class="string">'.'</span>)[<span class="number">0</span>]+<span class="string">'.JPG'</span></span><br><span class="line">        train_all_file.write(<span class="string">f'./data/light/image/train/<span class="subst">&#123;className&#125;</span>/<span class="subst">&#123;image_id&#125;</span>'</span>)</span><br><span class="line">        convert_annotation(annotation_voc, train_all_file)</span><br><span class="line">        train_all_file.write(<span class="string">'\n'</span>)</span><br><span class="line">train_all_file.close()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>필자의 annotation 변환 결과</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./data/light/image/train/bulb_on/<span class="number">162.J</span>PG <span class="number">70</span>,<span class="number">0</span>,<span class="number">124</span>,<span class="number">52</span>,<span class="number">0</span></span><br><span class="line">./data/light/image/train/bulb_on/<span class="number">1390.J</span>PG <span class="number">70</span>,<span class="number">61</span>,<span class="number">117</span>,<span class="number">100</span>,<span class="number">0</span></span><br><span class="line">./data/light/image/train/bulb_on/<span class="number">604.J</span>PG <span class="number">78</span>,<span class="number">38</span>,<span class="number">93</span>,<span class="number">52</span>,<span class="number">0</span></span><br><span class="line">./data/light/image/train/bulb_on/<span class="number">88.J</span>PG <span class="number">72</span>,<span class="number">28</span>,<span class="number">139</span>,<span class="number">93</span>,<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Transfer-Learning"><a href="#Transfer-Learning" class="headerlink" title="Transfer Learning"></a>Transfer Learning</h2><p>마지막으로 학습은 <code>train.py</code> 파일의 <code>_main()</code> 함수에 다음과 같은 변수가 있는데 이를 수정하여 실행하면 됩니다.</p>
+<figure class="highlight python"><figcaption><span>train.py의 _main()</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_main</span><span class="params">()</span>:</span></span><br><span class="line">  annotation_path = <span class="string">'data/light/train_all.txt'</span> <span class="comment"># 위 Convert Annotation의 결과 파일경로</span></span><br><span class="line">  log_dir = <span class="string">'logs/000/'</span> <span class="comment"># 학습 로그 저장경로</span></span><br><span class="line">  classes_path = <span class="string">'data/light/classes.txt'</span> <span class="comment"># 학습하는 클래스 목록</span></span><br><span class="line">  anchors_path = <span class="string">'model_data/yolo_tiny_anchors.txt'</span> <span class="comment"># tiny YOLO 모델의 anchors</span></span><br><span class="line">  transfer_learning_path = <span class="string">'model_data/yolo_tiny.h5'</span> <span class="comment"># Convert Darknet Model To Keras Model 결과 h5파일</span></span><br><span class="line">  <span class="comment"># ... 이하 생략</span></span><br></pre></td></tr></table></figure>
+
+<p>위와같이 수정을 한 뒤 실행을 하면 기존 pretraining 된 tiny YOLO weights를 로드한 뒤, 전이학습(Transfer Learning)을 시작합니다. 총 100epoch을 batch size 32로 진행하는데, 50에폭까지는 전체 44개의 Layer 중 42개를 Freeze 한 뒤 학습이 진행되고, 이후에는 모든 레이어를 Unfreeze한 뒤 학습이 진행됩니다.</p>
+<p>하지만 Keras의 <a href="https://keras.io/callbacks/#earlystopping" target="_blank" rel="external nofollow noopener noreferrer">EarlyStop</a>이 다음과 같은 조건으로 적용되어있어 전체 100epoch을 진행하기 전에 학습이 끝나기도 합니다.</p>
+<figure class="highlight python"><figcaption><span>EarlyStopping</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EarlyStopping(monitor=<span class="string">'val_loss'</span>, min_delta=<span class="number">0</span>, patience=<span class="number">10</span>, verbose=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>또한 최적의 모델을 선택하기 위해 <a href="https://keras.io/callbacks/#modelcheckpoint" target="_blank" rel="external nofollow noopener noreferrer">ModelCheckpoint</a> 함수가 validation error 를 모니터링하면서, 이전 epoch 에 비해 validation performance 가 좋은 경우, 무조건 이 때의 parameter들을 중간중간 저장되고 있어서 학습이 도중에 멈추더라도 중간 결과물을 보존할 수 있습니다.</p>
+<p>모든 학습이 완료되었으니 모델을 테스트하도록 하겠습니다.</p>
+<figure class="highlight python"><figcaption><span>Trained Model Test</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> yolo <span class="keyword">import</span> YOLO</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">objectDetection</span><span class="params">(file, model_path, class_path)</span>:</span></span><br><span class="line">    yolo = YOLO(model_path=model_path, classes_path=class_path, anchors_path=<span class="string">'model_data/yolo_tiny_anchors.txt'</span>)</span><br><span class="line">    image = Image.open(file)</span><br><span class="line">    result_image = yolo.detect_image(image)</span><br><span class="line">    display(result_image)</span><br><span class="line"></span><br><span class="line">objectDetection(<span class="string">'data/light/test/562.jpg'</span>, <span class="string">'model_data/light_tiny_model.h5'</span>, <span class="string">'data/light/classes.txt'</span>)</span><br></pre></td></tr></table></figure>
+
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/70910091-509b8d00-2052-11ea-8305-d4e810eebcad.png" target="_blank" rel="external nofollow noopener noreferrer" title="전이학습이 완료된 tiny YOLO v3 output" data-caption="전이학습이 완료된 tiny YOLO v3 output" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/70910091-509b8d00-2052-11ea-8305-d4e810eebcad.png" alt="전이학습이 완료된 tiny YOLO v3 output"></a><span class="caption">전이학습이 완료된 tiny YOLO v3 output</span></div>
+
+<p>이미지에 담긴 조명의 정확한 Bounding Box와 신뢰도 그리고 종류를 잘 탐지하고 있습니다. 테스트까지 완료된 모델을 파일로 저장하기 위해 <a href="https://github.com/qqwweee/keras-yolo3" target="_blank" rel="external nofollow noopener noreferrer">Keras-yolo3</a>의 <code>yolo.py</code> 파일에 학습된 모델을 반환하는 함수를 추가하였습니다.</p>
+<figure class="highlight python"><figcaption><span>yolo.py 파일에 학습된 모델을 반환하는 함수를 추가</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_model</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.yolo_model</span><br></pre></td></tr></table></figure>
+
+<p>그리고 모델의 save함수를 이용하여 학습이 완료된 모델을 저장하였습니다.</p>
+<figure class="highlight python"><figcaption><span>save keras h5 model</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model = yolo.get_model()</span><br><span class="line">model.save(<span class="string">'model_data/light_tiny_model.h5'</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="마무리"><a href="#마무리" class="headerlink" title="# 마무리"></a># 마무리</h1><p>다음 4부에서는 학습한 YOLO Model을 iOS 어플리케이션에 올리는 방법에 대해 설명하도록 하겠습니다.</p>
+<blockquote>
+<p>목차</p>
+</blockquote>
+<ul>
+<li><a href="/2019/12/25/pj-too-real-01/">1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
+<li><a href="/2019/12/24/pj-too-real-02/">2부. 현실감 있는 iOS AR앱 만들기</a></li>
+<li>✔︎ 3부. Custom YOLO 모델 만들기</li>
+<li><a href="/2019/12/22/pj-too-real-04/">4부. iOS에 YOLO 모델 탑재하기</a></li>
+</ul>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Too-Real/" rel="tag">Too Real</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/24/pj-too-real-02/" data-tooltip="2부. 현실감 있는 iOS AR앱 만들기" aria-label="PREVIOUS: 2부. 현실감 있는 iOS AR앱 만들기">
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/22/pj-too-real-04/" data-tooltip="4부. iOS에 YOLO 모델 탑재하기" aria-label="NEXT: 4부. iOS에 YOLO 모델 탑재하기">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/24/pj-too-real-02/" data-tooltip="2부. 현실감 있는 iOS AR앱 만들기" aria-label="PREVIOUS: 2부. 현실감 있는 iOS AR앱 만들기">
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/22/pj-too-real-04/" data-tooltip="4부. iOS에 YOLO 모델 탑재하기" aria-label="NEXT: 4부. iOS에 YOLO 모델 탑재하기">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-quhive0fec3plbbl2ntrdzl2q5iyualplkihfzeqchycvwgnilevsyh5qual.min.js"></script>
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
