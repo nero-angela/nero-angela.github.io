@@ -3292,3 +3292,27 @@ figure.highlight,
 
 }
 */
+.nero-test {
+  background-color: red; }
+
+.nero-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around; }
+
+.nero-grid > div {
+  max-width: 250px;
+  margin-bottom: 16px; }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .nero-grid > div {
+    max-width: none;
+    width: 100%; } }
+
+summary::-webkit-details-marker {
+  color: #5d686f; }
+
+summary:focus {
+  outline-style: none; }
