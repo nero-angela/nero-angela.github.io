@@ -10,7 +10,7 @@
     <meta name="author" content="Nero">
     <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
     <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
-    <link rel="canonical" href="https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/pj-too-real-03/">
     
     
         <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
@@ -18,12 +18,12 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.\n\n목차\n\n\n1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. 현실감 있는 iOS AR앱 만들기\n✔︎ 3부. Custom YOLO 모델 만들기\n4부. iOS에 YOLO 모델 탑재하기\n\n\n# What is the YOLO?시작하기에 앞서 YOLO에 대한 간단한 설명과 어떻게 Training 방법에 대해 알아보도록 하겠습니다.\n\n✔︎ 진행 순서\n\n\nYOLO Architecture &amp; Output\nObject Detection Data 준비\nTransfer Learning\n\n\n본 포스팅은 YOLO 모델 활용에 대한 글이므로, YOLO에 대한 자세한 설명은 다른 글을 참고하시기 바랍니다.\n\n영문 : Closer Look at YOLOv3\n한글 : [분석] YOLO\n\n\n\nYOLO ArchitectureYOLO (You Only Look Once)는 학습한 물체의 종류와 위치를 실시간으로 파악 할 수 있는 Real-Time Object Detection 모델로 다음과 같은 아키텍쳐로 구성되어 있습니다.\nYOLO output출처 - https://www.cyberailab.com\n\n다음으로 YOLO 모델을 학습을 위한 데이터 준비 방법을 알아보도록 하겠습니다.\n\n# 학습 데이터 준비Object Detection 모델을 만들기 위해서는 오브젝트가 담긴 이미지와 이미지 상의 오브젝트의 위치와 종류를 나타내는 라벨이 필요합니다. 이번 프로젝트에서는 다음과 같은 순서로 데이터를 준비하였습니다.\n\n✔︎ 데이터 준비 순서\n\n\nImage Gathering\nImage Labeling\nImage Resizing\nImage Generating\n\n\nImage Gathering이번 프로젝트에서는 램프, 전구, 형광등 총 3개의 물체를 학습하였고 이를 위해 다음과 같은 이미지를 수집하였습니다. 램프와 전구의 경우 ON/OFF 상태를 구분할 수 있도록 다른 클래스로 분리하였기 때문에 총 클래스 수는 5개입니다.\nsample image : dog.jpg출처 : darknet\n\ntiny YOLO v3 converted model test1234567891011from IPython.display import displayfrom PIL import Imagefrom yolo import YOLOdef objectDetection(file, model_path, class_path):    yolo = YOLO(model_path=model_path, classes_path=class_path, anchors_path=\"model_data/tiny_yolo_anchors.txt\")    image = Image.open(file)    result_image = yolo.detect_image(image)    display(result_image)objectDetection('dog.jpg', 'model_data/yolo_tiny.h5', 'model_data/coco_classes.txt')\n\nYOLO 모델이 적절한 bounding box와 confidence 그리고 class를 반환하는 것을 보니 변환에 성공한 것 같습니다.\n전이학습이 완료된 tiny YOLO v3 output\n\n이미지에 담긴 조명의 정확한 Bounding Box와 신뢰도 그리고 종류를 잘 탐지하고 있습니다. 테스트까지 완료된 모델을 파일로 저장하기 위해 Keras-yolo3의 yolo.py 파일에 학습된 모델을 반환하는 함수를 추가하였습니다.\nyolo.py 파일에 학습된 모델을 반환하는 함수를 추가12def get_model(self):    return self.yolo_model\n\n그리고 모델의 save함수를 이용하여 학습이 완료된 모델을 저장하였습니다.\nsave keras h5 model12model = yolo.get_model()model.save('model_data/light_tiny_model.h5')\n\n\n# 마무리다음 4부에서는 학습한 YOLO Model을 iOS 어플리케이션에 올리는 방법에 대해 설명하도록 하겠습니다.\n\n목차\n\n\n1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. 현실감 있는 iOS AR앱 만들기\n✔︎ 3부. Custom YOLO 모델 만들기\n4부. iOS에 YOLO 모델 탑재하기\n\n","dateCreated":"2019-12-23T16:44:28+09:00","dateModified":"2019-12-25T22:20:34+09:00","datePublished":"2019-12-23T16:44:28+09:00","description":"실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.","headline":"3부. Custom YOLO 모델 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/","keywords":"Too Real"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.\n\n목차\n\n\n1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. 현실감 있는 iOS AR앱 만들기\n✔︎ 3부. Custom YOLO 모델 만들기\n4부. iOS에 YOLO 모델 탑재하기\n\n\n# What is the YOLO?시작하기에 앞서 YOLO에 대한 간단한 설명과 어떻게 Training 방법에 대해 알아보도록 하겠습니다.\n\n✔︎ 진행 순서\n\n\nYOLO Architecture &amp; Output\nObject Detection Data 준비\nTransfer Learning\n\n\n본 포스팅은 YOLO 모델 활용에 대한 글이므로, YOLO에 대한 자세한 설명은 다른 글을 참고하시기 바랍니다.\n\n영문 : Closer Look at YOLOv3\n한글 : [분석] YOLO\n\n\n\nYOLO ArchitectureYOLO (You Only Look Once)는 학습한 물체의 종류와 위치를 실시간으로 파악 할 수 있는 Real-Time Object Detection 모델로 다음과 같은 아키텍쳐로 구성되어 있습니다.\nYOLO output출처 - https://www.cyberailab.com\n\n다음으로 YOLO 모델을 학습을 위한 데이터 준비 방법을 알아보도록 하겠습니다.\n\n# 학습 데이터 준비Object Detection 모델을 만들기 위해서는 오브젝트가 담긴 이미지와 이미지 상의 오브젝트의 위치와 종류를 나타내는 라벨이 필요합니다. 이번 프로젝트에서는 다음과 같은 순서로 데이터를 준비하였습니다.\n\n✔︎ 데이터 준비 순서\n\n\nImage Gathering\nImage Labeling\nImage Resizing\nImage Generating\n\n\nImage Gathering이번 프로젝트에서는 램프, 전구, 형광등 총 3개의 물체를 학습하였고 이를 위해 다음과 같은 이미지를 수집하였습니다. 램프와 전구의 경우 ON/OFF 상태를 구분할 수 있도록 다른 클래스로 분리하였기 때문에 총 클래스 수는 5개입니다.\nsample image : dog.jpg출처 : darknet\n\ntiny YOLO v3 converted model test1234567891011from IPython.display import displayfrom PIL import Imagefrom yolo import YOLOdef objectDetection(file, model_path, class_path):    yolo = YOLO(model_path=model_path, classes_path=class_path, anchors_path=\"model_data/tiny_yolo_anchors.txt\")    image = Image.open(file)    result_image = yolo.detect_image(image)    display(result_image)objectDetection('dog.jpg', 'model_data/yolo_tiny.h5', 'model_data/coco_classes.txt')\n\nYOLO 모델이 적절한 bounding box와 confidence 그리고 class를 반환하는 것을 보니 변환에 성공한 것 같습니다.\n전이학습이 완료된 tiny YOLO v3 output\n\n이미지에 담긴 조명의 정확한 Bounding Box와 신뢰도 그리고 종류를 잘 탐지하고 있습니다. 테스트까지 완료된 모델을 파일로 저장하기 위해 Keras-yolo3의 yolo.py 파일에 학습된 모델을 반환하는 함수를 추가하였습니다.\nyolo.py 파일에 학습된 모델을 반환하는 함수를 추가12def get_model(self):    return self.yolo_model\n\n그리고 모델의 save함수를 이용하여 학습이 완료된 모델을 저장하였습니다.\nsave keras h5 model12model = yolo.get_model()model.save('model_data/light_tiny_model.h5')\n\n\n# 마무리다음 4부에서는 학습한 YOLO Model을 iOS 어플리케이션에 올리는 방법에 대해 설명하도록 하겠습니다.\n\n목차\n\n\n1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기\n2부. 현실감 있는 iOS AR앱 만들기\n✔︎ 3부. Custom YOLO 모델 만들기\n4부. iOS에 YOLO 모델 탑재하기\n\n","dateCreated":"2019-12-23T16:44:28+09:00","dateModified":"2020-01-02T22:07:17+09:00","datePublished":"2019-12-23T16:44:28+09:00","description":"실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.","headline":"3부. Custom YOLO 모델 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pj-too-real-03/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pj-too-real-03/","keywords":"Too Real"}</script>
     <meta name="description" content="실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.">
 <meta name="keywords" content="Too Real">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="3부. Custom YOLO 모델 만들기">
-<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;2019&#x2F;12&#x2F;23&#x2F;pj-too-real-03&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;pj-too-real-03&#x2F;index.html">
 <meta property="og:site_name" content="🐈 Nero&#39;s Blog">
 <meta property="og:description" content="실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.">
 <meta property="og:locale" content="en">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70893892-5338bb00-202f-11ea-8c72-e7d48f83f2a9.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70894441-5aac9400-2030-11ea-8f65-adeb4dd2f779.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70910091-509b8d00-2052-11ea-8305-d4e810eebcad.png">
-<meta property="og:updated_time" content="2019-12-25T13:20:34.752Z">
+<meta property="og:updated_time" content="2020-01-02T13:07:17.270Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;70716343-8e857200-1d2f-11ea-8e60-9c75f24ca9ce.png">
     
@@ -47,7 +47,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-fq6e8dbhpcucd5bp3ouo36889dmivfr7rmzsgwwvgqxgsvgoixgzxlavtvbi.min.css">
+    <link rel="stylesheet" href="/assets/css/style-oocw4d24jiuc5d192niyloow46wvci168mporba61wovpiqv4ei7ypwigbu3.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
@@ -258,10 +258,10 @@
 <p>목차</p>
 </blockquote>
 <ul>
-<li><a href="/2019/12/25/pj-too-real-01/">1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
-<li><a href="/2019/12/24/pj-too-real-02/">2부. 현실감 있는 iOS AR앱 만들기</a></li>
+<li><a href="/post/pj-too-real-01/">1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
+<li><a href="/post/pj-too-real-02/">2부. 현실감 있는 iOS AR앱 만들기</a></li>
 <li>✔︎ 3부. Custom YOLO 모델 만들기</li>
-<li><a href="/2019/12/22/pj-too-real-04/">4부. iOS에 YOLO 모델 탑재하기</a></li>
+<li><a href="/post/pj-too-real-04/">4부. iOS에 YOLO 모델 탑재하기</a></li>
 </ul>
 <hr>
 <h1 id="What-is-the-YOLO"><a href="#What-is-the-YOLO" class="headerlink" title="# What is the YOLO?"></a># What is the YOLO?</h1><p>시작하기에 앞서 YOLO에 대한 간단한 설명과 어떻게 Training 방법에 대해 알아보도록 하겠습니다.</p>
@@ -406,10 +406,10 @@
 <p>목차</p>
 </blockquote>
 <ul>
-<li><a href="/2019/12/25/pj-too-real-01/">1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
-<li><a href="/2019/12/24/pj-too-real-02/">2부. 현실감 있는 iOS AR앱 만들기</a></li>
+<li><a href="/post/pj-too-real-01/">1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</a></li>
+<li><a href="/post/pj-too-real-02/">2부. 현실감 있는 iOS AR앱 만들기</a></li>
 <li>✔︎ 3부. Custom YOLO 모델 만들기</li>
-<li><a href="/2019/12/22/pj-too-real-04/">4부. iOS에 YOLO 모델 탑재하기</a></li>
+<li><a href="/post/pj-too-real-04/">4부. iOS에 YOLO 모델 탑재하기</a></li>
 </ul>
 
             
@@ -433,7 +433,7 @@
             <li class="post-action">
                 
                     
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/24/pj-too-real-02/" data-tooltip="2부. 현실감 있는 iOS AR앱 만들기" aria-label="PREVIOUS: 2부. 현실감 있는 iOS AR앱 만들기">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-too-real-02/" data-tooltip="2부. 현실감 있는 iOS AR앱 만들기" aria-label="PREVIOUS: 2부. 현실감 있는 iOS AR앱 만들기">
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -442,7 +442,7 @@
             <li class="post-action">
                 
                     
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/22/pj-too-real-04/" data-tooltip="4부. iOS에 YOLO 모델 탑재하기" aria-label="NEXT: 4부. iOS에 YOLO 모델 탑재하기">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-too-real-04/" data-tooltip="4부. iOS에 YOLO 모델 탑재하기" aria-label="NEXT: 4부. iOS에 YOLO 모델 탑재하기">
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -460,7 +460,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-too-real-03/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -468,7 +468,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-too-real-03/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
             </li>
@@ -513,7 +513,7 @@
             <li class="post-action">
                 
                     
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/24/pj-too-real-02/" data-tooltip="2부. 현실감 있는 iOS AR앱 만들기" aria-label="PREVIOUS: 2부. 현실감 있는 iOS AR앱 만들기">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-too-real-02/" data-tooltip="2부. 현실감 있는 iOS AR앱 만들기" aria-label="PREVIOUS: 2부. 현실감 있는 iOS AR앱 만들기">
                     
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -522,7 +522,7 @@
             <li class="post-action">
                 
                     
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/22/pj-too-real-04/" data-tooltip="4부. iOS에 YOLO 모델 탑재하기" aria-label="NEXT: 4부. iOS에 YOLO 모델 탑재하기">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-too-real-04/" data-tooltip="4부. iOS에 YOLO 모델 탑재하기" aria-label="NEXT: 4부. iOS에 YOLO 모델 탑재하기">
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -540,7 +540,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-too-real-03/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -548,7 +548,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-too-real-03/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
             </li>
@@ -576,7 +576,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-too-real-03/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
                     </a>
                 </li>
@@ -584,7 +584,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/2019/12/23/pj-too-real-03/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-too-real-03/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
                     </a>
                 </li>
@@ -637,7 +637,7 @@
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
-<script src="/assets/js/script-oicwfueddqxz2bptn48uzzt5ecrfv6lpnvzs1ikz7sk6dl2vvdqldhri4jfv.min.js"></script>
+<script src="/assets/js/script-eh9l8zwpx33oejqrmuykemaorqsakuncsa3yhevhtcck4mkczp8rbfxudvnq.min.js"></script>
 <!--SCRIPTS END-->
 
 
