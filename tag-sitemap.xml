@@ -3,22 +3,22 @@
 
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
-        <lastmod>2020-01-03T07:14:12.578Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nero.devstory.co.kr/tags/itertools/</loc>
-        <lastmod>2019-12-07T10:37:20.545Z</lastmod>
+        <lastmod>2020-01-03T07:35:22.258Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://nero.devstory.co.kr/tags/python/</loc>
-        <lastmod>2019-12-07T10:37:20.545Z</lastmod>
+        <lastmod>2020-01-03T07:35:22.258Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
+        <lastmod>2020-01-03T07:14:12.578Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
