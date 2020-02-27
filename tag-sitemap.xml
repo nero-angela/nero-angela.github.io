@@ -3,6 +3,20 @@
 
 
     <url>
+        <loc>https://nero.devstory.co.kr/tags/Devblog-Classifier/</loc>
+        <lastmod>2020-02-27T15:06:14.945Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
+        <lastmod>2020-02-18T12:40:09.714Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/tags/itertools/</loc>
         <lastmod>2020-01-03T07:35:22.258Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -12,13 +26,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/tags/python/</loc>
         <lastmod>2020-01-03T07:35:22.258Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
-        <lastmod>2020-01-03T07:14:12.578Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

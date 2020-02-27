@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>딥러닝으로 문서 분류기 만들기 - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/pj-devblog-classifier/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela"],"image":"profile.jpeg"},"articleBody":"Daily Devblog 서비스를 위한 개발 문서 분류기를 개발한 이야기를 공유합니다.\n# 프로젝트 소개필자는 IT 블로그의 글을 모아서 매일 오전 10시에 이메일로 발송해주는 Daily Devblog라는 좋은 서비스를 구독하고 있습니다. 발송되는 글들은 Awesome Devblog에서 제공받는데, 가끔씩 IT와 관련 없는 글이 등장하기도 합니다. 큰 문제는 아니지만 서비스를 애용하는 구독자로서, 약간의 도움이라도 되었으면 하는 바람으로 딥러닝을 이용하여 간단한 문서 분류기를 만들어보았습니다. 🎉\n\n개발에 사용된 코드 및 데이터는 아래 링크에서 확인하실 수 있습니다.\n\nGithub\n전처리 및 라벨링 된 데이터\n\n\n\n# 개발 과정전체 개발 순서는 데이터 수집 및 전처리, 단어 임베딩 모델 개발 그리고 문서 분류모델 개발 순으로 진행하였습니다.\n\nData Crawling &amp; Labeling데이터는 Awesome Devblog에서 제공해주는 데이터를 이용하였습니다.\ndata sample12345678910111213&#123;   _id        : &quot;5e566644e0ffb12d4cae83ba&quot;,  title      : &quot;[영화 소감] 1917. 때론 영웅은 옆으로 달린다.&quot;,  link       : &quot;http://blog.hwang.gg/20200226/&quot;,  date       : &quot;2020-02-26T11:45:20.000Z&quot;,  description: &quot;한국 사회에서 조직 문화 개선을 위해서 우리는 목숨을 내던지고 옆으로 달려야 하는가?&quot;,  author     : &quot;황건구&quot;,  imgUrl     : &quot;http://blog.hwang.gg/favicon.png&quot;,  tags       : [ ],  count      : 0,  postImage  : &quot;&quot;,  _class     : &quot;com.sarojaba.awesomedevblog.feed.Feed&quot; &#125;\n2020년 2월 초 기준으로 전체 34,620개의 글이 존재하였고, 이 중 10,382개의 글을 직접 라벨링하였습니다. 라벨링 작업이 가장 힘들었습니다.. 전체 데이터의 1/3 밖에 라벨링을 못했지만 일단 결과를 보고 싶어 다음 과정을 진행하였습니다.\n라벨링 기준1234     분류           라벨      개수개발과 관련 있는 글     1     24,238개개발과 관련 없는 글     0      2,748개아직 라벨링 안된 글    -1      7,634개\n\n라벨링을 완료한 1만개 데이터 중 개발과 관련있는 글과 관련없는 글의 비율은 약 3:1로 개발과 관련있는 글이 더 많았습니다.\n대표 문장 길이에 대한 Log-Histogram\n\nAwesome Devblog에서 제공하는 데이터 중 link을 이용하면 본문 html을 받아올 수 있지만, 오래되어 존재하지 link도 상당히 많아 이번에는 간단히 title, tags, description만을 다음과 같이 전처리하여 이용하였습니다.\n전처리 과정123456789배열로 이루어진 tags를 띄어쓰기를 기준으로 join영어, 한글, 공백만 남김html tag 삭제\\n, \\r 삭제2회 이상의 공백은 하나로 변환영어 대문자 소문자로 변환앞뒤 공백 삭제(strip)제목이 공백인 데이터 제외제목에 &apos;about&apos;이 단어가 들어간 데이터 제외\n\n제목에 ‘about’이 단어가 들어간 데이터는 하나같이 블로그 주인에 대한 소개글로 Daily Devblog에 노출될 필요가 없다고 판단하여 제외하였고, tags, title, description을 합쳐서 하나의 대표 문장인 text를 만들었습니다.\n학습에 쓰이는 데이터 예시1234&#123;  text  : &quot;영화 소감 때론 영웅은 옆으로 달린다 한국 사회에서 조직 문화 개선을 위해서 우리는 목숨을 내던지고 옆으로 달려야 하는가&quot;  label : 0&#125;\n\n","dateCreated":"2020-02-18T21:44:28+09:00","dateModified":"2020-02-28T00:06:14+09:00","datePublished":"2020-02-18T21:44:28+09:00","description":"Daily Devblog 서비스를 위한 개발 문서 분류기를 개발한 이야기를 공유합니다.","headline":"딥러닝으로 문서 분류기 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pj-devblog-classifier/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pj-devblog-classifier/","keywords":"Devblog Classifier"}</script>
+    <meta name="description" content="Daily Devblog 서비스를 위한 개발 문서 분류기를 개발한 이야기를 공유합니다.">
+<meta name="keywords" content="Devblog Classifier">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="딥러닝으로 문서 분류기 만들기">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;pj-devblog-classifier&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="Daily Devblog 서비스를 위한 개발 문서 분류기를 개발한 이야기를 공유합니다.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;75347930-2f260f80-58e5-11ea-97a0-8c3909d68b5c.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;74600892-e4351c80-50da-11ea-9454-5397bf134ace.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;74600889-dc757800-50da-11ea-9e55-97010103b606.png">
+<meta property="og:updated_time" content="2020-02-27T15:06:14.945Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;75347930-2f260f80-58e5-11ea-97a0-8c3909d68b5c.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-oocw4d24jiuc5d192niyloow46wvci168mporba61wovpiqv4ei7ypwigbu3.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script>
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            딥러닝으로 문서 분류기 만들기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-02-18T21:44:28+09:00">
+	
+		    Feb 18, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Project/">Project</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#프로젝트-소개"><span class="nero-toc-text"># 프로젝트 소개</span></a></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#개발-과정"><span class="nero-toc-text"># 개발 과정</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Data-Crawling-amp-Labeling"><span class="nero-toc-text">Data Crawling &amp; Labeling</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Preprocessing"><span class="nero-toc-text">Preprocessing</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Word-Embedding"><span class="nero-toc-text">Word Embedding</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Classifier-모델-개발"><span class="nero-toc-text">Classifier 모델 개발</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#결과물"><span class="nero-toc-text"># 결과물</span></a></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#마무리"><span class="nero-toc-text"># 마무리</span></a></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            <p>Daily Devblog 서비스를 위한 개발 문서 분류기를 개발한 이야기를 공유합니다.<br><a id="more"></a></p>
+<h1 id="프로젝트-소개"><a href="#프로젝트-소개" class="headerlink" title="# 프로젝트 소개"></a># 프로젝트 소개</h1><p>필자는 IT 블로그의 글을 모아서 매일 오전 10시에 이메일로 발송해주는 <a href="http://daily-devblog.com/" target="_blank" rel="external nofollow noopener noreferrer">Daily Devblog</a>라는 좋은 서비스를 구독하고 있습니다. 발송되는 글들은 <a href="https://awesome-devblog.netlify.com/" target="_blank" rel="external nofollow noopener noreferrer">Awesome Devblog</a>에서 제공받는데, 가끔씩 IT와 관련 없는 글이 등장하기도 합니다. 큰 문제는 아니지만 서비스를 애용하는 구독자로서, 약간의 도움이라도 되었으면 하는 바람으로 딥러닝을 이용하여 간단한 문서 분류기를 만들어보았습니다. 🎉</p>
+<blockquote>
+<p>개발에 사용된 코드 및 데이터는 아래 링크에서 확인하실 수 있습니다.</p>
+<ul>
+<li><a href="https://github.com/nero-angela/DevblogClassifier" target="_blank" rel="external nofollow noopener noreferrer">Github</a></li>
+<li><a href="https://drive.google.com/drive/u/0/folders/1Npfrh6XmeABJ8JJ6ApS1T88vVoqyDH7M" target="_blank" rel="external nofollow noopener noreferrer">전처리 및 라벨링 된 데이터</a></li>
+</ul>
+</blockquote>
+<hr>
+<h1 id="개발-과정"><a href="#개발-과정" class="headerlink" title="# 개발 과정"></a># 개발 과정</h1><p>전체 개발 순서는 데이터 수집 및 전처리, 단어 임베딩 모델 개발 그리고 문서 분류모델 개발 순으로 진행하였습니다.</p>
+<hr>
+<h2 id="Data-Crawling-amp-Labeling"><a href="#Data-Crawling-amp-Labeling" class="headerlink" title="Data Crawling &amp; Labeling"></a>Data Crawling &amp; Labeling</h2><p>데이터는 <a href="https://awesome-devblog.netlify.com/" target="_blank" rel="external nofollow noopener noreferrer">Awesome Devblog</a>에서 제공해주는 데이터를 이용하였습니다.</p>
+<figure class="highlight plain"><figcaption><span>data sample</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">  _id        : &quot;5e566644e0ffb12d4cae83ba&quot;,</span><br><span class="line">  title      : &quot;[영화 소감] 1917. 때론 영웅은 옆으로 달린다.&quot;,</span><br><span class="line">  link       : &quot;http://blog.hwang.gg/20200226/&quot;,</span><br><span class="line">  date       : &quot;2020-02-26T11:45:20.000Z&quot;,</span><br><span class="line">  description: &quot;한국 사회에서 조직 문화 개선을 위해서 우리는 목숨을 내던지고 옆으로 달려야 하는가?&quot;,</span><br><span class="line">  author     : &quot;황건구&quot;,</span><br><span class="line">  imgUrl     : &quot;http://blog.hwang.gg/favicon.png&quot;,</span><br><span class="line">  tags       : [ ],</span><br><span class="line">  count      : 0,</span><br><span class="line">  postImage  : &quot;&quot;,</span><br><span class="line">  _class     : &quot;com.sarojaba.awesomedevblog.feed.Feed&quot; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2020년 2월 초 기준으로 전체 34,620개의 글이 존재하였고, 이 중 10,382개의 글을 직접 라벨링하였습니다. 라벨링 작업이 가장 힘들었습니다.. 전체 데이터의 1/3 밖에 라벨링을 못했지만 일단 결과를 보고 싶어 다음 과정을 진행하였습니다.</p>
+<figure class="highlight plain"><figcaption><span>라벨링 기준</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">     분류           라벨      개수</span><br><span class="line">개발과 관련 있는 글     1     24,238개</span><br><span class="line">개발과 관련 없는 글     0      2,748개</span><br><span class="line">아직 라벨링 안된 글    -1      7,634개</span><br></pre></td></tr></table></figure>
+
+<p>라벨링을 완료한 1만개 데이터 중 개발과 관련있는 글과 관련없는 글의 비율은 약 3:1로 개발과 관련있는 글이 더 많았습니다.</p>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/75347930-2f260f80-58e5-11ea-97a0-8c3909d68b5c.png" target="_blank" rel="external nofollow noopener noreferrer" title="라벨링 된 데이터 비율" data-caption="라벨링 된 데이터 비율" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/75347930-2f260f80-58e5-11ea-97a0-8c3909d68b5c.png" style="width:500px;" alt="라벨링 된 데이터 비율"></a><span class="caption">라벨링 된 데이터 비율</span></div>
+
+<hr>
+<h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>가장 긴 대표 문장은 358자이고, 가장 짧은 문장은 3글자이며 평균 145글자로 이루어져있습니다. 각 문서의 대표값으로 임베딩된 단어들의 평균값을 사용할 예정이라 특정 길이로 문장을 자르거나 패딩을 채워넣지는 않았습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">문장 길이 최대 값 : 358</span><br><span class="line">문장 길이 최소 값 : 3</span><br><span class="line">문장 길이 평균 값 : 145.02</span><br><span class="line">문장 길이 표준편차 : 60.59</span><br><span class="line">문장 길이 중간 값 : 132</span><br><span class="line">문장 길이 제 1 사분위 : 108</span><br><span class="line">문장 길이 제 3 사분위 : 203</span><br></pre></td></tr></table></figure>
+
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/74600892-e4351c80-50da-11ea-9454-5397bf134ace.png" target="_blank" rel="external nofollow noopener noreferrer" title="대표 문장 길이에 대한 Log-Histogram" data-caption="대표 문장 길이에 대한 Log-Histogram" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/74600892-e4351c80-50da-11ea-9454-5397bf134ace.png" alt="대표 문장 길이에 대한 Log-Histogram"></a><span class="caption">대표 문장 길이에 대한 Log-Histogram</span></div>
+
+<p>Awesome Devblog에서 제공하는 데이터 중 <code>link</code>을 이용하면 본문 html을 받아올 수 있지만, 오래되어 존재하지 <code>link</code>도 상당히 많아 이번에는 간단히 <code>title</code>, <code>tags</code>, <code>description</code>만을 다음과 같이 전처리하여 이용하였습니다.</p>
+<figure class="highlight plain"><figcaption><span>전처리 과정</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">배열로 이루어진 tags를 띄어쓰기를 기준으로 join</span><br><span class="line">영어, 한글, 공백만 남김</span><br><span class="line">html tag 삭제</span><br><span class="line">\n, \r 삭제</span><br><span class="line">2회 이상의 공백은 하나로 변환</span><br><span class="line">영어 대문자 소문자로 변환</span><br><span class="line">앞뒤 공백 삭제(strip)</span><br><span class="line">제목이 공백인 데이터 제외</span><br><span class="line">제목에 &apos;about&apos;이 단어가 들어간 데이터 제외</span><br></pre></td></tr></table></figure>
+
+<p>제목에 ‘about’이 단어가 들어간 데이터는 하나같이 블로그 주인에 대한 소개글로 Daily Devblog에 노출될 필요가 없다고 판단하여 제외하였고, <code>tags</code>, <code>title</code>, <code>description</code>을 합쳐서 하나의 대표 문장인 <code>text</code>를 만들었습니다.</p>
+<figure class="highlight plain"><figcaption><span>학습에 쓰이는 데이터 예시</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  text  : &quot;영화 소감 때론 영웅은 옆으로 달린다 한국 사회에서 조직 문화 개선을 위해서 우리는 목숨을 내던지고 옆으로 달려야 하는가&quot;</span><br><span class="line">  label : 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/74600889-dc757800-50da-11ea-9e55-97010103b606.png" target="_blank" rel="external nofollow noopener noreferrer" title="전처리가 완료된 대표 문장의 단어들로 WordCloud를 나타내보았습니다." data-caption="전처리가 완료된 대표 문장의 단어들로 WordCloud를 나타내보았습니다." data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/74600889-dc757800-50da-11ea-9e55-97010103b606.png" alt="전처리가 완료된 대표 문장의 단어들로 WordCloud를 나타내보았습니다."></a><span class="caption">전처리가 완료된 대표 문장의 단어들로 WordCloud를 나타내보았습니다.</span></div>
+
+<hr>
+<h2 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h2><p><a href="https://en.wikipedia.org/wiki/Word_embedding" target="_blank" rel="external nofollow noopener noreferrer">Word Embedding</a>은 <a href="https://radimrehurek.com/gensim/models/fasttext.html" target="_blank" rel="external nofollow noopener noreferrer">Gensim FastText</a>를 이용하였습니다. 임베딩 모델 학습을 위한 데이터로 처음에는 크롤링한 데이터를 이용해 보았는데, RSS feed로 긁어온 데이터라 문장들이 끊켜있거나 html tag만 들어있는 등 데이터 질도 나쁘고 양도 부족하여 결과가 시원찮았습니다. 그래서 4.49GB의 <a href="https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.ko.300.bin.gz" target="_blank" rel="external nofollow noopener noreferrer">wiki 한국어 데이터</a>를 이용하여 임베딩 모델을 만들었는데 임베딩 모델의 용량만 14.5GB로 상당히 무거워졌지만 임베딩 결과는 훨씬 좋아졌습니다.</p>
+<figure class="highlight bash"><figcaption><span>임베딩 모델을 이용하여 "파이썬"이라는 단어와 유사한 Top5를 뽑았습니다.</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ python word_embedding.py --predict <span class="string">'파이썬'</span></span><br><span class="line">[</span><br><span class="line">  (<span class="string">'Python'</span>, 0.565061628818512),</span><br><span class="line">  (<span class="string">'자이썬'</span>, 0.5624369382858276),</span><br><span class="line">  (<span class="string">'레일스'</span>, 0.5598082542419434),</span><br><span class="line">  (<span class="string">'파이썬을'</span>, 0.5595801472663879),</span><br><span class="line">  (<span class="string">'언어용'</span>, 0.5288202166557312)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>모델에 사전 크기(vocaburary size)는 2백만개이고 하나의 단어를 300개의 벡터로 표현하도록 학습하였습니다. 다음으로 임베딩 모델을 이용하여 대표 문장을 벡터로 임베딩할 차례입니다. 앞서 설명한 것과 같이 대표 문장을 이루는 각 단어들을 임베딩한 뒤 평균값을 문장의 벡터로 변환하여 input 사용하였습니다.</p>
+<figure class="highlight python"><figcaption><span>embedding function</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">embedding</span><span class="params">(self, we_model, text, embedding_dim=<span class="number">300</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    주어진 문장을 단어별로 벡터화한 뒤 평균값을 문장의 벡터로 반환</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    - input</span></span><br><span class="line"><span class="string">    : we_model / FastText 단어 임베딩 모델</span></span><br><span class="line"><span class="string">    : text / str / 벡터화하려는 문장</span></span><br><span class="line"><span class="string">    : embedding_dim / int / we_model vector의 차원 수 (wiki 기반 fasttext는 300차원)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    - return</span></span><br><span class="line"><span class="string">    : nparray / shape = (embedding_dim)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    words = text.split(<span class="string">' '</span>)</span><br><span class="line">    words_num = len(words)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># model dimension (wiki festtext의 경우 300)</span></span><br><span class="line">    vector = np.zeros(embedding_dim)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">        vector += we_model[word]</span><br><span class="line">    <span class="keyword">return</span> vector/words_num</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Classifier-모델-개발"><a href="#Classifier-모델-개발" class="headerlink" title="Classifier 모델 개발"></a>Classifier 모델 개발</h2><p>Tensorflow 2.0.1 버전을 이용하여 개발을 하였습니다. 모델은 아래와 같이 간단히 Dense Layer 3개만을 쌓아 구현하였습니다.</p>
+<figure class="highlight python"><figcaption><span>layer</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">model = Sequential()</span><br><span class="line">model.add(Dense(<span class="number">100</span>, activation=<span class="string">'relu'</span>, kernel_initializer=<span class="string">'he_normal'</span>, input_shape=(X_train.shape[<span class="number">1</span>],)))</span><br><span class="line">model.add(Dense(<span class="number">80</span>, activation=<span class="string">'relu'</span>, kernel_initializer=<span class="string">'he_normal'</span>))</span><br><span class="line">model.add(Dense(<span class="number">2</span>, activation=<span class="string">'softmax'</span>))</span><br><span class="line">model.compile(optimizer=<span class="string">'adam'</span>,</span><br><span class="line">              loss=<span class="string">'sparse_categorical_crossentropy'</span>,</span><br><span class="line">              metrics=[<span class="string">'acc'</span>,</span><br><span class="line">                        self.f1_m,</span><br><span class="line">                        self.precision_m,</span><br><span class="line">                        self.recall_m])</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="결과물"><a href="#결과물" class="headerlink" title="# 결과물"></a># 결과물</h1><p>전체 10,382개의 데이터 중 33%(3,426개)를 test에 이용하여 모델의 성능을 테스트한 결과 validation accuracy 기준 88퍼센트의 결과를 보였습니다.</p>
+<figure class="highlight plain"><figcaption><span>Model Performance</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">loss : 0.278</span><br><span class="line">accuracy : 0.883</span><br><span class="line">f1_score : 0.847</span><br><span class="line">precision : 0.739</span><br><span class="line">recall : 1.0</span><br></pre></td></tr></table></figure>
+
+<p>이렇게 만들어진 모델을 실제 Daily Devblog에서 <a href="http://daily-devblog.com/archive/20200203" target="_blank" rel="external nofollow noopener noreferrer">2020년 2월 3일에 발송된 글</a>에 적용해보았습니다. 전체 41개의 글이 발송되었는데, 중 숫자로만 이루어진 글을 제외하고 총 40개의 글을 제목만을 이용하여 필터링해보았습니다. 전처리로 제목에 있는 쉼표(,)를 제거한 뒤 아래와 같이 실행하였습니다.</p>
+<figure class="highlight bash"><figcaption><span>predict 실행(쉼표를 이용하여 한 번에 여러 문장을 예측)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python predict.py --predict <span class="string">'맥북 초보자들이 꼭 알아야 할 단축키 top 5! mac keyboard shortcut 5. feat.맥북을 산  이유, [Spring Boot] 내장 웹 서버 - 2 (스프링부트 HTTPS / HTTP2), 네이버클라우드플랫폼 Certificate Manager 에 LetsEncrypt 인증서 등록, Go로 블록체인 만들기 #1, Ansible 파일 마지 막 변경 일자 확인하기, 엔티티 매핑, [11775]Compactness criteria for clustering, 쿠버네티스 CI/DI 를 위한 오픈소스 프로젝트 알아보기, [Windows] USB 윈도우 10 설치 /  다운로드 방 법, [Spring Boot] JAR파일(독립적으로 실행가능), 케라스(Keras)의 get_file 함수, 웹 서비스 Maintenance Mode (점검 모드) 지원기, Nodejs AES 128 CCM 암호화(복호화) 예제 - crypto, 영어패턴#37, [운영체제(OS)] 7. 쓰레드(Thread), 비동기 처리와 콜백함수 그리고 Promise, docker기반 데이터 시각화툴 Superset 설치하기 (리눅스), Wayland과 Weston, 테스트 주도 개발(Test-Driven Development:By Example) - 1부 : 화폐 예제 (9 ~ 10장), 당신은 정말 의지가 있는가?, [B급 프로그래머] 1월 5주 소식(빅데이터/인공지능 읽을거리 부문), 손흥민 시즌 13호골! epl 25라운드 토트넘 vs 맨체스터시티, [운영체제(OS)] 9. 프로세스 동기화 2, 자바 String StringBuilder 그리고 StringBuffer 차이 비교, (업무)2020년 2월 3일 REACT로 임상시험자동화솔루 션 개발 Start, [운영체제(OS)] 11. 모니터, 필리핀 세부 시티의 맛집! 하우스 오브 레촌 cebu city House of Lechon, [운영체제(OS)] 8. 프로세스 동기화 1, 영어패턴#38, c언어 fopen 함수 : 파일을 연다., 스프링 데이터 JPA와 Querydsl 인프런 강의 정리, [Sprint #10] Server Side Techniques Sprint, 카카오메일 IMAP / POP3 / SMTP 설정방법, [Algorithm] 이진트 리의 구현 과 순회 알고리즘, [운영체제(OS)] 10. 프로세스 동기화 3, [맥북] 트랙패드 제스처, [스프링 부트 개념과 활용] 로깅, 기술 뉴스 #143 : 20-02-03, [스프링 부트 개념과 활용] Profile, 언 덕 너머'</span></span><br></pre></td></tr></table></figure>
+
+<p>아래의 결과를 보면, 비개발 문서로 판단한 <code>Ansible 파일 마지막 변경 일자 확인하기</code>라는 글을 제외하고 전체 40개의 글 중 39개를 정확하게 분류하여 97.5%의 성능을 보였습니다. 🎉🎉</p>
+<figure class="highlight plain"><figcaption><span>비개발 문서로 판단</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(False, 0.191) 영어패턴#37</span><br><span class="line">(False, 0.013) 당신은 정말 의지가 있는가?</span><br><span class="line">(False, 0.041) 손흥민 시즌 13호골! epl 25라운드 토트넘 vs 맨체스터시티</span><br><span class="line">(False, 0.051) 필리핀 세부 시티의 맛집! 하우스 오브 레촌 cebu city House of Lechon</span><br><span class="line">(False, 0.191) 영어패턴#38</span><br><span class="line">(False, 0.053) 언덕 너머</span><br><span class="line">(False, 0.185) Ansible 파일 마지막 변경 일자 확인하기 😓</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>개발 문서로 판단</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(True, 0.983) 맥북 초보자들이 꼭 알아야 할 단축키 top 5! mac keyboard shortcut 5. feat.맥북을 산  이유</span><br><span class="line">(True, 1.000) [Spring Boot] 내장 웹 서버 - 2 (스프링부트 HTTPS / HTTP2)</span><br><span class="line">(True, 0.971) 네이버클라우드플랫폼 Certificate Manager 에 LetsEncrypt 인증서 등록</span><br><span class="line">(True, 0.791) Go로 블록체인 만들기 #1</span><br><span class="line">(True, 1.000) 엔티티 매핑</span><br><span class="line">(True, 0.973) [11775]Compactness criteria for clustering</span><br><span class="line">(True, 0.989) 쿠버네티스 CI/DI 를 위한 오픈소스 프로젝트 알아보기</span><br><span class="line">(True, 0.992) [Windows] USB 윈도우 10 설치 /  다운로드 방법</span><br><span class="line">(True, 0.981) [Spring Boot] JAR파일(독립적으로 실행가능)</span><br><span class="line">(True, 1.000) 케라스(Keras)의 get_file 함수</span><br><span class="line">(True, 0.987) 웹 서비스 Maintenance Mode (점검 모드) 지원기</span><br><span class="line">(True, 0.996) Nodejs AES 128 CCM 암호화(복호화) 예제 - crypto</span><br><span class="line">(True, 0.706) [운영체제(OS)] 7. 쓰레드(Thread)</span><br><span class="line">(True, 1.000) 비동기 처리와 콜백함수 그리고 Promise</span><br><span class="line">(True, 0.994) docker기반 데이터 시각화툴 Superset 설치하기 (리눅스)</span><br><span class="line">(True, 0.980) Wayland과 Weston</span><br><span class="line">(True, 0.937) 테스트 주도 개발(Test-Driven Development:By Example) - 1부 : 화폐 예제 (9 ~ 10장)</span><br><span class="line">(True, 0.584) [B급 프로그래머] 1월 5주 소식(빅데이터/인공지능 읽을거리 부문)</span><br><span class="line">(True, 0.999) [운영체제(OS)] 9. 프로세스 동기화 2</span><br><span class="line">(True, 1.000) 자바 String StringBuilder 그리고 StringBuffer 차이 비교</span><br><span class="line">(True, 0.892) (업무)2020년 2월 3일 REACT로 임상시험자동화솔루션 개발 Start</span><br><span class="line">(True, 0.544) [운영체제(OS)] 11. 모니터</span><br><span class="line">(True, 0.999) [운영체제(OS)] 8. 프로세스 동기화 1</span><br><span class="line">(True, 1.000) c언어 fopen 함수 : 파일을 연다.</span><br><span class="line">(True, 0.726) 스프링 데이터 JPA와 Querydsl 인프런 강의 정리</span><br><span class="line">(True, 0.991) [Sprint #10] Server Side Techniques Sprint</span><br><span class="line">(True, 0.463) 기술 뉴스 #143 : 20-02-03</span><br><span class="line">(True, 0.632) 카카오메일 IMAP / POP3 / SMTP 설정방법</span><br><span class="line">(True, 0.985) [Algorithm] 이진트 리의 구현과 순회 알고리즘</span><br><span class="line">(True, 0.999) [운영체제(OS)] 10. 프로세스 동기화 3</span><br><span class="line">(True, 0.989) [맥북] 트랙패드 제스처</span><br><span class="line">(True, 1.000) [스프링 부트 개념과 활용] 로깅</span><br><span class="line">(True, 1.000) [스프링 부트 개념과 활용] Profile</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="마무리"><a href="#마무리" class="headerlink" title="# 마무리"></a># 마무리</h1><p>짧은 시일내에 간단하게 만든 프로젝트로 88%의 성능밖에 나오지 않았지만, 앞으로 라벨링도 추가하고 좀 더 다양한 모델들을 시도하여 성능을 더 향상시키도록 하겠습니다.</p>
+<p>이상 딥러닝으로 문서 분류기 만들기 프로젝트에 대한 소개를 마치도록 하겠습니다.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Devblog-Classifier/" rel="tag">Devblog Classifier</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-too-real-01/" data-tooltip="1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기" aria-label="NEXT: 1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-devblog-classifier/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-devblog-classifier/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-too-real-01/" data-tooltip="1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기" aria-label="NEXT: 1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-devblog-classifier/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-devblog-classifier/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-devblog-classifier/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-devblog-classifier/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-eh9l8zwpx33oejqrmuykemaorqsakuncsa3yhevhtcck4mkczp8rbfxudvnq.min.js"></script>
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

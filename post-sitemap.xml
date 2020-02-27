@@ -8,8 +8,8 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-itertools/</loc>
-        <lastmod>2020-01-03T07:35:22.258Z</lastmod>
+        <loc>https://nero.devstory.co.kr/post/pj-devblog-classifier/</loc>
+        <lastmod>2020-02-27T15:06:14.945Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,15 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
-        <lastmod>2020-01-03T07:14:12.578Z</lastmod>
+        <lastmod>2020-02-18T12:40:09.714Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-itertools/</loc>
+        <lastmod>2020-01-03T07:35:22.258Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
