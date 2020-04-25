@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>딥러닝으로 문장의 끝점 검출기 만들기 - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/pj-endpoint-detector/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"문장의 끝점(마침표, 물음표)을 검출하는 딥러닝 모델을 개발한 이야기를 공유합니다.\n# 프로젝트 소개WebRTC의 Speech Recognition API를 이용하면 손쉽게 STT(Speech To Text) 기능을 구현할 수 있습니다. WebRTC 연구실의 음성 인식 사이트에서 데모를 경험해보실 수 있는데, 생각보다 인식이 잘되어 깜짝 놀라실 겁니다. 아래 예시는 “마침표가 찍히지 않는 것을 볼 수 있습니다” 라고 발화한 예시입니다.\n\n\n\nYour browser doesn't support HTML5 Video :/\nWebRTC의 Speech Recognition API는 발화를 하는 즉시 실시간으로 음향모델(Acoustic Model)이 음성을 텍스트로 변환한 결과를 반환하다가 몇 초 이상 발화가 없는 경우 지금까지 인식된 문장을 언어모델(Language Model)이 문맥에 맞게 수정하여 반환해 줍니다.\n\n\n사내 프로젝트에서 WebRTC의 Speech Recognition API를 이용하던 중 STT 결과물에 마침표나 물음표 같은 문장의 끝점이 없다는 것을 발견하였고, 해당 프로젝트에서는 문장의 구분점이 필요하여 마침표나 물음표와 같은 문장의 끝점을 검출해주는 딥러닝 모델을 구현해보았습니다.\n\n# 개발 과정개발 과정은 Crawling &gt; Preprocessing &gt; Analysis &gt; Labeling &gt; Training 순서로 진행하였습니다.\n\nCrawling학습에 필요한 데이터를 수집하는 단계로, 이번 프로젝트에 사용된 데이터는 실제 유입될 데이터와 가장 유사한 제 20대 국회 회의록을 이용하였습니다. 데이터가 hwp 형식으로 되어있어, GUI 매크로를 이용하여 txt 파일로 변환하였습니다.\n\nPreprocessing수집한 데이터를 가공하고 정제하는 전처리 단계로, 회의 데이터가 일정한 형식으로 구현되어 있어 이를 분석하여 다음과 같은 전처리를 하였습니다.\n국회 회의록 전처리123456789101112131415161718192021222324252627282930- 텍스트 배열 추출(라인별)- 라인별 전처리  &apos;^\\n&apos; : 공백 라인 삭제  &apos;o&apos; : 소문자 영어o를 이용한 단락 설명 삭제 (ex: o 국무위원 인사)- 텍스트 배열 to 텍스트 문자열로 변환- 회의시작 전과 후 데이터 삭제  &apos;\\(\\d+?[월시]\\d+?[일분]\\s.+?\\)&apos;가 처음 등장하는 부분이 시작  &apos;\\(\\d+?[월시]\\d+?[일분]\\s.+?\\)&apos;가 마지막 등장하는 부분이 종료- 대화가 아닌 내용 삭제  &apos;(\\(.+\\))&apos; : 괄호 데이터 삭제  &apos;\\d+\\.\\s[^◯]*&apos; : 회의 안건 목록 삭제- 시간에 따른 화자별 대화로 구분  &apos;◯.+?\\s.+?\\s+&apos; : 화자 추출  화자 시퀀스와 대화 시퀀스- 화자별 대화 문단 정제  &apos;\\n&apos; 줄바꿈 기호 삭제  strip(앞뒤 공백제거)  &apos;\\s&#123;2,&#125;&apos; 두 개 이상의 띄어쓰기 한 개로 변경  &apos;\\s$&apos; 문단 마지막에 있는 띄어쓰기 삭제  연속된 명사 사이에 찍히는 &apos;․&apos;(마침표 아님)를 &apos;,&apos;로 변경- 문단으로 부터 문장 추출  strip(앞뒤 공백제거)  &apos;\\s?(.+?[\\.\\!\\?…])\\D&apos; : 문장 추출\n\n학습에 불필요한 데이터를 제거하고 화자 단위로 분리하여 전체 2,084,007 문장을 수집했습니다.\nlog-histogram of length of sentence\n\nlog-histogram of word count in sentence\n\n또한 특수문자 및 끝점의 종류를 분석한 결과 다음과 같습니다.\n12345물음표로 끝나는 문장: 11.44%마침표로 끝나는 문장: 83.64%…로 끝나는 문장: 4.64%,각 있는 문장 문장: 30.27%특수문자가 있는 문장: 36.72%\n\ntrain and validation accuracy per epochs\n\n따라서 여기서는 precision, recall 그리고 f1-score 값을 보는게 중요합니다.\n\n\n\n종류\nprecision\nrecall\nf1-score\n데이터 수\n\n\n\n공백(0)\n0.99\n1.00\n0.99\n1,520,203개\n\n\n마침표(1)\n0.95\n0.93\n0.94\n232,575개\n\n\n물음표(2)\n0.90\n0.66\n0.76\n31,706개\n\n\nmicro avg\n0.98\n0.98\n0.98\n1,784,484개\n\n\nmacro avg\n0.95\n0.86\n0.90\n1,784,484개\n\n\nweighted avg\n0.98\n0.98\n0.98\n1,784,484개\n\n\nsamples avg\n0.98\n0.98\n0.98\n1,784,484개\n\n\n확실히 데이터가 많은 공백(0)은 precision, recall, f1-score가 모두 높게 나온것을 보실 수 있습니다. 마침표(1)도 공백(0)에 비하면 데이터가 6.5배 정도 적음에도 불구하고 거의 모든 수치가 0.9 이상으로 생각보다 성능이 잘 나왔습니다. 그러나 물음표(2)는 데이터가 너무 적어서 recall이 0.66으로 조금 낮게 나왔지만 precision은 0.90으로 꽤나 신뢰할만 수치가 나왔습니다.\n\n# 데모\n본 데모에 사용된 스크립트는 2018년 8월 22일(목) 김용민 브리핑 방송 대본의 일부 내용을 발췌한 내용으로 개인적 견해나 의미와는 아무런 상관이 없음을 밝힙니다.\n\n2018년 8월 22일(목) 김용민 브리핑 방송 대본의 일부 내용을 발췌하여 마침표와 느낌표를 제거한 뒤 모델에 input 데이터로 입력하여 테스트하였습니다.\n","dateCreated":"2020-04-25T21:44:28+09:00","dateModified":"2020-04-25T21:42:48+09:00","datePublished":"2020-04-25T21:44:28+09:00","description":"문장의 끝점(마침표, 물음표)을 검출하는 딥러닝 모델을 개발한 이야기를 공유합니다.","headline":"딥러닝으로 문장의 끝점 검출기 만들기","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pj-endpoint-detector/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pj-endpoint-detector/","keywords":"Endpoint Detector"}</script>
+    <meta name="description" content="문장의 끝점(마침표, 물음표)을 검출하는 딥러닝 모델을 개발한 이야기를 공유합니다.">
+<meta name="keywords" content="Endpoint Detector">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="딥러닝으로 문장의 끝점 검출기 만들기">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;pj-endpoint-detector&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="문장의 끝점(마침표, 물음표)을 검출하는 딥러닝 모델을 개발한 이야기를 공유합니다.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80273651-197b6d80-870f-11ea-9625-5de4460dc60a.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80273699-9dcdf080-870f-11ea-87ff-125a8653d847.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80273776-2351a080-8710-11ea-8003-201c59caafe6.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80274112-08ccf680-8713-11ea-8756-cd19f80620fc.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80273816-7deafc80-8710-11ea-8865-efebf3e48bcc.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80275619-79791080-871d-11ea-938f-889e21083086.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80276524-6ae22780-8724-11ea-89b7-49f701f51a90.png">
+<meta property="og:updated_time" content="2020-04-25T12:42:48.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;80273651-197b6d80-870f-11ea-9625-5de4460dc60a.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-oocw4d24jiuc5d192niyloow46wvci168mporba61wovpiqv4ei7ypwigbu3.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script>
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            딥러닝으로 문장의 끝점 검출기 만들기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-04-25T21:44:28+09:00">
+	
+		    Apr 25, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Project/">Project</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#프로젝트-소개"><span class="nero-toc-text"># 프로젝트 소개</span></a></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#개발-과정"><span class="nero-toc-text"># 개발 과정</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Crawling"><span class="nero-toc-text">Crawling</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Preprocessing"><span class="nero-toc-text">Preprocessing</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Analysis"><span class="nero-toc-text">Analysis</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Labeling"><span class="nero-toc-text">Labeling</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Training"><span class="nero-toc-text">Training</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#데모"><span class="nero-toc-text"># 데모</span></a></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#마무리"><span class="nero-toc-text"># 마무리</span></a></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            <p>문장의 끝점(마침표, 물음표)을 검출하는 딥러닝 모델을 개발한 이야기를 공유합니다.<br><a id="more"></a></p>
+<h1 id="프로젝트-소개"><a href="#프로젝트-소개" class="headerlink" title="# 프로젝트 소개"></a># 프로젝트 소개</h1><p>WebRTC의 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API" target="_blank" rel="external nofollow noopener noreferrer">Speech Recognition API</a>를 이용하면 손쉽게 STT(Speech To Text) 기능을 구현할 수 있습니다. WebRTC 연구실의 <a href="https://webrtclab.herokuapp.com/speech-recognition/" target="_blank" rel="external nofollow noopener noreferrer">음성 인식 사이트</a>에서 데모를 경험해보실 수 있는데, 생각보다 인식이 잘되어 깜짝 놀라실 겁니다. 아래 예시는 “마침표가 찍히지 않는 것을 볼 수 있습니다” 라고 발화한 예시입니다.</p>
+<div class="figure " style>
+<video class="fig-video" autoplay playsinline loop muted controls alt="WebRTC의 Speech Recognition API는 발화를 하는 즉시 실시간으로 음향모델(Acoustic Model)이 음성을 텍스트로 변환한 결과를 반환하다가 몇 초 이상 발화가 없는 경우 지금까지 인식된 문장을 언어모델(Language Model)이 문맥에 맞게 수정하여 반환해 줍니다.">
+<source src="/assets/videos/pj-endpoint-detector/stt_demo.mp4" type="video/mp4">
+<p>Your browser doesn't support HTML5 Video :/</p></video>
+<span class="caption">WebRTC의 Speech Recognition API는 발화를 하는 즉시 실시간으로 음향모델(Acoustic Model)이 음성을 텍스트로 변환한 결과를 반환하다가 몇 초 이상 발화가 없는 경우 지금까지 인식된 문장을 언어모델(Language Model)이 문맥에 맞게 수정하여 반환해 줍니다.</span>
+</div>
+
+<p>사내 프로젝트에서 WebRTC의 Speech Recognition API를 이용하던 중 STT 결과물에 마침표나 물음표 같은 문장의 끝점이 없다는 것을 발견하였고, 해당 프로젝트에서는 문장의 구분점이 필요하여 마침표나 물음표와 같은 문장의 끝점을 검출해주는 딥러닝 모델을 구현해보았습니다.</p>
+<hr>
+<h1 id="개발-과정"><a href="#개발-과정" class="headerlink" title="# 개발 과정"></a># 개발 과정</h1><p>개발 과정은 <code>Crawling</code> &gt; <code>Preprocessing</code> &gt; <code>Analysis</code> &gt; <code>Labeling</code> &gt; <code>Training</code> 순서로 진행하였습니다.</p>
+<hr>
+<h2 id="Crawling"><a href="#Crawling" class="headerlink" title="Crawling"></a>Crawling</h2><p>학습에 필요한 데이터를 수집하는 단계로, 이번 프로젝트에 사용된 데이터는 실제 유입될 데이터와 가장 유사한 <a href="http://likms.assembly.go.kr/record/mhs-40-010.do#none" target="_blank" rel="external nofollow noopener noreferrer">제 20대 국회 회의록</a>을 이용하였습니다. 데이터가 hwp 형식으로 되어있어, GUI 매크로를 이용하여 txt 파일로 변환하였습니다.</p>
+<hr>
+<h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>수집한 데이터를 가공하고 정제하는 전처리 단계로, 회의 데이터가 일정한 형식으로 구현되어 있어 이를 분석하여 다음과 같은 전처리를 하였습니다.</p>
+<figure class="highlight plain"><figcaption><span>국회 회의록 전처리</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">- 텍스트 배열 추출(라인별)</span><br><span class="line"></span><br><span class="line">- 라인별 전처리</span><br><span class="line">  &apos;^\n&apos; : 공백 라인 삭제</span><br><span class="line">  &apos;o&apos; : 소문자 영어o를 이용한 단락 설명 삭제 (ex: o 국무위원 인사)</span><br><span class="line"></span><br><span class="line">- 텍스트 배열 to 텍스트 문자열로 변환</span><br><span class="line"></span><br><span class="line">- 회의시작 전과 후 데이터 삭제</span><br><span class="line">  &apos;\(\d+?[월시]\d+?[일분]\s.+?\)&apos;가 처음 등장하는 부분이 시작</span><br><span class="line">  &apos;\(\d+?[월시]\d+?[일분]\s.+?\)&apos;가 마지막 등장하는 부분이 종료</span><br><span class="line"></span><br><span class="line">- 대화가 아닌 내용 삭제</span><br><span class="line">  &apos;(\(.+\))&apos; : 괄호 데이터 삭제</span><br><span class="line">  &apos;\d+\.\s[^◯]*&apos; : 회의 안건 목록 삭제</span><br><span class="line"></span><br><span class="line">- 시간에 따른 화자별 대화로 구분</span><br><span class="line">  &apos;◯.+?\s.+?\s+&apos; : 화자 추출</span><br><span class="line">  화자 시퀀스와 대화 시퀀스</span><br><span class="line"></span><br><span class="line">- 화자별 대화 문단 정제</span><br><span class="line">  &apos;\n&apos; 줄바꿈 기호 삭제</span><br><span class="line">  strip(앞뒤 공백제거)</span><br><span class="line">  &apos;\s&#123;2,&#125;&apos; 두 개 이상의 띄어쓰기 한 개로 변경</span><br><span class="line">  &apos;\s$&apos; 문단 마지막에 있는 띄어쓰기 삭제</span><br><span class="line">  연속된 명사 사이에 찍히는 &apos;․&apos;(마침표 아님)를 &apos;,&apos;로 변경</span><br><span class="line"></span><br><span class="line">- 문단으로 부터 문장 추출</span><br><span class="line">  strip(앞뒤 공백제거)</span><br><span class="line">  &apos;\s?(.+?[\.\!\?…])\D&apos; : 문장 추출</span><br></pre></td></tr></table></figure>
+
+<p>학습에 불필요한 데이터를 제거하고 화자 단위로 분리하여 전체 <strong>2,084,007 문장</strong>을 수집했습니다.</p>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/80273651-197b6d80-870f-11ea-9625-5de4460dc60a.png" target="_blank" rel="external nofollow noopener noreferrer" title="화자 단위로 분리한 데이터" data-caption="화자 단위로 분리한 데이터" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/80273651-197b6d80-870f-11ea-9625-5de4460dc60a.png" alt="화자 단위로 분리한 데이터"></a><span class="caption">화자 단위로 분리한 데이터</span></div>
+
+<hr>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>데이터를 시각화하고 전처리가 올바르게 되었는지 확인하는 단계로, 수집된 문장들을 분석해보면 평균 40글자에 최대 1,131 글자의 길이를 가지고 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">문장 길이 최대 값: 1131</span><br><span class="line">문장 길이 최소 값: 2</span><br><span class="line">문장 길이 평균 값: 49.34</span><br><span class="line">문장 길이 표준편차: 40.68</span><br><span class="line">문장 길이 중간 값: 38.0</span><br><span class="line">문장 길이 제 1 사분위: 19.0</span><br><span class="line">문장 길이 제 3 사분위: 67.0</span><br></pre></td></tr></table></figure>
+
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/80273699-9dcdf080-870f-11ea-87ff-125a8653d847.png" target="_blank" rel="external nofollow noopener noreferrer" title="log-histogram of length of sentence" data-caption="log-histogram of length of sentence" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/80273699-9dcdf080-870f-11ea-87ff-125a8653d847.png" alt="log-histogram of length of sentence"></a><span class="caption">log-histogram of length of sentence</span></div>
+
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/80273776-2351a080-8710-11ea-8003-201c59caafe6.png" target="_blank" rel="external nofollow noopener noreferrer" title="box plot of sentence" data-caption="box plot of sentence" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/80273776-2351a080-8710-11ea-8003-201c59caafe6.png" alt="box plot of sentence"></a><span class="caption">box plot of sentence</span></div>
+
+<p>수집된 단어들을 분석해보면 평균 12글자에 최대 256 글자의 길이를 가지고 있습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">단어 개수 최대 값: 256</span><br><span class="line">단어 개수 최소 값: 1</span><br><span class="line">단어 개수 평균 값: 11.89</span><br><span class="line">단어 개수 표준편차: 10.00</span><br><span class="line">단어 개수 중간 값: 9.0</span><br><span class="line">단어 개수 제 1 사분위: 5.0</span><br><span class="line">단어 개수 제 3 사분위: 16.0</span><br></pre></td></tr></table></figure>
+
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/80274112-08ccf680-8713-11ea-8756-cd19f80620fc.png" target="_blank" rel="external nofollow noopener noreferrer" title="log-histogram of word count in sentence" data-caption="log-histogram of word count in sentence" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/80274112-08ccf680-8713-11ea-8756-cd19f80620fc.png" alt="log-histogram of word count in sentence"></a><span class="caption">log-histogram of word count in sentence</span></div>
+
+<p>또한 특수문자 및 끝점의 종류를 분석한 결과 다음과 같습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">물음표로 끝나는 문장: 11.44%</span><br><span class="line">마침표로 끝나는 문장: 83.64%</span><br><span class="line">…로 끝나는 문장: 4.64%</span><br><span class="line">,각 있는 문장 문장: 30.27%</span><br><span class="line">특수문자가 있는 문장: 36.72%</span><br></pre></td></tr></table></figure>
+
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/80273816-7deafc80-8710-11ea-8865-efebf3e48bcc.png" target="_blank" rel="external nofollow noopener noreferrer" title="word cloud" data-caption="word cloud" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/80273816-7deafc80-8710-11ea-8865-efebf3e48bcc.png" alt="word cloud"></a><span class="caption">word cloud</span></div>
+
+<hr>
+<h2 id="Labeling"><a href="#Labeling" class="headerlink" title="Labeling"></a>Labeling</h2><p>데이터에 라벨링을 하는 단계로, 이번에 해결하려는 문제를 두 단어 사이에 <code>공백( )</code>, <code>마침표(.)</code>, <code>물음표(?)</code> 중 어떤게 들어올지 선택하는 분류 문제로 정의하였습니다.</p>
+<p>따라서 단어들을 <strong>Bigram</strong>으로 분리하였고, 문장의 마지막 단어가 혼자 오는 경우를 위해 <code>[PAD]</code>를 추가하였습니다. label은 Bigram 사이에 들어오는 실제 값을 이용하여 공백은 0, 마침표는 1 그리고 물음표는 2로 붙였습니다.</p>
+<p><code>의석을 정리해 주시기 바랍니다. 그럼 준비 되셨나요?</code>라는 문장을 라벨링한 경우 아래와 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">data</th>
+<th align="center">label</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">의석을 [PAD]</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">의석을 정리해</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">정리해 [PAD]</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">정리해 주시기</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">주시기 [PAD]</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">주시기 바랍니다</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">바랍니다 [PAD]</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">바랍니다 그럼</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">그럼 [PAD]</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">그럼 준비</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">준비 [PAD]</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">준비 되셨나요</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">되셨나요 [PAD]</td>
+<td align="center">2</td>
+</tr>
+</tbody></table>
+<p>라벨링된 데이터의 비율을 분석해보면 다음과 같습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">전체 데이터 개수 : 16,519,997개</span><br><span class="line">물음표 데이터 개수 : 158,842개 (0.9%)</span><br><span class="line">마침표 데이터 개수 : 1,183,299개 (7.2%)</span><br><span class="line">띄어쓰기 데이터 개수 : 15,177,856개 (91.9%)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p>학습은 Keras를 이용하였고, 다음과 같은 방법으로 692,862개의 단어사전을 구축하여 단어를 양의 정수로 표현하였습니다.</p>
+<figure class="highlight python"><figcaption><span>tokenize</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createVocabulary</span><span class="params">(bigram_array)</span>:</span></span><br><span class="line">    vocab = &#123;&#125;</span><br><span class="line">    index = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i, bigram <span class="keyword">in</span> enumerate(bigram_array):</span><br><span class="line">        words = bigram.split(<span class="string">' '</span>)</span><br><span class="line">        <span class="keyword">if</span> len(words) != <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> vocab:</span><br><span class="line">                vocab[word] = index</span><br><span class="line">                index += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> vocab, index</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">text2seq</span><span class="params">(vocab, bigram_array)</span>:</span></span><br><span class="line">    bigram_seq = []</span><br><span class="line">    <span class="keyword">for</span> i, bigram <span class="keyword">in</span> enumerate(bigram_array):</span><br><span class="line">        words = bigram.split(<span class="string">' '</span>)</span><br><span class="line">        seq = []</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> vocab:</span><br><span class="line">                seq.append(vocab[word])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                seq.append(<span class="number">0</span>) <span class="comment"># OOV 인 경우 0</span></span><br><span class="line">        bigram_seq.append(seq)</span><br><span class="line">    <span class="keyword">return</span> bigram_seq</span><br></pre></td></tr></table></figure>
+
+<p>앞서 공백(0), 마침표(1), 물음표(2)로 라벨링한 데이터는 <a href="https://keras.io/utils/" target="_blank" rel="external nofollow noopener noreferrer">keras.util.to_categorical</a> 함수를 이용하여 one-hot 인코딩을 하였고 전체 학습 데이터와 테스트 데이터는 8:2로 나누어 진행하였습니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">학습 데이터 : 13,215,997 개</span><br><span class="line">테스트 데이터 : 3,304,000 개</span><br></pre></td></tr></table></figure>
+
+<p>먼저 Embedding 레이어를 이용하여 앞서 양의 정수로 표현한 단어들을 고정된 크기의 밀집 벡터로 바꿔주었습니다. 다음 LSTM 레이어를 추가하였고 공백, 마침표, 띄어쓰기 셋 중 하나를 분류하는 문제이므로 output 차원이 3인 softmax Dense 레이어를 추가하였습니다. loss는 categorical_crossentropy를 이용하였고, adam optimizer를 이용하여 모델을 컴파일하였습니다.</p>
+<figure class="highlight python"><figcaption><span>model</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">model = Sequential()</span><br><span class="line">model.add(Embedding(vocab_size, <span class="number">2</span>, input_length=<span class="number">2</span>))</span><br><span class="line">model.add(LSTM(<span class="number">128</span>))</span><br><span class="line">model.add(Dense(<span class="number">3</span>, activation=<span class="string">'softmax'</span>))</span><br><span class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>, optimizer=<span class="string">'adam'</span>, metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line">history = model.fit(X_train, y_train, epochs=<span class="number">8</span>, validation_split=<span class="number">0.3</span>, batch_size = <span class="number">2048</span>)</span><br></pre></td></tr></table></figure>
+
+<p>총 8에폭을 학습하였고, 학습 시간은 30분이 소요되었습니다. 학습 종료시 validation accuracy는 대략 98.6%가 나왔는데, 데이터가 굉장히 공백(0)에 편중된(biased) 데이터이므로 전부 공백(0)으로 해도 90% 이상의 accuracy가 보장되기 때문에 큰 의미는 없다고 보여집니다.</p>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/80275619-79791080-871d-11ea-938f-889e21083086.png" target="_blank" rel="external nofollow noopener noreferrer" title="train and validation accuracy per epochs" data-caption="train and validation accuracy per epochs" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/80275619-79791080-871d-11ea-938f-889e21083086.png" alt="train and validation accuracy per epochs"></a><span class="caption">train and validation accuracy per epochs</span></div>
+
+<p>따라서 여기서는 precision, recall 그리고 f1-score 값을 보는게 중요합니다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">종류</th>
+<th align="center">precision</th>
+<th align="center">recall</th>
+<th align="center">f1-score</th>
+<th align="center">데이터 수</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">공백(0)</td>
+<td align="center">0.99</td>
+<td align="center">1.00</td>
+<td align="center">0.99</td>
+<td align="center">1,520,203개</td>
+</tr>
+<tr>
+<td align="center">마침표(1)</td>
+<td align="center">0.95</td>
+<td align="center">0.93</td>
+<td align="center">0.94</td>
+<td align="center">232,575개</td>
+</tr>
+<tr>
+<td align="center">물음표(2)</td>
+<td align="center">0.90</td>
+<td align="center">0.66</td>
+<td align="center">0.76</td>
+<td align="center">31,706개</td>
+</tr>
+<tr>
+<td align="center">micro avg</td>
+<td align="center">0.98</td>
+<td align="center">0.98</td>
+<td align="center">0.98</td>
+<td align="center">1,784,484개</td>
+</tr>
+<tr>
+<td align="center">macro avg</td>
+<td align="center">0.95</td>
+<td align="center">0.86</td>
+<td align="center">0.90</td>
+<td align="center">1,784,484개</td>
+</tr>
+<tr>
+<td align="center">weighted avg</td>
+<td align="center">0.98</td>
+<td align="center">0.98</td>
+<td align="center">0.98</td>
+<td align="center">1,784,484개</td>
+</tr>
+<tr>
+<td align="center">samples avg</td>
+<td align="center">0.98</td>
+<td align="center">0.98</td>
+<td align="center">0.98</td>
+<td align="center">1,784,484개</td>
+</tr>
+</tbody></table>
+<p>확실히 데이터가 많은 공백(0)은 precision, recall, f1-score가 모두 높게 나온것을 보실 수 있습니다. 마침표(1)도 공백(0)에 비하면 데이터가 6.5배 정도 적음에도 불구하고 거의 모든 수치가 0.9 이상으로 생각보다 성능이 잘 나왔습니다. 그러나 물음표(2)는 데이터가 너무 적어서 recall이 0.66으로 조금 낮게 나왔지만 precision은 0.90으로 꽤나 신뢰할만 수치가 나왔습니다.</p>
+<hr>
+<h1 id="데모"><a href="#데모" class="headerlink" title="# 데모"></a># 데모</h1><blockquote>
+<p>본 데모에 사용된 스크립트는 <a href="https://www.kimyongmin.com/?mid=script&page=1&document_srl=20905" target="_blank" rel="external nofollow noopener noreferrer">2018년 8월 22일(목) 김용민 브리핑 방송 대본</a>의 일부 내용을 발췌한 내용으로 개인적 견해나 의미와는 아무런 상관이 없음을 밝힙니다.</p>
+</blockquote>
+<p><a href="https://www.kimyongmin.com/?mid=script&page=1&document_srl=20905" target="_blank" rel="external nofollow noopener noreferrer">2018년 8월 22일(목) 김용민 브리핑 방송 대본</a>의 일부 내용을 발췌하여 마침표와 느낌표를 제거한 뒤 모델에 input 데이터로 입력하여 테스트하였습니다.</p>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/80276524-6ae22780-8724-11ea-89b7-49f701f51a90.png" target="_blank" rel="external nofollow noopener noreferrer" title="왼쪽: 마침표와 물음표가 제거된 데이터, 오른쪽: 모델 예측 결과" data-caption="왼쪽: 마침표와 물음표가 제거된 데이터, 오른쪽: 모델 예측 결과" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/80276524-6ae22780-8724-11ea-89b7-49f701f51a90.png" alt="왼쪽: 마침표와 물음표가 제거된 데이터, 오른쪽: 모델 예측 결과"></a><span class="caption">왼쪽: 마침표와 물음표가 제거된 데이터, 오른쪽: 모델 예측 결과</span></div>
+
+<p>3번째 줄에 공백이 들어갈 부분에 마침표가 들어간 문장과 12번째 줄에 마침표가 빠진 것 이외에는 모두 괜찮게 예측했음을 볼 수 있습니다.</p>
+<hr>
+<h1 id="마무리"><a href="#마무리" class="headerlink" title="# 마무리"></a># 마무리</h1><p>국회 회의 코퍼스를 이용하여 만든 모델이라 회의 이외의 다른 도메인의 데이터에 대해선 성능이 떨어지는 것을 보면, 범용적인 모델을 만들기 위해선 정말 많은 데이터가 필요할 것 같습니다. 그래도 이번 프로젝트의 도메인에는 맞는 코퍼스라 문제없이 잘 마무리할 수 있었습니다.</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Endpoint-Detector/" rel="tag">Endpoint Detector</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-devblog-classifier/" data-tooltip="딥러닝으로 문서 분류기 만들기" aria-label="NEXT: 딥러닝으로 문서 분류기 만들기">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-endpoint-detector/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-endpoint-detector/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pj-devblog-classifier/" data-tooltip="딥러닝으로 문서 분류기 만들기" aria-label="NEXT: 딥러닝으로 문서 분류기 만들기">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-endpoint-detector/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-endpoint-detector/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pj-endpoint-detector/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pj-endpoint-detector/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-eh9l8zwpx33oejqrmuykemaorqsakuncsa3yhevhtcck4mkczp8rbfxudvnq.min.js"></script>
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
