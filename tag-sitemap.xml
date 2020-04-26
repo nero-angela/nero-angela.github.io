@@ -4,7 +4,14 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/tags/Endpoint-Detector/</loc>
-        <lastmod>2020-04-25T12:42:48.121Z</lastmod>
+        <lastmod>2020-04-26T03:03:29.510Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
+        <lastmod>2020-04-26T02:28:49.426Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -12,13 +19,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/tags/Devblog-Classifier/</loc>
         <lastmod>2020-03-04T02:41:18.395Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
-        <lastmod>2020-02-18T12:40:09.714Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
