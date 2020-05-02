@@ -8,6 +8,30 @@
     </url>
 
     <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-itertools/</loc>
+        <lastmod>2020-05-02T07:35:17.880Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-endpoint-detector/</loc>
+        <lastmod>2020-05-02T07:33:06.419Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-devblog-classifier/</loc>
+        <lastmod>2020-05-02T07:32:40.093Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
         <lastmod>2020-05-02T07:24:44.049Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -34,30 +58,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-01/</loc>
         <lastmod>2020-05-02T07:22:47.460Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-endpoint-detector/</loc>
-        <lastmod>2020-04-26T03:03:29.510Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-devblog-classifier/</loc>
-        <lastmod>2020-03-04T02:41:18.395Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-itertools/</loc>
-        <lastmod>2020-01-03T07:35:22.258Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -3,36 +3,36 @@
 
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
-        <lastmod>2020-05-02T07:24:44.049Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Endpoint-Detector/</loc>
-        <lastmod>2020-04-26T03:03:29.510Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Devblog-Classifier/</loc>
-        <lastmod>2020-03-04T02:41:18.395Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nero.devstory.co.kr/tags/itertools/</loc>
-        <lastmod>2020-01-03T07:35:22.258Z</lastmod>
+        <lastmod>2020-05-02T07:35:17.880Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://nero.devstory.co.kr/tags/python/</loc>
-        <lastmod>2020-01-03T07:35:22.258Z</lastmod>
+        <lastmod>2020-05-02T07:35:17.880Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Endpoint-Detector/</loc>
+        <lastmod>2020-05-02T07:33:06.419Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Devblog-Classifier/</loc>
+        <lastmod>2020-05-02T07:32:40.093Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
+        <lastmod>2020-05-02T07:24:44.049Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
