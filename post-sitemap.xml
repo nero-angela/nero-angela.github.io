@@ -8,8 +8,24 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pj-endpoint-detector/</loc>
-        <lastmod>2020-04-26T03:03:29.510Z</lastmod>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
+        <lastmod>2020-05-02T07:24:44.049Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-03/</loc>
+        <lastmod>2020-05-02T07:24:32.827Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-02/</loc>
+        <lastmod>2020-05-02T07:23:47.440Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +33,15 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-01/</loc>
-        <lastmod>2020-04-26T02:28:49.426Z</lastmod>
+        <lastmod>2020-05-02T07:22:47.460Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-endpoint-detector/</loc>
+        <lastmod>2020-04-26T03:03:29.510Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -32,32 +56,8 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
-        <lastmod>2020-02-18T12:40:09.714Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://nero.devstory.co.kr/post/pl-python-itertools/</loc>
         <lastmod>2020-01-03T07:35:22.258Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-03/</loc>
-        <lastmod>2020-01-03T07:13:57.968Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-02/</loc>
-        <lastmod>2020-01-03T07:13:38.982Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

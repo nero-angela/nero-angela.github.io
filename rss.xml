@@ -57,13 +57,13 @@
     </item>
     
     <item>
-      <title>2부. 현실감 있는 iOS AR앱 만들기</title>
+      <title>2부. ARKit을 이용하여 iOS AR앱 만들기</title>
       <link>https://nero.devstory.co.kr/post/pj-too-real-02/</link>
       <guid>https://nero.devstory.co.kr/post/pj-too-real-02/</guid>
       <pubDate>Tue, 24 Dec 2019 07:44:28 GMT</pubDate>
       <description>
       
-        &lt;p&gt;1부에서 소개한 현실감 있는 iOS AR 어플리케이션 개발 내용을 공유합니다.&lt;br&gt;
+        &lt;p&gt;ARKit을 이용하여 현실감 있는 iOS AR 어플리케이션 개발 내용을 공유합니다.&lt;br&gt;
       
       </description>
       
@@ -72,7 +72,7 @@
     </item>
     
     <item>
-      <title>3부. Custom YOLO 모델 만들기</title>
+      <title>3부. Custom YOLO v3 모델 만들기</title>
       <link>https://nero.devstory.co.kr/post/pj-too-real-03/</link>
       <guid>https://nero.devstory.co.kr/post/pj-too-real-03/</guid>
       <pubDate>Mon, 23 Dec 2019 07:44:28 GMT</pubDate>
@@ -87,13 +87,13 @@
     </item>
     
     <item>
-      <title>4부. iOS에 YOLO 모델 탑재하기</title>
+      <title>4부. CoreML을 이용하여 iOS에 YOLO v3 모델 탑재하기</title>
       <link>https://nero.devstory.co.kr/post/pj-too-real-04/</link>
       <guid>https://nero.devstory.co.kr/post/pj-too-real-04/</guid>
       <pubDate>Sun, 22 Dec 2019 07:44:28 GMT</pubDate>
       <description>
       
-        &lt;p&gt;iOS 어플리케이션에 YOLO 모델을 탑재하는 방법에 대해 공유합니다.&lt;br&gt;
+        &lt;p&gt;CoreML을 이용하여 iOS 어플리케이션에 YOLO v3 모델을 탑재하는 방법에 대해 공유합니다.&lt;br&gt;
       
       </description>
       
