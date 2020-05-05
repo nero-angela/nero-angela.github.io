@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Sat, 02 May 2020 07:33:06 GMT</pubDate>
+    <pubDate>Tue, 05 May 2020 17:24:30 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>지도 제작 웹사이트 GentleMap 개발기</title>
+      <link>https://nero.devstory.co.kr/post/pj-gentle-map/</link>
+      <guid>https://nero.devstory.co.kr/post/pj-gentle-map/</guid>
+      <pubDate>Thu, 30 Apr 2020 06:02:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션을 개발한 이야기를 공유합니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pj-gentle-map/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>딥러닝으로 문장의 끝점 검출기 만들기</title>

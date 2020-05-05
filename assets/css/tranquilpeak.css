@@ -1571,7 +1571,7 @@ figure.highlight,
   width: calc(100% - 4px);
   margin: 2px auto; }
   .figure.center .fig-img {
-    margin: 2px auto; }
+    margin: 32px auto 2px auto; }
 
 .figure.left, .figure.fig-20, .figure.fig-25, .figure.fig-33, .figure.fig-50, .figure.fig-75 {
   float: left;
@@ -1699,6 +1699,7 @@ figure.highlight,
   position: relative;
   height: auto;
   overflow: hidden;
+  margin-top: 30px;
   margin-bottom: 30px; }
   .image-gallery .image-gallery-metabar {
     position: absolute;
