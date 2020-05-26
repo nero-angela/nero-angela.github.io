@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>Python Sort() - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/pl-python-sort/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"Python의 sort() 함수에 대해서 알아보도록 하겠습니다.\n# Sortpython 2.3 버전 부터 Merge sort와 Insertion sort를 결합한 Tim sort 알고리즘을 내장 정렬 함수로 사용하고 있습니다. Tim sort에 대한 자세한 사항은 naver D2의 Tim sort에 대해서 알아보자 글을 참고해 주세요.\n\nSpace &amp; Time Complexitypython sort 함수는 Tim sort를 이용하고 있으며, 시간 복잡도와 공간 복잡도는 다음과 같습니다.\n\n\n\n\n\n\n\n\nBest case time complexity\nO(n)\n\n\nAverage case time complexity\nO(nlogn)\n\n\nWorst case time complexity\nO(nlogn)\n\n\nWorst case space complexity\nO(n)\n\n\n\nSort vs Sortedpython은 제자리(in-place)에서 정렬하는 방식과 새로운 정렬된 리스트를 반환하는 두 가지 정렬 방법을 제공합니다.sorted() 함수를 이용하면 제자리(in-place) 정렬이 적용되고, list.sort() 함수를 이용하면 정렬된 새로운 리스트를 반환합니다.\nsorted()를 이용한 제자리 정렬12a = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]sorted(a)    # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\nlist.sort()를 이용한 정렬123a = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]a.sort()     # Nonea            # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n두 함수 모두 기본적으로 오름차순으로 정렬하는데, reverse라는 매개변수를 이용하여 역순으로 정렬할 수 있습니다.\nreverse option12a = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]sorted(a, reverse=True) # [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]\n\n\nKeysort()와 list.serted()는 함수를 입력받는 key라는 매개변수를 가지고 있습니다. key는 정렬로 사용할 키를 반환하는 함수로, 이용하면 원하는 정렬을 쉽게 구현할 수 있습니다.\n대소문자를 구분하지 않고 정렬12sorted(\"This is a test string from Andrew\".split(), key=str.lower)# ['a', 'Andrew', 'from', 'is', 'string', 'test', 'This']\n\ntuple의 특정 index를 기준으로 정렬1234567student_tuples = [    ('john', 'A', 15),    ('jane', 'B', 12),    ('dave', 'B', 10),]sorted(student_tuples, key=lambda student: student[2]) # sorted by age# [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]\n\n아래의 예시는 객체의 특정 속성을 이용한 정렬입니다.\n객체 특정 속성을 이용한 정렬1234567891011121314151617class Student:    def __init__(self, name, grade, age):        self.name = name        self.grade = grade        self.age = age    def __repr__(self):        return repr((self.name, self.grade, self.age))    student_objects = [    Student('john', 'A', 15),    Student('jane', 'B', 12),    Student('dave', 'B', 10),]sorted(student_objects, key=lambda student: student.age)# [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]\n\n참고로 클래스의 인스턴스를 기본적으로 출력하면 아래와 같이 메모리 주소를 반환하게 되어있습니다.\n123[&lt;__main__.Student at 0x11034a990&gt;, &lt;__main__.Student at 0x11034a890&gt;, &lt;__main__.Student at 0x11034a790&gt;]\n\n이를 보기 좋게 만들기 위해 Student 클래스에 __repr__ 함수를 override하여 내부 구조를 볼 수 있도록 구현하였습니다.\noverride __repr__123[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]\n\n객체의 경우 key를 넣지 않는 경우 기본적으로 __lt__() 함수를 호출하도록 되어있습니다.\n__lt__()를 이용한 sort123456789101112131415161718192021from operator import attrgetterclass Student:    def __init__(self, name, grade, age):        self.name = name        self.grade = grade        self.age = age            def __repr__(self):        return repr((self.name, self.grade, self.age))        def __lt__(self, other):        return self.age &lt; other.age    student_objects = [    Student('john', 'A', 15),    Student('jane', 'B', 12),    Student('dave', 'B', 10),]sorted(student_objects)# [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]\n\n\nStable sortStable sort 알고리즘이란 정렬 기준이 동일한 값의 순서가 입력된 순서대로 정렬되는 알고리즘을 말합니다. 아래 예제는 색상을 기준으로 정렬하는데, Stable한 경우에는 아래와 같이 각 색상의 숫자 2가 입력된 것과 같이 항상 1 뒤에 있어야 합니다. (&#39;blue&#39;, 1)이 항상 (&#39;blue&#39;, 2) 앞에 있는 것을 보시면 됩니다.\npython의 sort 함수는 stable 합니다.123data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]sorted(data, key=lambda x: x[0])# [('blue', 1), ('blue', 2), ('red', 1), ('red', 2)]\n\n다음과 같이 각 색상의 2가 1보다 먼저 나온 경우, stable하지 않은 함수입니다.\n1[('blue', 2), ('blue', 1), ('red', 1), ('red', 2)]\n\n\nMultiple Sortpython operator 모듈을 이용하면 다중 정렬을 구현할 수 있습니다. 아래 예시는 itemgetter를 이용하여 등급 순으로 정렬한 뒤, 내부에서 나이 순으로 정렬한 코드입니다.\n123456789from operator import itemgetterstudent_tuples = [    ('john', 'A', 15), # 이름, 등급, 나이    ('jane', 'B', 12),    ('dave', 'B', 10),]sorted(student_tuples, key=itemgetter(1, 2))# [('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]\n\n객체의 경우 attrgetter를 이용하여 다중 정렬을 구현할 수 있습니다.\n123456789101112131415161718from operator import attrgetterclass Student:    def __init__(self, name, grade, age):        self.name = name        self.grade = grade        self.age = age    def __repr__(self):        return repr((self.name, self.grade, self.age))    student_objects = [    Student('john', 'A', 15),    Student('jane', 'B', 12),    Student('dave', 'B', 10),]sorted(student_objects, key=attrgetter('grade', 'age'))# [('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]\n\n만약에 위와 달리 등급은 오름차순, 나이는 내림차순으로 정렬하고 싶은 경우\u001d 다음과 같이 구현할 수 있다.\n12345678910111213student_objects = [    Student('john', 'A', 15),    Student('jane', 'B', 12),    Student('dave', 'B', 10),]def complex_sort(xs, specs):    for key, reverse in specs:        xs.sort(key=attrgetter(key), reverse=reverse) # in-place sort    return xscomplex_sort(student_objects, [('grade', False), ('age', True)])# [('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]\n\n\n# 마무리python sort() 함수에 대해 알아보았습니다. 더 자세한 사항은 공식문서를 참고하시기 바랍니다.\n","dateCreated":"2020-05-26T14:41:24+09:00","dateModified":"2020-05-26T17:07:02+09:00","datePublished":"2020-05-26T14:41:24+09:00","description":"Python의 sort() 함수에 대해서 알아보도록 하겠습니다.","headline":"Python Sort()","image":["https://user-images.githubusercontent.com/26322627/80858217-de3ee880-8c92-11ea-83a3-8133a274b35e.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-sort/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-sort/","keywords":"Program Language | Python","thumbnailUrl":"https://user-images.githubusercontent.com/26322627/80858217-de3ee880-8c92-11ea-83a3-8133a274b35e.png"}</script>
+    <meta name="description" content="Python의 sort() 함수에 대해서 알아보도록 하겠습니다.">
+<meta name="keywords" content="Program Language | Python">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Python Sort()">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;pl-python-sort&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="Python의 sort() 함수에 대해서 알아보도록 하겠습니다.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-05-26T08:07:02.463Z">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+        <meta property="og:image" content="https://user-images.githubusercontent.com/26322627/80858217-de3ee880-8c92-11ea-83a3-8133a274b35e.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://user-images.githubusercontent.com/26322627/80858217-de3ee880-8c92-11ea-83a3-8133a274b35e.png">
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-xrljgnhebbi0rb0x2eesfxz1sftlmqw7fxqdvzvrlmsr7gjgqt8jkrtohpqz.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script>
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Python Sort()
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-26T14:41:24+09:00">
+	
+		    May 26, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Program-Language/">Program Language</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Sort"><span class="nero-toc-text"># Sort</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Space-amp-Time-Complexity"><span class="nero-toc-text">Space &amp; Time Complexity</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Sort-vs-Sorted"><span class="nero-toc-text">Sort vs Sorted</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Key"><span class="nero-toc-text">Key</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Stable-sort"><span class="nero-toc-text">Stable sort</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Multiple-Sort"><span class="nero-toc-text">Multiple Sort</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#마무리"><span class="nero-toc-text"># 마무리</span></a></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            
+
+
+            <p>Python의 sort() 함수에 대해서 알아보도록 하겠습니다.<br><a id="more"></a></p>
+<h1 id="Sort"><a href="#Sort" class="headerlink" title="# Sort"></a># Sort</h1><p>python 2.3 버전 부터 <a href="https://en.wikipedia.org/wiki/Merge_sort" target="_blank" rel="external nofollow noopener noreferrer">Merge sort</a>와 <a href="https://en.wikipedia.org/wiki/Insertion_sort" target="_blank" rel="external nofollow noopener noreferrer">Insertion sort</a>를 결합한 <a href="https://en.wikipedia.org/wiki/Timsort" target="_blank" rel="external nofollow noopener noreferrer">Tim sort</a> 알고리즘을 내장 정렬 함수로 사용하고 있습니다. Tim sort에 대한 자세한 사항은 naver D2의 <a href="https://d2.naver.com/helloworld/0315536" target="_blank" rel="external nofollow noopener noreferrer">Tim sort에 대해서 알아보자</a> 글을 참고해 주세요.</p>
+<hr>
+<h2 id="Space-amp-Time-Complexity"><a href="#Space-amp-Time-Complexity" class="headerlink" title="Space &amp; Time Complexity"></a>Space &amp; Time Complexity</h2><p>python sort 함수는 Tim sort를 이용하고 있으며, 시간 복잡도와 공간 복잡도는 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Best case time complexity</td>
+<td align="center">O(n)</td>
+</tr>
+<tr>
+<td align="center">Average case time complexity</td>
+<td align="center">O(nlogn)</td>
+</tr>
+<tr>
+<td align="center">Worst case time complexity</td>
+<td align="center">O(nlogn)</td>
+</tr>
+<tr>
+<td align="center">Worst case space complexity</td>
+<td align="center">O(n)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Sort-vs-Sorted"><a href="#Sort-vs-Sorted" class="headerlink" title="Sort vs Sorted"></a>Sort vs Sorted</h2><p>python은 제자리(in-place)에서 정렬하는 방식과 새로운 정렬된 리스트를 반환하는 두 가지 정렬 방법을 제공합니다.<br><code>sorted()</code> 함수를 이용하면 제자리(in-place) 정렬이 적용되고, <code>list.sort()</code> 함수를 이용하면 정렬된 새로운 리스트를 반환합니다.</p>
+<figure class="highlight python"><figcaption><span>sorted()를 이용한 제자리 정렬</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">sorted(a)    <span class="comment"># [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>list.sort()를 이용한 정렬</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">a.sort()     <span class="comment"># None</span></span><br><span class="line">a            <span class="comment"># [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span></span><br></pre></td></tr></table></figure>
+
+<p>두 함수 모두 기본적으로 오름차순으로 정렬하는데, <code>reverse</code>라는 매개변수를 이용하여 역순으로 정렬할 수 있습니다.</p>
+<figure class="highlight python"><figcaption><span>reverse option</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">sorted(a, reverse=<span class="literal">True</span>) <span class="comment"># [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Key"><a href="#Key" class="headerlink" title="Key"></a>Key</h2><p><code>sort()</code>와 <code>list.serted()</code>는 함수를 입력받는 <code>key</code>라는 매개변수를 가지고 있습니다. <code>key</code>는 정렬로 사용할 키를 반환하는 함수로, 이용하면 원하는 정렬을 쉽게 구현할 수 있습니다.</p>
+<figure class="highlight python"><figcaption><span>대소문자를 구분하지 않고 정렬</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sorted(<span class="string">"This is a test string from Andrew"</span>.split(), key=str.lower)</span><br><span class="line"><span class="comment"># ['a', 'Andrew', 'from', 'is', 'string', 'test', 'This']</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>tuple의 특정 index를 기준으로 정렬</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">student_tuples = [</span><br><span class="line">    (<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>),</span><br><span class="line">    (<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>),</span><br><span class="line">    (<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),</span><br><span class="line">]</span><br><span class="line">sorted(student_tuples, key=<span class="keyword">lambda</span> student: student[<span class="number">2</span>]) <span class="comment"># sorted by age</span></span><br><span class="line"><span class="comment"># [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]</span></span><br></pre></td></tr></table></figure>
+
+<p>아래의 예시는 객체의 특정 속성을 이용한 정렬입니다.</p>
+<figure class="highlight python"><figcaption><span>객체 특정 속성을 이용한 정렬</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, grade, age)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.grade = grade</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> repr((self.name, self.grade, self.age))</span><br><span class="line">    </span><br><span class="line">student_objects = [</span><br><span class="line">    Student(<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>),</span><br><span class="line">    Student(<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>),</span><br><span class="line">    Student(<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">sorted(student_objects, key=<span class="keyword">lambda</span> student: student.age)</span><br><span class="line"><span class="comment"># [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]</span></span><br></pre></td></tr></table></figure>
+
+<p>참고로 클래스의 인스턴스를 기본적으로 출력하면 아래와 같이 메모리 주소를 반환하게 되어있습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&lt;__main__.Student at <span class="number">0x11034a990</span>&gt;,</span><br><span class="line"> &lt;__main__.Student at <span class="number">0x11034a890</span>&gt;,</span><br><span class="line"> &lt;__main__.Student at <span class="number">0x11034a790</span>&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>이를 보기 좋게 만들기 위해 <code>Student</code> 클래스에 <code>__repr__</code> 함수를 override하여 내부 구조를 볼 수 있도록 구현하였습니다.</p>
+<figure class="highlight python"><figcaption><span>override __repr__</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),</span><br><span class="line"> (<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>),</span><br><span class="line"> (<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>)]</span><br></pre></td></tr></table></figure>
+
+<p>객체의 경우 <code>key</code>를 넣지 않는 경우 기본적으로 <a href="https://docs.python.org/ko/3/reference/datamodel.html#object.__lt__" target="_blank" rel="external nofollow noopener noreferrer">__lt__()</a> 함수를 호출하도록 되어있습니다.</p>
+<figure class="highlight python"><figcaption><span>__lt__()를 이용한 sort</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> attrgetter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, grade, age)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.grade = grade</span><br><span class="line">        self.age = age</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> repr((self.name, self.grade, self.age))</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.age &lt; other.age</span><br><span class="line">    </span><br><span class="line">student_objects = [</span><br><span class="line">    Student(<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>),</span><br><span class="line">    Student(<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>),</span><br><span class="line">    Student(<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),</span><br><span class="line">]</span><br><span class="line">sorted(student_objects)</span><br><span class="line"><span class="comment"># [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Stable-sort"><a href="#Stable-sort" class="headerlink" title="Stable sort"></a>Stable sort</h2><p>Stable sort 알고리즘이란 정렬 기준이 동일한 값의 순서가 입력된 순서대로 정렬되는 알고리즘을 말합니다. 아래 예제는 색상을 기준으로 정렬하는데, Stable한 경우에는 아래와 같이 각 색상의 숫자 2가 입력된 것과 같이 항상 1 뒤에 있어야 합니다. <code>(&#39;blue&#39;, 1)</code>이 항상 <code>(&#39;blue&#39;, 2)</code> 앞에 있는 것을 보시면 됩니다.</p>
+<figure class="highlight python"><figcaption><span>python의 sort 함수는 stable 합니다.</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = [(<span class="string">'red'</span>, <span class="number">1</span>), (<span class="string">'blue'</span>, <span class="number">1</span>), (<span class="string">'red'</span>, <span class="number">2</span>), (<span class="string">'blue'</span>, <span class="number">2</span>)]</span><br><span class="line">sorted(data, key=<span class="keyword">lambda</span> x: x[<span class="number">0</span>])</span><br><span class="line"><span class="comment"># [('blue', 1), ('blue', 2), ('red', 1), ('red', 2)]</span></span><br></pre></td></tr></table></figure>
+
+<p>다음과 같이 각 색상의 2가 1보다 먼저 나온 경우, stable하지 않은 함수입니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="string">'blue'</span>, <span class="number">2</span>), (<span class="string">'blue'</span>, <span class="number">1</span>), (<span class="string">'red'</span>, <span class="number">1</span>), (<span class="string">'red'</span>, <span class="number">2</span>)]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Multiple-Sort"><a href="#Multiple-Sort" class="headerlink" title="Multiple Sort"></a>Multiple Sort</h2><p>python <a href="https://docs.python.org/ko/3.7/library/operator.html" target="_blank" rel="external nofollow noopener noreferrer">operator</a> 모듈을 이용하면 다중 정렬을 구현할 수 있습니다. 아래 예시는 <code>itemgetter</code>를 이용하여 등급 순으로 정렬한 뒤, 내부에서 나이 순으로 정렬한 코드입니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter</span><br><span class="line"></span><br><span class="line">student_tuples = [</span><br><span class="line">    (<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>), <span class="comment"># 이름, 등급, 나이</span></span><br><span class="line">    (<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>),</span><br><span class="line">    (<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),</span><br><span class="line">]</span><br><span class="line">sorted(student_tuples, key=itemgetter(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"><span class="comment"># [('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]</span></span><br></pre></td></tr></table></figure>
+
+<p>객체의 경우 <code>attrgetter</code>를 이용하여 다중 정렬을 구현할 수 있습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> attrgetter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, grade, age)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.grade = grade</span><br><span class="line">        self.age = age</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> repr((self.name, self.grade, self.age))</span><br><span class="line">    </span><br><span class="line">student_objects = [</span><br><span class="line">    Student(<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>),</span><br><span class="line">    Student(<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>),</span><br><span class="line">    Student(<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">sorted(student_objects, key=attrgetter(<span class="string">'grade'</span>, <span class="string">'age'</span>))</span><br><span class="line"><span class="comment"># [('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]</span></span><br></pre></td></tr></table></figure>
+
+<p>만약에 위와 달리 등급은 오름차순, 나이는 내림차순으로 정렬하고 싶은 경우 다음과 같이 구현할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">student_objects = [</span><br><span class="line">    Student(<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>),</span><br><span class="line">    Student(<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>),</span><br><span class="line">    Student(<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">complex_sort</span><span class="params">(xs, specs)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> key, reverse <span class="keyword">in</span> specs:</span><br><span class="line">        xs.sort(key=attrgetter(key), reverse=reverse) <span class="comment"># in-place sort</span></span><br><span class="line">    <span class="keyword">return</span> xs</span><br><span class="line"></span><br><span class="line">complex_sort(student_objects, [(<span class="string">'grade'</span>, <span class="literal">False</span>), (<span class="string">'age'</span>, <span class="literal">True</span>)])</span><br><span class="line"><span class="comment"># [('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="마무리"><a href="#마무리" class="headerlink" title="# 마무리"></a># 마무리</h1><p>python <code>sort()</code> 함수에 대해 알아보았습니다. 더 자세한 사항은 <a href="https://docs.python.org/ko/3/howto/sorting.html" target="_blank" rel="external nofollow noopener noreferrer">공식문서</a>를 참고하시기 바랍니다.</p>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Program-Language-Python/" rel="tag">Program Language | Python</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pl-python-collections-counter/" data-tooltip="Python Collections Counter()" aria-label="NEXT: Python Collections Counter()">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-sort/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-sort/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/pl-python-collections-counter/" data-tooltip="Python Collections Counter()" aria-label="NEXT: Python Collections Counter()">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-sort/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-sort/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-sort/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-sort/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-2yifve3ldxccq7mwzcca0neyrcklyrr7iqhzugyeoy8shd2238ndfbuyqdgw.min.js"></script>
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

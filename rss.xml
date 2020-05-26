@@ -8,17 +8,32 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Tue, 26 May 2020 05:09:37 GMT</pubDate>
+    <pubDate>Tue, 26 May 2020 08:07:02 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
-      <title>Python Collections Counter</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-collections-counter/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-collections-counter/</guid>
-      <pubDate>Mon, 07 Dec 2020 09:47:24 GMT</pubDate>
+      <title>Python Sort()</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-sort/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-sort/</guid>
+      <pubDate>Tue, 26 May 2020 05:41:24 GMT</pubDate>
       <description>
       
-        &lt;p&gt;이번 포스팅에서는 Python 2.7과 3.5부터 탑제된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt; 클래스에 대해 알아보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;Python의 sort() 함수에 대해서 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-sort/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Collections Counter()</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-collections-counter/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-collections-counter/</guid>
+      <pubDate>Tue, 26 May 2020 02:47:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python 2.7과 3.5부터 탑제된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt; 클래스에 대해 알아보도록 하겠습니다.&lt;br&gt;
       
       </description>
       

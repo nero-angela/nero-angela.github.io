@@ -8,16 +8,16 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-collections-counter/</loc>
-        <lastmod>2020-05-26T05:09:37.331Z</lastmod>
+        <loc>https://nero.devstory.co.kr/post/pl-python-sort/</loc>
+        <lastmod>2020-05-26T08:07:02.463Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pj-gentle-map/</loc>
-        <lastmod>2020-05-14T02:16:00.991Z</lastmod>
+        <loc>https://nero.devstory.co.kr/post/pl-python-collections-counter/</loc>
+        <lastmod>2020-05-26T08:05:35.094Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,15 +25,7 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/post/pl-python-itertools/</loc>
-        <lastmod>2020-05-02T07:35:17.880Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-endpoint-detector/</loc>
-        <lastmod>2020-05-02T07:33:06.419Z</lastmod>
+        <lastmod>2020-05-26T05:40:19.580Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -41,31 +33,23 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-devblog-classifier/</loc>
-        <lastmod>2020-05-02T07:32:40.093Z</lastmod>
+        <lastmod>2020-05-26T05:39:23.544Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
-        <lastmod>2020-05-02T07:24:44.049Z</lastmod>
+        <loc>https://nero.devstory.co.kr/post/pj-endpoint-detector/</loc>
+        <lastmod>2020-05-26T05:39:21.338Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-03/</loc>
-        <lastmod>2020-05-02T07:24:32.827Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-02/</loc>
-        <lastmod>2020-05-02T07:23:47.440Z</lastmod>
+        <loc>https://nero.devstory.co.kr/post/pj-gentle-map/</loc>
+        <lastmod>2020-05-26T05:39:19.258Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -73,7 +57,31 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-01/</loc>
-        <lastmod>2020-05-02T07:22:47.460Z</lastmod>
+        <lastmod>2020-05-26T05:39:17.050Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-02/</loc>
+        <lastmod>2020-05-26T05:39:14.522Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-03/</loc>
+        <lastmod>2020-05-26T05:39:12.277Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
+        <lastmod>2020-05-26T05:39:01.187Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

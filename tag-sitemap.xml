@@ -3,50 +3,36 @@
 
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/collections/</loc>
-        <lastmod>2020-05-26T05:09:37.331Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Program-Language-Python/</loc>
+        <lastmod>2020-05-26T08:07:02.463Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/python/</loc>
-        <lastmod>2020-05-26T05:09:37.331Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Project-Devblog-Classifier/</loc>
+        <lastmod>2020-05-26T05:39:23.544Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/Gentle-Map/</loc>
-        <lastmod>2020-05-14T02:16:00.991Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Project-Endpoint-Detector/</loc>
+        <lastmod>2020-05-26T05:39:21.338Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/itertools/</loc>
-        <lastmod>2020-05-02T07:35:17.880Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Project-Gentle-Map/</loc>
+        <lastmod>2020-05-26T05:39:19.258Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/Endpoint-Detector/</loc>
-        <lastmod>2020-05-02T07:33:06.419Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Devblog-Classifier/</loc>
-        <lastmod>2020-05-02T07:32:40.093Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Too-Real/</loc>
-        <lastmod>2020-05-02T07:24:44.049Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Project-Too-Real/</loc>
+        <lastmod>2020-05-26T05:39:17.050Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
