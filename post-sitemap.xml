@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>https://nero.devstory.co.kr/post/algo-programmers-12077/</loc>
+        <lastmod>2020-05-26T15:14:41.392Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/post/pl-python-collections-counter/</loc>
-        <lastmod>2020-05-26T08:10:17.391Z</lastmod>
+        <lastmod>2020-05-26T15:13:04.272Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +25,7 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/post/pl-python-sort/</loc>
-        <lastmod>2020-05-26T08:07:02.463Z</lastmod>
+        <lastmod>2020-05-26T14:42:16.822Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
