@@ -8,13 +8,13 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Wed, 27 May 2020 06:13:46 GMT</pubDate>
+    <pubDate>Wed, 27 May 2020 06:53:16 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>알고리즘 | 전화번호 목록</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-42577/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-42577/</guid>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-phone-book/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-phone-book/</guid>
       <pubDate>Wed, 27 May 2020 04:07:28 GMT</pubDate>
       <description>
       
@@ -23,13 +23,13 @@
       </description>
       
       
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-42577/#disqus_thread</comments>
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-phone-book/#disqus_thread</comments>
     </item>
     
     <item>
       <title>알고리즘 | 완주하지 못한 선수</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-12077/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-12077/</guid>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-marathon/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-marathon/</guid>
       <pubDate>Tue, 26 May 2020 12:34:28 GMT</pubDate>
       <description>
       
@@ -38,7 +38,7 @@
       </description>
       
       
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-12077/#disqus_thread</comments>
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-marathon/#disqus_thread</comments>
     </item>
     
     <item>
