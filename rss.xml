@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Wed, 27 May 2020 06:53:16 GMT</pubDate>
+    <pubDate>Wed, 27 May 2020 07:38:32 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Python Reduce()</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</guid>
+      <pubDate>Wed, 27 May 2020 07:35:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python의 &lt;code&gt;functools&lt;/code&gt;의 &lt;code&gt;reduce()&lt;/code&gt; 함수에 대해서 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-functools-reduce/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 전화번호 목록</title>

@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>Python Reduce() - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/pl-python-functools-reduce/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.\n\nReducereduce는 누계값과 현재 요소의 값을 받는 함수와, iterable 그리고 초기값을 받는 함수입니다.\n123456789def reduce(function, iterable, initializer=None):    it = iter(iterable)    if initializer is None:        value = next(it)    else:        value = initializer    for element in it:        value = function(value, element)    return value\n\nreduce의 정의를 한 줄로 설명하기 어려운데, 사용법을 보면 금방 이해할 수 있습니다.\n배열의 모든 원소의 합 구하기123from functools import reducea = [1, 2, 3]total = reduce(lambda acc, cur: acc + cur, a) # ((1 + 2) + 3) = 6\n\n최댓값 구하기123from functools import reducea = [1, 2, 3]total = reduce(lambda pre, cur: cur if pre &lt; cur else pre, a) # 3\n\nreduce는 내부적으로 iterable을 쓰기 때문에 for문 보다 간결하고 성능이 뒤어납니다.\n","dateCreated":"2020-05-27T16:35:24+09:00","dateModified":"2020-05-27T16:38:32+09:00","datePublished":"2020-05-27T16:35:24+09:00","description":"Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.","headline":"Python Reduce()","image":["https://source.unsplash.com/150x150/?reduce"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-functools-reduce/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-functools-reduce/","keywords":"Program Language | Python","thumbnailUrl":"https://source.unsplash.com/150x150/?reduce"}</script>
+    <meta name="description" content="Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.">
+<meta name="keywords" content="Program Language | Python">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Python Reduce()">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;pl-python-functools-reduce&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-05-27T07:38:32.568Z">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+        <meta property="og:image" content="https://source.unsplash.com/150x150/?reduce">
+        <meta class="swiftype" name="image" data-type="enum" content="https://source.unsplash.com/150x150/?reduce">
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-xrljgnhebbi0rb0x2eesfxz1sftlmqw7fxqdvzvrlmsr7gjgqt8jkrtohpqz.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Python Reduce()
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-27T16:35:24+09:00">
+	
+		    May 27, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Program-Language/">Program Language</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Reduce"><span class="nero-toc-text">Reduce</span></a></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            
+
+
+            <p>Python의 <code>functools</code>의 <code>reduce()</code> 함수에 대해서 알아보도록 하겠습니다.<br><a id="more"></a></p>
+<hr>
+<h1 id="Reduce"><a href="#Reduce" class="headerlink" title="Reduce"></a>Reduce</h1><p><a href="https://docs.python.org/3.7/library/functools.html#functools.reduce" target="_blank" rel="external nofollow noopener noreferrer">reduce</a>는 누계값과 현재 요소의 값을 받는 함수와, iterable 그리고 초기값을 받는 함수입니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reduce</span><span class="params">(function, iterable, initializer=None)</span>:</span></span><br><span class="line">    it = iter(iterable)</span><br><span class="line">    <span class="keyword">if</span> initializer <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        value = next(it)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        value = initializer</span><br><span class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> it:</span><br><span class="line">        value = function(value, element)</span><br><span class="line">    <span class="keyword">return</span> value</span><br></pre></td></tr></table></figure>
+
+<p>reduce의 정의를 한 줄로 설명하기 어려운데, 사용법을 보면 금방 이해할 수 있습니다.</p>
+<figure class="highlight python"><figcaption><span>배열의 모든 원소의 합 구하기</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">total = reduce(<span class="keyword">lambda</span> acc, cur: acc + cur, a) <span class="comment"># ((1 + 2) + 3) = 6</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>최댓값 구하기</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">total = reduce(<span class="keyword">lambda</span> pre, cur: cur <span class="keyword">if</span> pre &lt; cur <span class="keyword">else</span> pre, a) <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<p>reduce는 내부적으로 iterable을 쓰기 때문에 <code>for문</code> 보다 간결하고 성능이 뒤어납니다.</p>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Program-Language-Python/" rel="tag">Program Language | Python</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-phone-book/" data-tooltip="알고리즘 | 전화번호 목록" aria-label="NEXT: 알고리즘 | 전화번호 목록">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-functools-reduce/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-functools-reduce/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-phone-book/" data-tooltip="알고리즘 | 전화번호 목록" aria-label="NEXT: 알고리즘 | 전화번호 목록">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-functools-reduce/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-functools-reduce/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-functools-reduce/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-functools-reduce/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-2yifve3ldxccq7mwzcca0neyrcklyrr7iqhzugyeoy8shd2238ndfbuyqdgw.min.js"></script>
+<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+
+
+
+    </body>
+</html>
