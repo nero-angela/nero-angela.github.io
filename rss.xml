@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Tue, 26 May 2020 15:14:41 GMT</pubDate>
+    <pubDate>Wed, 27 May 2020 04:36:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 전화번호 목록</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-42577/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-42577/</guid>
+      <pubDate>Wed, 27 May 2020 04:07:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “전화번호 목록”를 Python을 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-42577/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 완주하지 못한 선수</title>
