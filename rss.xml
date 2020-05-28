@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Wed, 27 May 2020 07:38:32 GMT</pubDate>
+    <pubDate>Thu, 28 May 2020 10:40:28 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 베스트 앨범</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-best-album/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-best-album/</guid>
+      <pubDate>Wed, 27 May 2020 08:29:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “베스트 앨범”을 Python을 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-best-album/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>Python Reduce()</title>

@@ -3,15 +3,22 @@
 
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/Program-Language-Python/</loc>
-        <lastmod>2020-05-27T10:46:03.943Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Algorithm/</loc>
+        <lastmod>2020-05-28T10:40:28.211Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/Algorithm/</loc>
-        <lastmod>2020-05-27T08:24:38.034Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Project-Too-Real/</loc>
+        <lastmod>2020-05-28T10:33:18.769Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Program-Language-Python/</loc>
+        <lastmod>2020-05-27T10:46:03.943Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -33,13 +40,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/tags/Project-Gentle-Map/</loc>
         <lastmod>2020-05-26T05:39:19.258Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Project-Too-Real/</loc>
-        <lastmod>2020-05-26T05:39:17.050Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

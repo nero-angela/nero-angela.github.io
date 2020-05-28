@@ -8,22 +8,22 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/categories/Program-Language/</loc>
-        <lastmod>2020-05-27T10:46:03.943Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nero.devstory.co.kr/categories/Algorithm/</loc>
-        <lastmod>2020-05-27T08:24:38.034Z</lastmod>
+        <lastmod>2020-05-28T10:40:28.211Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://nero.devstory.co.kr/categories/Project/</loc>
-        <lastmod>2020-05-26T05:39:23.544Z</lastmod>
+        <lastmod>2020-05-28T10:33:18.769Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/categories/Program-Language/</loc>
+        <lastmod>2020-05-27T10:46:03.943Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
