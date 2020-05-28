@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Thu, 28 May 2020 11:02:57 GMT</pubDate>
+    <pubDate>Thu, 28 May 2020 16:09:21 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 별 찍기</title>
+      <link>https://nero.devstory.co.kr/post/algo-baekjoon-print-star/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-baekjoon-print-star/</guid>
+      <pubDate>Thu, 28 May 2020 16:08:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Baekjoon의 알고리즘 문제 “별 찍기”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-baekjoon-print-star/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 베스트 앨범</title>
