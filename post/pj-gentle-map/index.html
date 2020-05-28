@@ -18,7 +18,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션 GentleMap을 개발한 이야기를 공유합니다.\n# 프로젝트 소개사이드 프로젝트로 전체 개발 기간은 3개월 정도 소요되었고, 혼자서 개발하였습니다.\n\n최종 결과물은 https://GentleMap.devstory.co.kr에서 이용하실 수 있습니다.\n\n\n개발 동기대학생 때 KT&amp;G 상상발룬티어 소속으로 100명의 자원 봉사자들과 팀을 이루어 120가구에 반찬을 나누는 사랑의 반찬나눔 봉사와 취약계층 60가구를 대상으로 화재감지기 설치 봉사를 기획하고 참여했습니다. 두 봉사활동은 모두 취약계층의 명단을 팀 별로 나눈 지도를 제작 해야했는데, 당시 네이버 주소 API와 Google Map API을 이용한 Android 지도 어플리케이션을 만들어 봉사활동을 편하게 진행할 수 있었습니다.\n이 후에도 지도가 필요한 봉사활동을 할 때 직접 주소를 위도 경도로 변환하고, 팀 수에 맞추어 가까운 거리순으로 마커를 분배하여 지도 어플리케이션을 만들었습니다. 문득 다른 봉사활동을 하는 사람들도 비슷한 니즈를 가지고 있을것이라 생각이 들어 누구든지 손쉽게 지도를 만들 수 있는 웹 플랫폼인 Gentle Map을 만들게 되었습니다.\n\n기능 소개\nExcel 데이터를 지도상에 시각화\n활동하는 팀 수에 맞추어 동선이 최소화되도록 마커 자동 분배\n관심있는 팀의 마커만 볼 수 있는 마커 필터링 기능\n모든 마커의 상태가 실시간으로 동기화 되어 진행상황로 실시간으로 모니터링 가능\n카카오톡 계정을 이용한 소셜 로그인 기능\n카카오톡 링크 이용하여 손쉽게 프로젝트 초대 기능\n프로젝트 참가자는 회원가입 없이 비밀번호만으로 참여 가능\n별도의 어플리케이션 설치 없이 모바일 웹을 이용하여 이용 가능\n모바일에서도 이용가능한 반응형 디자인\nHTML5의 Geolocation을 이용한 GPS 기능\n\n\n# 개발 내용Vue.js 기반의 반응형 웹 어플리케이션과 Firebase 기반의 백엔드로 설계하였습니다.\n\n✔︎ FrontEnd\n\n\nVue.js\nVuex\nVue Router\nElement UI\nVusax\nKakao Map\nKakao Login\nKakao Link\n\n\n✔︎ BackEnd\n\n\nFirebase Hosting\nFirebase Firestore\nFirebase Functions\nFirebase Authentication\nFirebase Storage\n\n\nDesignKakao API를 이용하여 지도 및 Marker Clustering 기능을 구현하였습니다.\n\n프로젝트를 생성 및 관리를 위해선 로그인이 필요합니다. 이때 회원가입 과정을 손쉽게 할 수 있도록 Kakao 소셜 로그인 기능을 이용하였는데, Firebase에서는 카카오톡 소셜 로그인을 정식적으로 지원하지 않기 때문에 Firebase Functions에 Custom Token을 발급하는 함수를 만들고, 클라이언트에서 signInWithCustomToken을 이용하여 로그인하도록 구현하였습니다.\n\nHostingHTML5 Geolocation을 이용하기 위해선, HTTPS가 필요합니다. Firebase Hosting에서는 기본적으로 SSL을 제공해주기 때문에 별도로 인증서를 구매하지 않고 HTTPS를 이용할 수 있습니다. 또한 Custom Domain도 HTTPS가 지원되기 때문에 gentlemap.devstory.co.kr 를 연결하여 호스팅하였습니다.\n\nFirestore\n\n\nYour browser doesn't support HTML5 Video :/\nFirestore를 이용한 실시간 마커상태 동기화 영상  (왼쪽 : Desktop, 오른쪽 : Mobile)\n\n\n마커 상태를 새로고침 없이 실시간으로 동기화 되도록 Firestore를 이용하였습니다. 초기에 마커들의 상태를 하나의 Document 안에 배열로 구현하였는데, Firestore에서는 배열의 특정 원소만을 업데이트하는 기능을 지원하지 않아 변경된 배열 전체를 업데이트하도록 구현하였습니다. 그런데 짧은 시간 안에 두 유저가 업데이트를 요청하는 경우, 아래 sequence diagram 처럼 늦게 요청한 유저의 요청값이 이전 유저의 값으로 동기화되어 화면상 결과가 데이터베이스와 달라지는 문제가 발생하였습니다.\n","dateCreated":"2020-04-30T15:02:28+09:00","dateModified":"2020-05-26T14:39:19+09:00","datePublished":"2020-04-30T15:02:28+09:00","description":"주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션 GentleMap을 개발한 이야기를 공유합니다.","headline":"Vue.js & Firebase 기반 지도 제작 웹사이트 만들기","image":["https://user-images.githubusercontent.com/26322627/80855964-c494a580-8c80-11ea-8f11-843d96980050.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pj-gentle-map/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pj-gentle-map/","keywords":"Project | Gentle Map","thumbnailUrl":"https://user-images.githubusercontent.com/26322627/80855964-c494a580-8c80-11ea-8f11-843d96980050.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션 GentleMap을 개발한 이야기를 공유합니다.\n# 프로젝트 소개사이드 프로젝트로 전체 개발 기간은 3개월 정도 소요되었고, 혼자서 개발하였습니다.\n\n최종 결과물은 https://GentleMap.devstory.co.kr에서 이용하실 수 있습니다.\n\n\n개발 동기대학생 때 KT&amp;G 상상발룬티어 소속으로 100명의 자원 봉사자들과 팀을 이루어 120가구에 반찬을 나누는 사랑의 반찬나눔 봉사와 취약계층 60가구를 대상으로 화재감지기 설치 봉사를 기획하고 참여했습니다. 두 봉사활동은 모두 취약계층의 명단을 팀 별로 나눈 지도를 제작 해야했는데, 당시 네이버 주소 API와 Google Map API을 이용한 Android 지도 어플리케이션을 만들어 봉사활동을 편하게 진행할 수 있었습니다.\n이 후에도 지도가 필요한 봉사활동을 할 때 직접 주소를 위도 경도로 변환하고, 팀 수에 맞추어 가까운 거리순으로 마커를 분배하여 지도 어플리케이션을 만들었습니다. 문득 다른 봉사활동을 하는 사람들도 비슷한 니즈를 가지고 있을것이라 생각이 들어 누구든지 손쉽게 지도를 만들 수 있는 웹 플랫폼인 Gentle Map을 만들게 되었습니다.\n\n기능 소개\nExcel 데이터를 지도상에 시각화\n활동하는 팀 수에 맞추어 동선이 최소화되도록 마커 자동 분배\n관심있는 팀의 마커만 볼 수 있는 마커 필터링 기능\n모든 마커의 상태가 실시간으로 동기화 되어 진행상황로 실시간으로 모니터링 가능\n카카오톡 계정을 이용한 소셜 로그인 기능\n카카오톡 링크 이용하여 손쉽게 프로젝트 초대 기능\n프로젝트 참가자는 회원가입 없이 비밀번호만으로 참여 가능\n별도의 어플리케이션 설치 없이 모바일 웹을 이용하여 이용 가능\n모바일에서도 이용가능한 반응형 디자인\nHTML5의 Geolocation을 이용한 GPS 기능\n\n\n# 개발 내용Vue.js 기반의 반응형 웹 어플리케이션과 Firebase 기반의 백엔드로 설계하였습니다.\n\n✔︎ FrontEnd\n\n\nVue.js\nVuex\nVue Router\nElement UI\nVusax\nKakao Map\nKakao Login\nKakao Link\n\n\n✔︎ BackEnd\n\n\nFirebase Hosting\nFirebase Firestore\nFirebase Functions\nFirebase Authentication\nFirebase Storage\n\n\nDesignKakao API를 이용하여 지도 및 Marker Clustering 기능을 구현하였습니다.\n\n프로젝트를 생성 및 관리를 위해선 로그인이 필요합니다. 이때 회원가입 과정을 손쉽게 할 수 있도록 Kakao 소셜 로그인 기능을 이용하였는데, Firebase에서는 카카오톡 소셜 로그인을 정식적으로 지원하지 않기 때문에 Firebase Functions에 Custom Token을 발급하는 함수를 만들고, 클라이언트에서 signInWithCustomToken을 이용하여 로그인하도록 구현하였습니다.\n\nHostingHTML5 Geolocation을 이용하기 위해선, HTTPS가 필요합니다. Firebase Hosting에서는 기본적으로 SSL을 제공해주기 때문에 별도로 인증서를 구매하지 않고 HTTPS를 이용할 수 있습니다. 또한 Custom Domain도 HTTPS가 지원되기 때문에 gentlemap.devstory.co.kr 를 연결하여 호스팅하였습니다.\n\nFirestore\n\n\nYour browser doesn't support HTML5 Video :/\nFirestore를 이용한 실시간 마커상태 동기화 영상  (왼쪽 : Desktop, 오른쪽 : Mobile)\n\n\n마커 상태를 새로고침 없이 실시간으로 동기화 되도록 Firestore를 이용하였습니다. 초기에 마커들의 상태를 하나의 Document 안에 배열로 구현하였는데, Firestore에서는 배열의 특정 원소만을 업데이트하는 기능을 지원하지 않아 변경된 배열 전체를 업데이트하도록 구현하였습니다. 그런데 짧은 시간 안에 두 유저가 업데이트를 요청하는 경우, 아래 sequence diagram 처럼 늦게 요청한 유저의 요청값이 이전 유저의 값으로 동기화되어 화면상 결과가 데이터베이스와 달라지는 문제가 발생하였습니다.\n","dateCreated":"2020-04-30T15:02:28+09:00","dateModified":"2020-05-26T14:39:19+09:00","datePublished":"2020-04-30T15:02:28+09:00","description":"주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션 GentleMap을 개발한 이야기를 공유합니다.","headline":"Vue.js & Firebase 기반 지도 제작 웹사이트 만들기","image":["https://user-images.githubusercontent.com/26322627/80855964-c494a580-8c80-11ea-8f11-843d96980050.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pj-gentle-map/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pj-gentle-map/","keywords":"Project | Gentle Map","thumbnailUrl":"https://user-images.githubusercontent.com/26322627/80855964-c494a580-8c80-11ea-8f11-843d96980050.png"}</script>
     <meta name="description" content="주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션 GentleMap을 개발한 이야기를 공유합니다.">
 <meta name="keywords" content="Project | Gentle Map">
 <meta property="og:type" content="blog">
@@ -82,7 +82,7 @@
         
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-xrljgnhebbi0rb0x2eesfxz1sftlmqw7fxqdvzvrlmsr7gjgqt8jkrtohpqz.min.css">
+    <link rel="stylesheet" href="/assets/css/style-obdxtyhfxlxqw4x0ch6jz6v6g3k2u9dfime53skog7bkcsub7fklwxxjzwll.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
@@ -213,6 +213,15 @@
                     </a>
             </li>
             
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/nero-angela/" target="_blank" rel="external nofollow noopener noreferrer" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
         </ul>
         
             <ul class="sidebar-buttons">
@@ -300,7 +309,7 @@
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858334-bac86d80-8c93-11ea-8d65-232ed505e737.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858334-bac86d80-8c93-11ea-8d65-232ed505e737.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
 
                         <img class="photo" src="https://user-images.githubusercontent.com/26322627/80858334-bac86d80-8c93-11ea-8d65-232ed505e737.png">
@@ -310,7 +319,7 @@
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858337-c025b800-8c93-11ea-8a23-d88cb0b58dc0.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858337-c025b800-8c93-11ea-8a23-d88cb0b58dc0.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
 
                         <img class="photo" src="https://user-images.githubusercontent.com/26322627/80858337-c025b800-8c93-11ea-8a23-d88cb0b58dc0.png">
@@ -320,7 +329,7 @@
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858339-c156e500-8c93-11ea-993f-65bcc041034e.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858339-c156e500-8c93-11ea-993f-65bcc041034e.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
 
                         <img class="photo" src="https://user-images.githubusercontent.com/26322627/80858339-c156e500-8c93-11ea-993f-65bcc041034e.png">
@@ -330,56 +339,56 @@
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858340-c1ef7b80-8c93-11ea-9acb-31c03d3d954a.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858340-c1ef7b80-8c93-11ea-9acb-31c03d3d954a.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858343-c320a880-8c93-11ea-9720-6e086b0c7aee.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858343-c320a880-8c93-11ea-9720-6e086b0c7aee.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858499-886b4000-8c94-11ea-863d-db8a50412f8c.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858499-886b4000-8c94-11ea-863d-db8a50412f8c.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858501-8d2ff400-8c94-11ea-952f-779a00d371bf.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858501-8d2ff400-8c94-11ea-952f-779a00d371bf.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858502-8e612100-8c94-11ea-95ee-9f408dcc33ab.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858502-8e612100-8c94-11ea-95ee-9f408dcc33ab.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858504-902ae480-8c94-11ea-9020-8850aa05e89d.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858504-902ae480-8c94-11ea-9020-8850aa05e89d.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858506-915c1180-8c94-11ea-94b2-70c593beddda.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858506-915c1180-8c94-11ea-94b2-70c593beddda.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
             
             
             <div class="photo-box">
-                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckaqz989z000ch7kw97jibf45" data-caption title href="https://user-images.githubusercontent.com/26322627/80858508-928d3e80-8c94-11ea-836d-8c17b9e796a6.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
+                <a class="photo-box-inner fancybox" data-fancybox="gallery-ckar0wh5w000kvykwcp807kwd" data-caption title href="https://user-images.githubusercontent.com/26322627/80858508-928d3e80-8c94-11ea-836d-8c17b9e796a6.png" aria-label rel="external nofollow noopener noreferrer" target="_blank">
                     
                 </a>
             </div>
@@ -708,7 +717,7 @@
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
-<script src="/assets/js/script-2yifve3ldxccq7mwzcca0neyrcklyrr7iqhzugyeoy8shd2238ndfbuyqdgw.min.js"></script>
+<script src="/assets/js/script-xlcannty8wrynf04v4dh7hcgfzx2k6czhfx7thc7jompljugisz9y4q9pfjq.min.js"></script>
 <!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 

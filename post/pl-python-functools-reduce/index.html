@@ -18,7 +18,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg"},"articleBody":"Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.\n\nReducereduce는 누계값과 현재 요소의 값을 받는 함수와, iterable 그리고 초기값을 받는 함수입니다.\n123456789def reduce(function, iterable, initializer=None):    it = iter(iterable)    if initializer is None:        value = next(it)    else:        value = initializer    for element in it:        value = function(value, element)    return value\n\nreduce의 정의를 한 줄로 설명하기 어려운데, 사용법을 보면 금방 이해할 수 있습니다.\n배열의 모든 원소의 합 구하기123from functools import reducea = [1, 2, 3]total = reduce(lambda acc, cur: acc + cur, a) # ((1 + 2) + 3) = 6\n\n최댓값 구하기123from functools import reducea = [1, 2, 3]total = reduce(lambda pre, cur: cur if pre &lt; cur else pre, a) # 3\n\nreduce는 내부적으로 iterable을 쓰기 때문에 for문 보다 간결하고 성능이 뒤어납니다.\n","dateCreated":"2020-05-27T16:35:24+09:00","dateModified":"2020-05-27T16:38:32+09:00","datePublished":"2020-05-27T16:35:24+09:00","description":"Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.","headline":"Python Reduce()","image":["https://source.unsplash.com/150x150/?reduce"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-functools-reduce/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-functools-reduce/","keywords":"Program Language | Python","thumbnailUrl":"https://source.unsplash.com/150x150/?reduce"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.\n\nReducereduce는 누계값과 현재 요소의 값을 받는 함수와, iterable 그리고 초기값을 받는 함수입니다.\n123456789def reduce(function, iterable, initializer=None):    it = iter(iterable)    if initializer is None:        value = next(it)    else:        value = initializer    for element in it:        value = function(value, element)    return value\n\nreduce의 정의를 한 줄로 설명하기 어려운데, 사용법을 보면 금방 이해할 수 있습니다.\n배열의 모든 원소의 합 구하기123from functools import reducea = [1, 2, 3]total = reduce(lambda acc, cur: acc + cur, a) # ((1 + 2) + 3) = 6\n\n최댓값 구하기123from functools import reducea = [1, 2, 3]total = reduce(lambda pre, cur: cur if pre &lt; cur else pre, a) # 3\n\nreduce는 내부적으로 iterable을 쓰기 때문에 for문 보다 간결하고 성능이 뒤어납니다.\n","dateCreated":"2020-05-27T16:35:24+09:00","dateModified":"2020-05-27T16:38:32+09:00","datePublished":"2020-05-27T16:35:24+09:00","description":"Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.","headline":"Python Reduce()","image":["https://source.unsplash.com/150x150/?reduce"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-functools-reduce/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-functools-reduce/","keywords":"Program Language | Python","thumbnailUrl":"https://source.unsplash.com/150x150/?reduce"}</script>
     <meta name="description" content="Python의 functools의 reduce() 함수에 대해서 알아보도록 하겠습니다.">
 <meta name="keywords" content="Program Language | Python">
 <meta property="og:type" content="blog">
@@ -43,7 +43,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-xrljgnhebbi0rb0x2eesfxz1sftlmqw7fxqdvzvrlmsr7gjgqt8jkrtohpqz.min.css">
+    <link rel="stylesheet" href="/assets/css/style-obdxtyhfxlxqw4x0ch6jz6v6g3k2u9dfime53skog7bkcsub7fklwxxjzwll.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
@@ -171,6 +171,15 @@
                     
                         <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/nero-angela/" target="_blank" rel="external nofollow noopener noreferrer" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
                     </a>
             </li>
             
@@ -487,7 +496,7 @@
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
-<script src="/assets/js/script-2yifve3ldxccq7mwzcca0neyrcklyrr7iqhzugyeoy8shd2238ndfbuyqdgw.min.js"></script>
+<script src="/assets/js/script-xlcannty8wrynf04v4dh7hcgfzx2k6czhfx7thc7jompljugisz9y4q9pfjq.min.js"></script>
 <!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
