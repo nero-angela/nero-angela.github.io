@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Sat, 30 May 2020 04:00:31 GMT</pubDate>
+    <pubDate>Sat, 30 May 2020 07:16:04 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Python Timeit</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-timeit/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-timeit/</guid>
+      <pubDate>Sat, 30 May 2020 06:52:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python &lt;code&gt;timeit&lt;/code&gt;를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-timeit/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 탑</title>
@@ -123,7 +138,7 @@
       <pubDate>Tue, 26 May 2020 05:41:24 GMT</pubDate>
       <description>
       
-        &lt;p&gt;Python의 sort() 함수에 대해서 알아보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;Python의 &lt;code&gt;sort()&lt;/code&gt;에 대해서 알아보도록 하겠습니다.&lt;br&gt;
       
       </description>
       
@@ -138,7 +153,7 @@
       <pubDate>Tue, 26 May 2020 02:47:24 GMT</pubDate>
       <description>
       
-        &lt;p&gt;Python 2.7과 3.5부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt; 클래스에 대해 알아보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;Python 2.7과 3.5부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
       
       </description>
       

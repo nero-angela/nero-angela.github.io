@@ -8,8 +8,24 @@
     </url>
 
     <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-timeit/</loc>
+        <lastmod>2020-05-30T07:16:04.916Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-sort/</loc>
+        <lastmod>2020-05-30T06:37:17.186Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/post/pl-python-collections-counter/</loc>
-        <lastmod>2020-05-30T06:17:44.944Z</lastmod>
+        <lastmod>2020-05-30T06:37:01.620Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -74,14 +90,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-03/</loc>
         <lastmod>2020-05-28T10:33:18.769Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-sort/</loc>
-        <lastmod>2020-05-27T10:46:03.943Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

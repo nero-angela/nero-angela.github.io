@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>Python Timeit - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/pl-python-timeit/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.\n\n# Timeit\ntimeit은 작은 코드의 실행시간을 측정하는 내장 모듈입니다.\n\n\nHow to usetimeit을 사용하시려면 아래와 같이 import를 해주세요.\n1from timeit import timeit\n\nstmt는 측정하려는 코드 조각을 문자열 형태로 넣으면 됩니다.\n1timeit(stmt='pass', setup='pass', timer=&lt;default timer&gt;, number=1000000)\n\nstmt : 측정하려는 코드 조각을 문자열 형태로 넣습니다.\nsetup : stmt 코드가 실행되기 위해 선행 코드들을 문자열 형태로 넣습니다.\ntimer : 플랫폼 별 다양한 타이머를 설정합니다. time.clock이 1/100sec로 1/60sec인 time.time 보다 정확합니다.\nnumber : 반복 횟수를 지정합니다.\n\n\nExample간단하게 list.pop(0)와 deque.popleft()의 실행 시간을 timeit을 이용하여 측정해보겠습니다. 문자열로 전달해야하는 stmt나 setup의 코드가 긴 경우 &quot;&quot;&quot;triple quetes&quot;&quot;&quot;를 이용하시면 됩니다.\n1234setup = \"\"\"a=[i for i in range(10**7)]\"\"\"timeit.timeit('a.pop(0)', setup=setup, number=1) # 0.03873537702020258\n\n123456setup = \"\"\"from collections import dequea = deque([i for i in range(10**7)])\"\"\"timeit.timeit('a.popleft()', setup=setup, number=1) # 6.488000508397818e-06\n\nsetup에서 선언하지 않은 변수나 설정은 stmt에서 인식하지 못합니다.\n","dateCreated":"2020-05-30T15:52:00+09:00","dateModified":"2020-05-30T16:16:04+09:00","datePublished":"2020-05-30T15:52:00+09:00","description":"Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.","headline":"Python Timeit","image":["https://source.unsplash.com/150x150/?time"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-timeit/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-timeit/","keywords":"Program Language | Python","thumbnailUrl":"https://source.unsplash.com/150x150/?time"}</script>
+    <meta name="description" content="Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.">
+<meta name="keywords" content="Program Language | Python">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Python Timeit">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;pl-python-timeit&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-05-30T07:16:04.916Z">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+        <meta property="og:image" content="https://source.unsplash.com/150x150/?time">
+        <meta class="swiftype" name="image" data-type="enum" content="https://source.unsplash.com/150x150/?time">
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-obdxtyhfxlxqw4x0ch6jz6v6g3k2u9dfime53skog7bkcsub7fklwxxjzwll.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/nero-angela/" target="_blank" rel="external nofollow noopener noreferrer" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Python Timeit
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-30T15:52:00+09:00">
+	
+		    May 30, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Program-Language/">Program Language</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Timeit"><span class="nero-toc-text"># Timeit</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#How-to-use"><span class="nero-toc-text">How to use</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Example"><span class="nero-toc-text">Example</span></a></li></ol></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            
+
+
+            <p>Python <code>timeit</code>를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.<br><a id="more"></a></p>
+<hr>
+<h1 id="Timeit"><a href="#Timeit" class="headerlink" title="# Timeit"></a># Timeit</h1><blockquote>
+<p><a href="https://docs.python.org/2/library/timeit.html" target="_blank" rel="external nofollow noopener noreferrer">timeit</a>은 작은 코드의 실행시간을 측정하는 내장 모듈입니다.</p>
+</blockquote>
+<hr>
+<h2 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use"></a>How to use</h2><p><code>timeit</code>을 사용하시려면 아래와 같이 import를 해주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> timeit <span class="keyword">import</span> timeit</span><br></pre></td></tr></table></figure>
+
+<p><code>stmt</code>는 측정하려는 코드 조각을 <strong>문자열</strong> 형태로 넣으면 됩니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timeit(stmt=<span class="string">'pass'</span>, setup=<span class="string">'pass'</span>, timer=&lt;default timer&gt;, number=<span class="number">1000000</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>stmt : 측정하려는 코드 조각을 <strong>문자열</strong> 형태로 넣습니다.</li>
+<li>setup : <code>stmt</code> 코드가 실행되기 위해 선행 코드들을 <strong>문자열</strong> 형태로 넣습니다.</li>
+<li>timer : 플랫폼 별 다양한 타이머를 설정합니다. <code>time.clock</code>이 <code>1/100sec</code>로 <code>1/60sec</code>인 <code>time.time</code> 보다 정확합니다.</li>
+<li>number : 반복 횟수를 지정합니다.</li>
+</ul>
+<hr>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>간단하게 <code>list.pop(0)</code>와 <code>deque.popleft()</code>의 실행 시간을 <code>timeit</code>을 이용하여 측정해보겠습니다. <strong>문자열</strong>로 전달해야하는 <code>stmt</code>나 <code>setup</code>의 코드가 긴 경우 <code>&quot;&quot;&quot;triple quetes&quot;&quot;&quot;</code>를 이용하시면 됩니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setup = <span class="string">"""</span></span><br><span class="line"><span class="string">a=[i for i in range(10**7)]</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">timeit.timeit(<span class="string">'a.pop(0)'</span>, setup=setup, number=<span class="number">1</span>) <span class="comment"># 0.03873537702020258</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">setup = <span class="string">"""</span></span><br><span class="line"><span class="string">from collections import deque</span></span><br><span class="line"><span class="string">a = deque([i for i in range(10**7)])</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">timeit.timeit(<span class="string">'a.popleft()'</span>, setup=setup, number=<span class="number">1</span>) <span class="comment"># 6.488000508397818e-06</span></span><br></pre></td></tr></table></figure>
+
+<p><code>setup</code>에서 선언하지 않은 변수나 설정은 <code>stmt</code>에서 인식하지 못합니다.</p>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Program-Language-Python/" rel="tag">Program Language | Python</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-tower/" data-tooltip="알고리즘 | 탑" aria-label="NEXT: 알고리즘 | 탑">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-timeit/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-timeit/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-tower/" data-tooltip="알고리즘 | 탑" aria-label="NEXT: 알고리즘 | 탑">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-timeit/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-timeit/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-timeit/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-timeit/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-xlcannty8wrynf04v4dh7hcgfzx2k6czhfx7thc7jompljugisz9y4q9pfjq.min.js"></script>
+<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+
+
+
+    </body>
+</html>
