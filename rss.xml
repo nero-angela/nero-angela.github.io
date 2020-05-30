@@ -8,7 +8,7 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Sat, 30 May 2020 08:42:26 GMT</pubDate>
+    <pubDate>Sat, 30 May 2020 08:44:05 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -18,7 +18,7 @@
       <pubDate>Sat, 30 May 2020 08:42:00 GMT</pubDate>
       <description>
       
-        &lt;p&gt;Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;Programmers의 알고리즘 문제 “다리를 지나는 트럭”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
       
       </description>
       
