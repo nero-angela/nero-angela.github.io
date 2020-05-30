@@ -27,6 +27,21 @@
     </item>
     
     <item>
+      <title>Python Collections Deque()</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-collections-deque/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-collections-deque/</guid>
+      <pubDate>Sat, 30 May 2020 06:15:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python 2.4부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;deque&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-collections-deque/#disqus_thread</comments>
+    </item>
+    
+    <item>
       <title>알고리즘 | 탑</title>
       <link>https://nero.devstory.co.kr/post/algo-programmers-tower/</link>
       <guid>https://nero.devstory.co.kr/post/algo-programmers-tower/</guid>
