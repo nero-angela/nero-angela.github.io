@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>알고리즘 | 다리를 지나는 트럭 - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.\n\n# Problem\n출처 : Programmers\n\n\n문제 설명트럭 여러 대가 강을 가로지르는 일 차선 다리를 정해진 순으로 건너려 합니다. 모든 트럭이 다리를 건너려면 최소 몇 초가 걸리는지 알아내야 합니다. 트럭은 1초에 1만큼 움직이며, 다리 길이는 bridge_length이고 다리는 무게 weight까지 견딥니다. (※ 트럭이 다리에 완전히 오르지 않은 경우, 이 트럭의 무게는 고려하지 않습니다.)\n예를 들어, 길이가 2이고 10kg 무게를 견디는 다리가 있습니다. 무게가 [7, 4, 5, 6]kg인 트럭이 순서대로 최단 시간 안에 다리를 건너려면 다음과 같이 건너야 합니다.\n\n\n\n경과 시간\n다리를 지난 트럭\n다리를 건너는 트럭\n대기 트럭\n\n\n\n0\n[]\n[]\n[7,4,5,6]\n\n\n1~2\n[]\n[7]\n[4,5,6]\n\n\n3\n[7]\n[4]\n[5,6]\n\n\n4\n[7]\n[4,5]\n[6]\n\n\n5\n[7,4]\n[5]\n[6]\n\n\n6~7\n[7,4,5]\n[6]\n[]\n\n\n8\n[7,4,5,6]\n[]\n[]\n\n\n따라서, 모든 트럭이 다리를 지나려면 최소 8초가 걸립니다.\nsolution 함수의 매개변수로 다리 길이 bridge_length, 다리가 견딜 수 있는 무게 weight, 트럭별 무게 truck_weights가 주어집니다. 이때 모든 트럭이 다리를 건너려면 최소 몇 초가 걸리는지 return 하도록 solution 함수를 완성하세요.\n\n제한 조건\nbridge_length는 1 이상 10,000 이하입니다.\nweight는 1 이상 10,000 이하입니다.\ntruck_weights의 길이는 1 이상 10,000 이하입니다.\n모든 트럭의 무게는 1 이상 weight 이하입니다.\n\n\n입출력 예\n\n\nbridge_length\nweight\ntruck_weights\nreturn\n\n\n\n2\n10\n[7,4,5,6]\n8\n\n\n100\n100\n[10]\n101\n\n\n100\n100\n[10,10,10,10,10,10,10,10,10,10]\n110\n\n\n\n# Solution\n##\n1234567891011121314def solution(bridge_length, weight, truck_weights):    passed = []    passing = []    time = 0    total_trucks = len(truck_weights)    while len(passed) &lt; total_trucks:        time += 1        if len(passing) &gt; 0 and time - passing[0][1] == bridge_length:            passed.append(passing.pop(0))                tw = sum(map(lambda x: x[0], passing))        if len(truck_weights) &gt; 0 and tw + truck_weights[0] &lt;= weight:            passing.append((truck_weights.pop(0), time))    return time\n12345678910111213141516171819정확성  테스트\t테스트 1 〉 통과 (3.14ms, 7.77MB)\t테스트 2 〉 통과 (23.87ms, 7.75MB)\t테스트 3 〉 통과 (0.08ms, 7.74MB)\t테스트 4 〉 통과 (62.53ms, 7.83MB)\t테스트 5 〉 통과 (436.90ms, 7.79MB)\t테스트 6 〉 통과 (167.22ms, 7.91MB)\t테스트 7 〉 통과 (1.80ms, 7.74MB)\t테스트 8 〉 통과 (0.53ms, 7.74MB)\t테스트 9 〉 통과 (10.90ms, 7.79MB)\t테스트 10 〉 통과 (0.33ms, 7.8MB)\t테스트 11 〉 통과 (0.04ms, 7.8MB)\t테스트 12 〉 통과 (0.97ms, 7.8MB)\t테스트 13 〉 통과 (3.53ms, 7.85MB)\t테스트 14 〉 통과 (0.07ms, 7.85MB)채점 결과\t정확성: 100.0\t합계: 100.0 / 100.0","dateCreated":"2020-05-30T13:39:00+09:00","dateModified":"2020-05-30T13:46:37+09:00","datePublished":"2020-05-30T13:39:00+09:00","description":"Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.","headline":"알고리즘 | 다리를 지나는 트럭","image":["https://source.unsplash.com/150x150/?truck"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/","keywords":"Algorithm","thumbnailUrl":"https://source.unsplash.com/150x150/?truck"}</script>
+    <meta name="description" content="Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="알고리즘 | 다리를 지나는 트럭">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;algo-programmers-truck-passing-a-bridge&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-05-30T04:46:37.791Z">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+        <meta property="og:image" content="https://source.unsplash.com/150x150/?truck">
+        <meta class="swiftype" name="image" data-type="enum" content="https://source.unsplash.com/150x150/?truck">
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-obdxtyhfxlxqw4x0ch6jz6v6g3k2u9dfime53skog7bkcsub7fklwxxjzwll.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/nero-angela/" target="_blank" rel="external nofollow noopener noreferrer" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            알고리즘 | 다리를 지나는 트럭
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-30T13:39:00+09:00">
+	
+		    May 30, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Problem"><span class="nero-toc-text"># Problem</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#문제-설명"><span class="nero-toc-text">문제 설명</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#제한-조건"><span class="nero-toc-text">제한 조건</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#입출력-예"><span class="nero-toc-text">입출력 예</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Solution"><span class="nero-toc-text"># Solution</span></a></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            
+
+
+            <p>Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.<br><a id="more"></a></p>
+<hr>
+<h1 id="Problem"><a href="#Problem" class="headerlink" title="# Problem"></a># Problem</h1><blockquote>
+<p>출처 : <a href="https://programmers.co.kr/learn/courses/30/lessons/42583?language=python" target="_blank" rel="external nofollow noopener noreferrer">Programmers</a></p>
+</blockquote>
+<hr>
+<h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>트럭 여러 대가 강을 가로지르는 일 차선 다리를 정해진 순으로 건너려 합니다. 모든 트럭이 다리를 건너려면 최소 몇 초가 걸리는지 알아내야 합니다. 트럭은 1초에 1만큼 움직이며, 다리 길이는 bridge_length이고 다리는 무게 weight까지 견딥니다. (※ 트럭이 다리에 완전히 오르지 않은 경우, 이 트럭의 무게는 고려하지 않습니다.)</p>
+<p>예를 들어, 길이가 2이고 10kg 무게를 견디는 다리가 있습니다. 무게가 [7, 4, 5, 6]kg인 트럭이 순서대로 최단 시간 안에 다리를 건너려면 다음과 같이 건너야 합니다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">경과 시간</th>
+<th align="center">다리를 지난 트럭</th>
+<th align="center">다리를 건너는 트럭</th>
+<th align="center">대기 트럭</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">[]</td>
+<td align="center">[]</td>
+<td align="center">[7,4,5,6]</td>
+</tr>
+<tr>
+<td align="center">1~2</td>
+<td align="center">[]</td>
+<td align="center">[7]</td>
+<td align="center">[4,5,6]</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">[7]</td>
+<td align="center">[4]</td>
+<td align="center">[5,6]</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">[7]</td>
+<td align="center">[4,5]</td>
+<td align="center">[6]</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">[7,4]</td>
+<td align="center">[5]</td>
+<td align="center">[6]</td>
+</tr>
+<tr>
+<td align="center">6~7</td>
+<td align="center">[7,4,5]</td>
+<td align="center">[6]</td>
+<td align="center">[]</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">[7,4,5,6]</td>
+<td align="center">[]</td>
+<td align="center">[]</td>
+</tr>
+</tbody></table>
+<p>따라서, 모든 트럭이 다리를 지나려면 최소 8초가 걸립니다.</p>
+<p>solution 함수의 매개변수로 다리 길이 bridge_length, 다리가 견딜 수 있는 무게 weight, 트럭별 무게 truck_weights가 주어집니다. 이때 모든 트럭이 다리를 건너려면 최소 몇 초가 걸리는지 return 하도록 solution 함수를 완성하세요.</p>
+<hr>
+<h2 id="제한-조건"><a href="#제한-조건" class="headerlink" title="제한 조건"></a>제한 조건</h2><ul>
+<li>bridge_length는 1 이상 10,000 이하입니다.</li>
+<li>weight는 1 이상 10,000 이하입니다.</li>
+<li>truck_weights의 길이는 1 이상 10,000 이하입니다.</li>
+<li>모든 트럭의 무게는 1 이상 weight 이하입니다.</li>
+</ul>
+<hr>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th align="center">bridge_length</th>
+<th align="center">weight</th>
+<th align="center">truck_weights</th>
+<th align="center">return</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">2</td>
+<td align="center">10</td>
+<td align="center">[7,4,5,6]</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td align="center">100</td>
+<td align="center">[10]</td>
+<td align="center">101</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td align="center">100</td>
+<td align="center">[10,10,10,10,10,10,10,10,10,10]</td>
+<td align="center">110</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="# Solution"></a># Solution</h1><hr>
+<p>##</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(bridge_length, weight, truck_weights)</span>:</span></span><br><span class="line">    passed = []</span><br><span class="line">    passing = []</span><br><span class="line">    time = <span class="number">0</span></span><br><span class="line">    total_trucks = len(truck_weights)</span><br><span class="line">    <span class="keyword">while</span> len(passed) &lt; total_trucks:</span><br><span class="line">        time += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> len(passing) &gt; <span class="number">0</span> <span class="keyword">and</span> time - passing[<span class="number">0</span>][<span class="number">1</span>] == bridge_length:</span><br><span class="line">            passed.append(passing.pop(<span class="number">0</span>))</span><br><span class="line">        </span><br><span class="line">        tw = sum(map(<span class="keyword">lambda</span> x: x[<span class="number">0</span>], passing))</span><br><span class="line">        <span class="keyword">if</span> len(truck_weights) &gt; <span class="number">0</span> <span class="keyword">and</span> tw + truck_weights[<span class="number">0</span>] &lt;= weight:</span><br><span class="line">            passing.append((truck_weights.pop(<span class="number">0</span>), time))</span><br><span class="line">    <span class="keyword">return</span> time</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">정확성  테스트</span><br><span class="line">	테스트 <span class="number">1</span> 〉 통과 (<span class="number">3.14</span>ms, <span class="number">7.77</span>MB)</span><br><span class="line">	테스트 <span class="number">2</span> 〉 통과 (<span class="number">23.87</span>ms, <span class="number">7.75</span>MB)</span><br><span class="line">	테스트 <span class="number">3</span> 〉 통과 (<span class="number">0.08</span>ms, <span class="number">7.74</span>MB)</span><br><span class="line">	테스트 <span class="number">4</span> 〉 통과 (<span class="number">62.53</span>ms, <span class="number">7.83</span>MB)</span><br><span class="line">	테스트 <span class="number">5</span> 〉 통과 (<span class="number">436.90</span>ms, <span class="number">7.79</span>MB)</span><br><span class="line">	테스트 <span class="number">6</span> 〉 통과 (<span class="number">167.22</span>ms, <span class="number">7.91</span>MB)</span><br><span class="line">	테스트 <span class="number">7</span> 〉 통과 (<span class="number">1.80</span>ms, <span class="number">7.74</span>MB)</span><br><span class="line">	테스트 <span class="number">8</span> 〉 통과 (<span class="number">0.53</span>ms, <span class="number">7.74</span>MB)</span><br><span class="line">	테스트 <span class="number">9</span> 〉 통과 (<span class="number">10.90</span>ms, <span class="number">7.79</span>MB)</span><br><span class="line">	테스트 <span class="number">10</span> 〉 통과 (<span class="number">0.33</span>ms, <span class="number">7.8</span>MB)</span><br><span class="line">	테스트 <span class="number">11</span> 〉 통과 (<span class="number">0.04</span>ms, <span class="number">7.8</span>MB)</span><br><span class="line">	테스트 <span class="number">12</span> 〉 통과 (<span class="number">0.97</span>ms, <span class="number">7.8</span>MB)</span><br><span class="line">	테스트 <span class="number">13</span> 〉 통과 (<span class="number">3.53</span>ms, <span class="number">7.85</span>MB)</span><br><span class="line">	테스트 <span class="number">14</span> 〉 통과 (<span class="number">0.07</span>ms, <span class="number">7.85</span>MB)</span><br><span class="line"></span><br><span class="line">채점 결과</span><br><span class="line">	정확성: <span class="number">100.0</span></span><br><span class="line">	합계: <span class="number">100.0</span> / <span class="number">100.0</span></span><br></pre></td></tr></table></figure>
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Algorithm/" rel="tag">Algorithm</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-tower/" data-tooltip="알고리즘 | 탑" aria-label="NEXT: 알고리즘 | 탑">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-tower/" data-tooltip="알고리즘 | 탑" aria-label="NEXT: 알고리즘 | 탑">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-xlcannty8wrynf04v4dh7hcgfzx2k6czhfx7thc7jompljugisz9y4q9pfjq.min.js"></script>
+<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+
+
+
+    </body>
+</html>

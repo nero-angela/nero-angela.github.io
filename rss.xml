@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Sat, 30 May 2020 04:00:31 GMT</pubDate>
+    <pubDate>Sat, 30 May 2020 04:46:37 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 다리를 지나는 트럭</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</guid>
+      <pubDate>Sat, 30 May 2020 04:39:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 탑</title>
@@ -138,7 +153,7 @@
       <pubDate>Tue, 26 May 2020 02:47:24 GMT</pubDate>
       <description>
       
-        &lt;p&gt;Python 2.7과 3.5부터 탑제된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt; 클래스에 대해 알아보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;Python 2.7과 3.5부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt; 클래스에 대해 알아보도록 하겠습니다.&lt;br&gt;
       
       </description>
       
@@ -258,7 +273,7 @@
       <pubDate>Sat, 09 Nov 2019 09:47:24 GMT</pubDate>
       <description>
       
-        &lt;p&gt;이번 포스팅에서는 Python 2.7과 3.5부터 탑제된 &lt;code&gt;itertools&lt;/code&gt;의 유용하고 자주 쓸만한 함수들을 익혀보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;이번 포스팅에서는 Python 2.7과 3.5부터 탑재된 &lt;code&gt;itertools&lt;/code&gt;의 유용하고 자주 쓸만한 함수들을 익혀보도록 하겠습니다.&lt;br&gt;
       
       </description>
       
