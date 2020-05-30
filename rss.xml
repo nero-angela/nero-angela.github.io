@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Thu, 28 May 2020 16:11:25 GMT</pubDate>
+    <pubDate>Sat, 30 May 2020 04:00:31 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 탑</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-tower/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-tower/</guid>
+      <pubDate>Sat, 30 May 2020 03:29:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-tower/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 별 찍기</title>
