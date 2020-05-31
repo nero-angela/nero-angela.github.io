@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Sat, 30 May 2020 08:44:05 GMT</pubDate>
+    <pubDate>Sun, 31 May 2020 13:37:53 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 기능개발</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-function-development/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-function-development/</guid>
+      <pubDate>Sun, 31 May 2020 12:16:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “기능개발”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-function-development/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 다리를 지나는 트럭</title>
@@ -18,7 +33,7 @@
       <pubDate>Sat, 30 May 2020 08:42:00 GMT</pubDate>
       <description>
       
-        &lt;p&gt;Programmers의 알고리즘 문제 “다리를 지나는 트럭”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “다리를 지나는 트럭”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
       
       </description>
       
@@ -63,7 +78,7 @@
       <pubDate>Sat, 30 May 2020 03:29:00 GMT</pubDate>
       <description>
       
-        &lt;p&gt;Programmers의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
       
       </description>
       
@@ -78,7 +93,7 @@
       <pubDate>Thu, 28 May 2020 16:08:00 GMT</pubDate>
       <description>
       
-        &lt;p&gt;Baekjoon의 알고리즘 문제 “별 찍기”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+        &lt;p&gt;백준의 알고리즘 문제 “별 찍기”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
       
       </description>
       
@@ -294,21 +309,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/pj-too-real-04/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Python Itertools</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-itertools/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-itertools/</guid>
-      <pubDate>Sat, 09 Nov 2019 09:47:24 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;이번 포스팅에서는 Python 2.7과 3.5부터 탑재된 &lt;code&gt;itertools&lt;/code&gt;의 유용하고 자주 쓸만한 함수들을 익혀보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pl-python-itertools/#disqus_thread</comments>
     </item>
     
   </channel>
