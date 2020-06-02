@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>알고리즘 | 쇠막대기 - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/algo-programmers-iron-bar/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.\n# Problem\n출처 : Programmers\n\n\n문제 설명여러 개의 쇠막대기를 레이저로 절단하려고 합니다. 효율적인 작업을 위해서 쇠막대기를 아래에서 위로 겹쳐 놓고, 레이저를 위에서 수직으로 발사하여 쇠막대기들을 자릅니다. 쇠막대기와 레이저의 배치는 다음 조건을 만족합니다.\n1234- 쇠막대기는 자신보다 긴 쇠막대기 위에만 놓일 수 있습니다.- 쇠막대기를 다른 쇠막대기 위에 놓는 경우 완전히 포함되도록 놓되, 끝점은 겹치지 않도록 놓습니다.- 각 쇠막대기를 자르는 레이저는 적어도 하나 존재합니다.- 레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않습니다.\n\n아래 그림은 위 조건을 만족하는 예를 보여줍니다. 수평으로 그려진 굵은 실선은 쇠막대기이고, 점은 레이저의 위치, 수직으로 그려진 점선 화살표는 레이저의 발사 방향입니다.\n","dateCreated":"2020-06-02T15:46:00+09:00","dateModified":"2020-06-02T16:04:58+09:00","datePublished":"2020-06-02T15:46:00+09:00","description":"프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.","headline":"알고리즘 | 쇠막대기","image":["https://source.unsplash.com/150x150/?developer"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/algo-programmers-iron-bar/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/algo-programmers-iron-bar/","keywords":"Algorithm","thumbnailUrl":"https://source.unsplash.com/150x150/?developer"}</script>
+    <meta name="description" content="프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="알고리즘 | 쇠막대기">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;algo-programmers-iron-bar&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;83488780-5f82d880-a4e8-11ea-837d-352102f84854.png">
+<meta property="og:updated_time" content="2020-06-02T07:04:58.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;user-images.githubusercontent.com&#x2F;26322627&#x2F;83488780-5f82d880-a4e8-11ea-837d-352102f84854.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+        <meta property="og:image" content="https://source.unsplash.com/150x150/?developer">
+        <meta class="swiftype" name="image" data-type="enum" content="https://source.unsplash.com/150x150/?developer">
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-obdxtyhfxlxqw4x0ch6jz6v6g3k2u9dfime53skog7bkcsub7fklwxxjzwll.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/nero-angela/" target="_blank" rel="external nofollow noopener noreferrer" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            알고리즘 | 쇠막대기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-02T15:46:00+09:00">
+	
+		    Jun 02, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Problem"><span class="nero-toc-text"># Problem</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#문제-설명"><span class="nero-toc-text">문제 설명</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#제한사항"><span class="nero-toc-text">제한사항</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#입출력-예"><span class="nero-toc-text">입출력 예</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#입출력-예-설명"><span class="nero-toc-text">입출력 예 설명</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Solution"><span class="nero-toc-text"># Solution</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Stack"><span class="nero-toc-text">Stack</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Regex"><span class="nero-toc-text">Regex</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Integer"><span class="nero-toc-text">Integer</span></a></li></ol></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            
+
+
+            <p>프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.<br><a id="more"></a></p>
+<h1 id="Problem"><a href="#Problem" class="headerlink" title="# Problem"></a># Problem</h1><blockquote>
+<p>출처 : <a href="https://programmers.co.kr/learn/courses/30/lessons/42585#" target="_blank" rel="external nofollow noopener noreferrer">Programmers</a></p>
+</blockquote>
+<hr>
+<h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>여러 개의 쇠막대기를 레이저로 절단하려고 합니다. 효율적인 작업을 위해서 쇠막대기를 아래에서 위로 겹쳐 놓고, 레이저를 위에서 수직으로 발사하여 쇠막대기들을 자릅니다. 쇠막대기와 레이저의 배치는 다음 조건을 만족합니다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 쇠막대기는 자신보다 긴 쇠막대기 위에만 놓일 수 있습니다.</span><br><span class="line">- 쇠막대기를 다른 쇠막대기 위에 놓는 경우 완전히 포함되도록 놓되, 끝점은 겹치지 않도록 놓습니다.</span><br><span class="line">- 각 쇠막대기를 자르는 레이저는 적어도 하나 존재합니다.</span><br><span class="line">- 레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않습니다.</span><br></pre></td></tr></table></figure>
+
+<p>아래 그림은 위 조건을 만족하는 예를 보여줍니다. 수평으로 그려진 굵은 실선은 쇠막대기이고, 점은 레이저의 위치, 수직으로 그려진 점선 화살표는 레이저의 발사 방향입니다.</p>
+<div class="figure center" style><a class="fancybox" href="https://user-images.githubusercontent.com/26322627/83488780-5f82d880-a4e8-11ea-837d-352102f84854.png" target="_blank" rel="external nofollow noopener noreferrer" title="<br>출처 - <a href=https://programmers.co.kr/learn/courses/30/lessons/42585#>programmers</a>" data-caption="<br>출처 - <a href=https://programmers.co.kr/learn/courses/30/lessons/42585#>programmers</a>" data-fancybox="default style=" visible: hidden;"><img class="fig-img" src="https://user-images.githubusercontent.com/26322627/83488780-5f82d880-a4e8-11ea-837d-352102f84854.png" alt="<br>출처 - <a href=https://programmers.co.kr/learn/courses/30/lessons/42585#>programmers</a>"></a><span class="caption"><br>출처 - <a href="https://programmers.co.kr/learn/courses/30/lessons/42585#" rel="external nofollow noopener noreferrer" target="_blank">programmers</a></span></div>
+
+<p>이러한 레이저와 쇠막대기의 배치는 다음과 같이 괄호를 이용하여 왼쪽부터 순서대로 표현할 수 있습니다.</p>
+<p>(a) 레이저는 여는 괄호와 닫는 괄호의 인접한 쌍 ‘()’으로 표현합니다. 또한 모든 ‘()’는 반드시 레이저를 표현합니다.<br>(b) 쇠막대기의 왼쪽 끝은 여는 괄호 ‘(‘로, 오른쪽 끝은 닫힌 괄호 ‘)’로 표현됩니다.<br>위 예의 괄호 표현은 그림 위에 주어져 있습니다.<br>쇠막대기는 레이저에 의해 몇 개의 조각으로 잘리는데, 위 예에서 가장 위에 있는 두 개의 쇠막대기는 각각 3개와 2개의 조각으로 잘리고, 이와 같은 방식으로 주어진 쇠막대기들은 총 17개의 조각으로 잘립니다.</p>
+<p>쇠막대기와 레이저의 배치를 표현한 문자열 arrangement가 매개변수로 주어질 때, 잘린 쇠막대기 조각의 총 개수를 return 하도록 solution 함수를 작성해주세요.</p>
+<hr>
+<h2 id="제한사항"><a href="#제한사항" class="headerlink" title="제한사항"></a>제한사항</h2><ul>
+<li>arrangement의 길이는 최대 100,000입니다.</li>
+<li>arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</li>
+</ul>
+<hr>
+<h2 id="입출력-예"><a href="#입출력-예" class="headerlink" title="입출력 예"></a>입출력 예</h2><table>
+<thead>
+<tr>
+<th align="center">arrangement</th>
+<th align="center">return</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">()(((()())(())()))(())</td>
+<td align="center">17</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><p>문제에 나온 예와 같습니다.</p>
+<hr>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="# Solution"></a># Solution</h1><hr>
+<h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><p>기본 아이디어는 <code>()</code>를 <code>*</code>로 변환한 뒤, 괄호의 규칙을 자료구조 <code>stack</code>을 이용하여 구현하였습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(arrangement)</span>:</span></span><br><span class="line">    arrangement = arrangement.replace(<span class="string">"()"</span>, <span class="string">"*"</span>)</span><br><span class="line">    stack = []</span><br><span class="line">    answer = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> arrangement:</span><br><span class="line">        <span class="keyword">if</span> i == <span class="string">"*"</span>:</span><br><span class="line">            stack = [i+<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> stack]</span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">"("</span>:</span><br><span class="line">            stack.append(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">")"</span>:</span><br><span class="line">            answer += stack.pop()</span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">정확성  테스트</span><br><span class="line">  테스트 <span class="number">1</span> 〉 실패 (시간 초과)</span><br><span class="line">  테스트 <span class="number">2</span> 〉 통과 (<span class="number">0.09</span>ms, <span class="number">10.6</span>MB)</span><br><span class="line">  테스트 <span class="number">3</span> 〉 통과 (<span class="number">18.51</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">4</span> 〉 통과 (<span class="number">1.22</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">5</span> 〉 통과 (<span class="number">1.91</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">6</span> 〉 통과 (<span class="number">1.79</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">7</span> 〉 통과 (<span class="number">20.10</span>ms, <span class="number">10.7</span>MB)</span><br><span class="line">  테스트 <span class="number">8</span> 〉 통과 (<span class="number">19.93</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">9</span> 〉 통과 (<span class="number">21.58</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">10</span> 〉 통과 (<span class="number">22.10</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">11</span> 〉 통과 (<span class="number">16.71</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">12</span> 〉 통과 (<span class="number">17.33</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">13</span> 〉 통과 (<span class="number">18.00</span>ms, <span class="number">10.7</span>MB)</span><br><span class="line">  테스트 <span class="number">14</span> 〉 통과 (<span class="number">28.76</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">15</span> 〉 통과 (<span class="number">31.70</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">16</span> 〉 통과 (<span class="number">27.78</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">17</span> 〉 통과 (<span class="number">32.14</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">18</span> 〉 통과 (<span class="number">35.04</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">19</span> 〉 통과 (<span class="number">35.71</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">20</span> 〉 통과 (<span class="number">36.23</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line"></span><br><span class="line">채점 결과</span><br><span class="line">  정확성: <span class="number">95.0</span></span><br><span class="line">  합계: <span class="number">95.0</span> / <span class="number">100.0</span></span><br></pre></td></tr></table></figure>
+<p><code>테스트 1</code>에서 시간 초과가 되었습니다. <code>*</code>가 등장하였을 때 <code>stack</code>의 값을 1씩 더해주는 코드에서 시간을 많이 잡아먹는 것 같습니다.</p>
+<hr>
+<h2 id="Regex"><a href="#Regex" class="headerlink" title="Regex"></a>Regex</h2><p>정규표현식을 이용하여 아래와 같은 순서대로 구현해보았습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">()(((()())(())()))(())  <span class="comment"># () -&gt; *</span></span><br><span class="line">*(((**)(*)*))(*)        <span class="comment"># [('**'), ('*'), ('*')]</span></span><br><span class="line">*((****))*              <span class="comment"># [('****')]</span></span><br><span class="line">*(****)*                <span class="comment"># [('****')]</span></span><br><span class="line">***</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(arrangement)</span>:</span></span><br><span class="line">    arrangement = arrangement.replace(<span class="string">'()'</span>, <span class="string">'*'</span>)</span><br><span class="line">    answer = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="string">'('</span> <span class="keyword">in</span> arrangement:</span><br><span class="line">        fs = re.findall(<span class="string">'\(\*+\)'</span>, arrangement)</span><br><span class="line">        <span class="keyword">for</span> f <span class="keyword">in</span> fs:</span><br><span class="line">            start = f.count(<span class="string">"*"</span>)</span><br><span class="line">            answer += start + <span class="number">1</span></span><br><span class="line">            arrangement = arrangement.replace(f, <span class="string">"*"</span>*start, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">정확성  테스트</span><br><span class="line">  테스트 <span class="number">1</span> 〉 통과 (<span class="number">7787.01</span>ms, <span class="number">11</span>MB)</span><br><span class="line">  테스트 <span class="number">2</span> 〉 통과 (<span class="number">0.16</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">3</span> 〉 통과 (<span class="number">693.56</span>ms, <span class="number">12.1</span>MB)</span><br><span class="line">  테스트 <span class="number">4</span> 〉 통과 (<span class="number">3.14</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">5</span> 〉 통과 (<span class="number">6.37</span>ms, <span class="number">10.7</span>MB)</span><br><span class="line">  테스트 <span class="number">6</span> 〉 통과 (<span class="number">6.34</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">7</span> 〉 통과 (<span class="number">648.56</span>ms, <span class="number">11.1</span>MB)</span><br><span class="line">  테스트 <span class="number">8</span> 〉 통과 (<span class="number">628.01</span>ms, <span class="number">11</span>MB)</span><br><span class="line">  테스트 <span class="number">9</span> 〉 통과 (<span class="number">897.19</span>ms, <span class="number">11.3</span>MB)</span><br><span class="line">  테스트 <span class="number">10</span> 〉 통과 (<span class="number">777.93</span>ms, <span class="number">11.3</span>MB)</span><br><span class="line">  테스트 <span class="number">11</span> 〉 통과 (<span class="number">414.84</span>ms, <span class="number">11</span>MB)</span><br><span class="line">  테스트 <span class="number">12</span> 〉 통과 (<span class="number">482.26</span>ms, <span class="number">11</span>MB)</span><br><span class="line">  테스트 <span class="number">13</span> 〉 통과 (<span class="number">557.09</span>ms, <span class="number">11.1</span>MB)</span><br><span class="line">  테스트 <span class="number">14</span> 〉 통과 (<span class="number">1149.22</span>ms, <span class="number">11.4</span>MB)</span><br><span class="line">  테스트 <span class="number">15</span> 〉 통과 (<span class="number">1329.12</span>ms, <span class="number">11.4</span>MB)</span><br><span class="line">  테스트 <span class="number">16</span> 〉 통과 (<span class="number">1268.73</span>ms, <span class="number">11.4</span>MB)</span><br><span class="line">  테스트 <span class="number">17</span> 〉 통과 (<span class="number">1673.97</span>ms, <span class="number">11.7</span>MB)</span><br><span class="line">  테스트 <span class="number">18</span> 〉 통과 (<span class="number">1604.46</span>ms, <span class="number">11.6</span>MB)</span><br><span class="line">  테스트 <span class="number">19</span> 〉 통과 (<span class="number">1634.53</span>ms, <span class="number">11.6</span>MB)</span><br><span class="line">  테스트 <span class="number">20</span> 〉 통과 (<span class="number">1698.34</span>ms, <span class="number">11.7</span>MB)</span><br><span class="line"></span><br><span class="line">채점 결과</span><br><span class="line">  정확성: <span class="number">100.0</span></span><br><span class="line">  합계: <span class="number">100.0</span> / <span class="number">100.0</span></span><br></pre></td></tr></table></figure>
+<p>정확성은 좋지만, 성능이 너무나 떨어집니다.</p>
+<hr>
+<h2 id="Integer"><a href="#Integer" class="headerlink" title="Integer"></a>Integer</h2><p><code>stack</code>을 버리고 각 문자열이 등장할 때 마다 바로바로 막대기 수를 계산하도록 구현하였습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(arrangement)</span>:</span></span><br><span class="line">    arrangement = arrangement.replace(<span class="string">"()"</span>, <span class="string">"*"</span>)</span><br><span class="line">    stick = <span class="number">0</span></span><br><span class="line">    answer = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> arrangement:</span><br><span class="line">        <span class="keyword">if</span> i == <span class="string">"*"</span>:</span><br><span class="line">            answer += stick</span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">"("</span>:</span><br><span class="line">            stick += <span class="number">1</span></span><br><span class="line">            answer += <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">")"</span>:</span><br><span class="line">            stick -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">정확성  테스트</span><br><span class="line">  테스트 <span class="number">1</span> 〉 통과 (<span class="number">6.35</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">2</span> 〉 통과 (<span class="number">0.05</span>ms, <span class="number">10.7</span>MB)</span><br><span class="line">  테스트 <span class="number">3</span> 〉 통과 (<span class="number">5.83</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">4</span> 〉 통과 (<span class="number">0.31</span>ms, <span class="number">10.7</span>MB)</span><br><span class="line">  테스트 <span class="number">5</span> 〉 통과 (<span class="number">0.47</span>ms, <span class="number">10.7</span>MB)</span><br><span class="line">  테스트 <span class="number">6</span> 〉 통과 (<span class="number">0.44</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">7</span> 〉 통과 (<span class="number">3.99</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">8</span> 〉 통과 (<span class="number">4.02</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">9</span> 〉 통과 (<span class="number">4.72</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">10</span> 〉 통과 (<span class="number">4.43</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">11</span> 〉 통과 (<span class="number">3.38</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">12</span> 〉 통과 (<span class="number">3.48</span>ms, <span class="number">10.7</span>MB)</span><br><span class="line">  테스트 <span class="number">13</span> 〉 통과 (<span class="number">3.74</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">14</span> 〉 통과 (<span class="number">5.35</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">15</span> 〉 통과 (<span class="number">5.75</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">16</span> 〉 통과 (<span class="number">5.60</span>ms, <span class="number">10.8</span>MB)</span><br><span class="line">  테스트 <span class="number">17</span> 〉 통과 (<span class="number">6.41</span>ms, <span class="number">11</span>MB)</span><br><span class="line">  테스트 <span class="number">18</span> 〉 통과 (<span class="number">6.53</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">19</span> 〉 통과 (<span class="number">6.42</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line">  테스트 <span class="number">20</span> 〉 통과 (<span class="number">6.50</span>ms, <span class="number">10.9</span>MB)</span><br><span class="line"></span><br><span class="line">채점 결과</span><br><span class="line">  정확성: <span class="number">100.0</span></span><br><span class="line">  합계: <span class="number">100.0</span> / <span class="number">100.0</span></span><br></pre></td></tr></table></figure>
+<p>정확성도 높고, 성능도 좋습니다.</p>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Algorithm/" rel="tag">Algorithm</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-printer/" data-tooltip="알고리즘 | 프린터" aria-label="NEXT: 알고리즘 | 프린터">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/algo-programmers-iron-bar/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/algo-programmers-iron-bar/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled" aria-hidden="true">
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-printer/" data-tooltip="알고리즘 | 프린터" aria-label="NEXT: 알고리즘 | 프린터">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/algo-programmers-iron-bar/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/algo-programmers-iron-bar/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/algo-programmers-iron-bar/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/algo-programmers-iron-bar/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-xlcannty8wrynf04v4dh7hcgfzx2k6czhfx7thc7jompljugisz9y4q9pfjq.min.js"></script>
+<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+
+
+
+    </body>
+</html>

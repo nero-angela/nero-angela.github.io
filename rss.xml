@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Mon, 01 Jun 2020 14:38:50 GMT</pubDate>
+    <pubDate>Tue, 02 Jun 2020 07:04:58 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 쇠막대기</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</guid>
+      <pubDate>Tue, 02 Jun 2020 06:46:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 프린터</title>
@@ -294,21 +309,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/pj-too-real-02/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>3부. Custom YOLO v3 모델 만들기</title>
-      <link>https://nero.devstory.co.kr/post/pj-too-real-03/</link>
-      <guid>https://nero.devstory.co.kr/post/pj-too-real-03/</guid>
-      <pubDate>Mon, 23 Dec 2019 07:44:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pj-too-real-03/#disqus_thread</comments>
     </item>
     
   </channel>
