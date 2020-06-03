@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Tue, 02 Jun 2020 07:08:50 GMT</pubDate>
+    <pubDate>Wed, 03 Jun 2020 06:08:12 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 주식가격</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-stock-price/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-stock-price/</guid>
+      <pubDate>Wed, 03 Jun 2020 05:54:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “주식가격”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-stock-price/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 쇠막대기</title>
@@ -294,21 +309,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/pj-too-real-01/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>2부. ARKit을 이용하여 iOS AR앱 만들기</title>
-      <link>https://nero.devstory.co.kr/post/pj-too-real-02/</link>
-      <guid>https://nero.devstory.co.kr/post/pj-too-real-02/</guid>
-      <pubDate>Tue, 24 Dec 2019 07:44:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;ARKit을 이용하여 현실감 있는 iOS AR 어플리케이션 개발 내용을 공유합니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pj-too-real-02/#disqus_thread</comments>
     </item>
     
   </channel>
