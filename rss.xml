@@ -8,13 +8,13 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Wed, 03 Jun 2020 06:08:12 GMT</pubDate>
+    <pubDate>Wed, 03 Jun 2020 06:12:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>알고리즘 | 주식가격</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-stock-price/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-stock-price/</guid>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</guid>
       <pubDate>Wed, 03 Jun 2020 05:54:00 GMT</pubDate>
       <description>
       
@@ -23,7 +23,7 @@
       </description>
       
       
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-stock-price/#disqus_thread</comments>
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/#disqus_thread</comments>
     </item>
     
     <item>
