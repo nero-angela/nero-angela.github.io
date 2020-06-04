@@ -8,8 +8,38 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Wed, 03 Jun 2020 06:12:00 GMT</pubDate>
+    <pubDate>Thu, 04 Jun 2020 12:47:33 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>알고리즘 | 더 맵게</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</guid>
+      <pubDate>Thu, 04 Jun 2020 12:35:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “더 맵게”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Heapq</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-heapq/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-heapq/</guid>
+      <pubDate>Thu, 04 Jun 2020 08:01:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python의 &lt;code&gt;Heqpq&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-heapq/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>알고리즘 | 주식가격</title>
@@ -279,36 +309,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/pj-endpoint-detector/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>딥러닝으로 문서 분류기 만들기</title>
-      <link>https://nero.devstory.co.kr/post/pj-devblog-classifier/</link>
-      <guid>https://nero.devstory.co.kr/post/pj-devblog-classifier/</guid>
-      <pubDate>Tue, 18 Feb 2020 12:44:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Daily Devblog 서비스를 위한 개발 문서 분류기를 개발한 이야기를 공유합니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pj-devblog-classifier/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</title>
-      <link>https://nero.devstory.co.kr/post/pj-too-real-01/</link>
-      <guid>https://nero.devstory.co.kr/post/pj-too-real-01/</guid>
-      <pubDate>Wed, 25 Dec 2019 07:44:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;딥러닝을 이용하여 더욱 현실감 있는 AR 어플리케이션을 개발한 이야기를 공유합니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pj-too-real-01/#disqus_thread</comments>
     </item>
     
   </channel>

@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</loc>
+        <lastmod>2020-06-04T12:47:33.338Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-heapq/</loc>
+        <lastmod>2020-06-04T12:35:05.880Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</loc>
         <lastmod>2020-06-03T06:12:00.720Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -48,7 +64,7 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/algo-programmers-camouflage/</loc>
+        <loc>https://nero.devstory.co.kr/post/algo-programmers-function-development/</loc>
         <lastmod>2020-06-01T14:35:47.357Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -56,7 +72,7 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/algo-programmers-function-development/</loc>
+        <loc>https://nero.devstory.co.kr/post/algo-programmers-camouflage/</loc>
         <lastmod>2020-06-01T14:35:47.357Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

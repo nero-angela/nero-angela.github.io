@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="🐈 Nero&#39;s Blog">
+    <title>Python Heapq - 🐈 Nero&#39;s Blog</title>
+    <meta name="author" content="Nero">
+    <meta name="naver-site-verification" content="06059f4c6c7365e9ed7f72d2d6a0ffefa0dc5105">
+    <meta name="msvalidate.01" content="43351327233A3A9F48E0D1E5C5F2E834">
+    <link rel="canonical" href="https://nero.devstory.co.kr/post/pl-python-heapq/">
+    
+    
+        <link rel="icon" href="https://nero.devstory.co.kr/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"Python의 Heqpq에 대해 알아보도록 하겠습니다.\n\n# HeapHeapq를 알기 위해선 자료구조 Heap을 알아야합니다. 위키백과에서 정의하는 Heap은 다음과 같습니다.\n\n힙(heap)은 최댓값 및 최솟값을 찾아내는 연산을 빠르게 하기 위해 고안된 완전이진트리(complete binary tree)를 기본으로 한 자료구조(tree-based structure)로서 다음과 같은 힙 속성(property)을 만족한다. A가 B의 부모노드(parent node) 이면, A의 키(key)값과 B의 키값 사이에는 대소관계가 성립한다.\n\n\nHeap의 종류\nMax Heap (최대 힙\u001c)\n\nkey(부모) &gt;= key(자식)\nRoot에 최댓값이 위치\n\n\nMin Heap (최소 힙\u001e)\n\nkey(부모) &lt;= key(자식)\nRoot에 최솟값이 위치\n\n\n\n\nHeap의 특징Heap은 최댓값과 최솟값을 쉽게 구하기 위한 자료구조로, 배열을 Heap의 형태로 정렬 하는 과정을 heapify라 부르며 완전 이진트리 구조이기 때문에 O(log(n))의 시간 복잡도를 가집니다.\nheapify는 상향식과 하향식 두 가지 방법이 존재하며 자세한 방법은 Binary Heap Tree implementation in Python 영상을 참고해주세요.\n\nHeap sort이러한 Heap의 특징을 이용한 정렬이 바로 Heap Sort(힙정렬)인데, 전체 n개의 노드 중 절반의 노드에 대해서만 heapify를 반복하면 되기 때문에 (n/2) * log(n)의 시간복잡도를 가지나 log(n)이 n/2보다 작기 때문에 사실상 O(n)의 속도를 가집니다. (공식적으로는 O(nlog(n))의 시간복잡도를 가진다고 표현합니다.)\n\n✔︎ heap sort의 특징\n\n\nQuick Sort보다 안정적이게 O(nlog(n))의 시간복잡도를 보장함\n메모리상으로 병합 정렬보다 효율적임\n\n\nHeap 구현\u001fPython을 이용하여 Heap을 구현해보도록 하겠습니다. Heap은 바로 다음과 같은 규칙을 이용하면 배열을 이용하여 쉽게 구현할 수 있습니다.\n배열은 index가 0부터 시작하는 것을 고려해서 봐주세요.123index(left child) = 2 * index(parent) + 1index(right child) = 2 * index(parent) + 2index(parent) = (index(child) - 1)//2\n\n위와 같은 규칙을 이용하여 최대힙(max heap)을 구현해보도록 하겠습니다. 자세한 설명은 Binary Heap Tree implementation in Python를 참고해주세요.\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768class MaxHeap:    def __init__(self):        self.heap = []            def print_heap(self):        print(self.heap)            def get_parent(self, i):        return i-1)//2    def get_left_child(self, i):        return 2*i+1        def get_right_child(self, i):        return 2*i+2        def has_parent(self, i):        return self.get_parent(i) &gt;= 0        def has_left_child(self, i):        return self.get_left_child(i) &lt; len(self.heap)        def has_right_child(self, i):        return self.get_right_child(i) &lt; len(self.heap)        def swap(self, i, j):        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]            def insert_key(self, key):        self.heap.append(key)        self.heapify_up(len(self.heap)-1)            def heapify_up(self, i):        while self.has_parent(i) and self.heap[i] &gt; self.heap[self.get_parent(i)]:            self.swap(i, self.get_parent(i))            i = self.get_parent(i)        def delete_root(self):        if len(self.heap) == 0:            return -1        last_index = len(self.heap)-1        self.swap(0, last_index)        root = self.heap.pop()        self.heapify_down(0)        return root        def heapify_down(self, i):        while self.has_left_child(i):            max_child_index = self.get_max_child_index(i)            if max_child_index == -1:                break            if self.heap[i] &lt; self.heap[max_child_index]:                self.swap(i, max_child_index)                i = max_child_index            else:                break        def get_max_child_index(self, i):        if self.has_left_child(i):            left_c = self.get_left_child(i)            if self.has_right_child(i):                right_c = self.get_right_child(i)                if self.heap[left_c] &gt; self.heap[right_c]:                    return left_c                else:                    return right_c        else:            return -1\n1234567891011max_heap = MaxHeap()array = [45, 99, 63, 27, 29, 57, 42, 35, 12, 24]# build max heapfor i in array:    max_heap.insert_key(i)    max_heap.print_heap() # [99, 45, 63, 35, 29, 57, 42, 27, 12, 24]max_heap.insert_key(50) # [99, 50, 63, 35, 45, 57, 42, 27, 12, 24, 29]max_heap.delete_root() # [63, 50, 57, 35, 45, 29, 42, 27, 12, 24]\n\n\n# HeapqPython에 내장된 heapq라는 heap queue algorithm 모듈을 이용하면 손쉽게 heap을 사용할 수 있습니다. 아래와같이 import를 하여 사용하시면 됩니다.\n1from heapq import *\n\n\nMethods다음으로 heapq의 내장 함수들에 대해서 설명하도록 하겠습니다.\n\nheappush(heap, item)heappush는 heap에 요소를 추가합니다. 첫 번째 인자로 heap을 넣는 것에 주의해야합니다.\n1234from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums)     # [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]heappush(nums, 6) # [1, 3, 2, 4, 4, 8, 5, 4, 7, 4, 6]\n\n\nheappop(heap)heappop은 root에 있는 요소를 꺼내어 반환합니다.\n1234from heapq import *nums = [1, 3, 2, 4, 4, 8, 5, 4, 7, 4, 6]heappop(nums) # 1print(nums)   # [2, 3, 5, 4, 4, 8, 6, 4, 7, 4]\n\n\nheappushpop(heap, item)heappushpop은 heap에 요소를 추가한 뒤 root에 있는 요소를 꺼내어 반환합니다.\n12345from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums)                # [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]print(heappushpop(nums, 10)) # 1print(nums)                  # [2, 3, 5, 4, 4, 8, 10, 4, 7, 4]\n\n아래 코드는 0을 push하는 경우 root에 0이 들어가기 때문에 pop을 하는 경우 0이 그대로 나오는 것을 확인할 수 있습니다.\n12345from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums)                # [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]print(heappushpop(nums, 0))  # 0print(nums)                  # [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]\n\n\nheapify(x)다음과 같이 배열을 heapify 함수에 전달하면 min heap(최소힙)을 변환합니다.\n1234from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums) # [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]\n\n\nheapreplace(heap, item)heapreplace는 heappushpop과 달리 pop을 먼저 수행한 뒤 push를 수행합니다. 따라서 0이 가장 작은 값 임에도 불구하고 pop먼저 수행하기 때문에 1이 나오고, 0이 push 됩니다.\n12345from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums)                # [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]print(heapreplace(nums, 0))  # 1print(nums)                  # [0, 3, 2, 4, 4, 8, 5, 4, 7, 4]\n\n\nmerge(*iterables, key=None, reverse=False)merge는 정렬된 배열들을 합치는 함수입니다.\n123456from heapq import *nums1 = [2, 4, 1, 7]nums2 = [3, 8, 5, 4]nums1.sort()              # [1, 2, 4, 7]nums2.sort()              # [3, 4, 5, 8]list(merge(nums1, nums2)) # [1, 2, 3, 4, 4, 5, 7, 8]\n\n\nnlargest(n, iterable, key=None)n번 째로 큰 값은 max heap(최대힙)을 이용하여 아래와 같이 구현할 수 있습니다.\n123456789101112from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heap = []for num in nums:    heappush(heap, (-num, num))n = 3while n &gt; 0:    answer = heappop(heap)[1]    n -= 1answer # 5\n\n하지만 heapq의 내장함수인 nlargest를 이용하면 다음과 같이 구현할 수 있습니다. nlargest는 배열을 반환하며, 결과값의 마지막 요소가 n번 째로 큰 값입니다.\n1234from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums)nlargest(3, nums) # [8, 7, 5]\n\n\nnsmallest(n, iterable, key=None)n번 째로 작은 값을 heapify와 heappop을 이용하여 아래와 같이 구현할 수 있습니다.\n10개의 데이터 중 10번째로 작은 값은 8입니다.12345678910from heapq import * nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums)n = 10while n &gt; 0:    answer = heappop(nums)    n -= 1answer # 8\n\n하지만 heapq의 내장함수인 nsmallest를 이용하면 다음과 같이 구현할 수 있습니다. nsmallest는 배열을 반환하며, 결과값의 마지막 요소가 n번 째로 작은 값입니다.\n1234from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heapify(nums)nsmallest(10, nums) # [1, 2, 3, 4, 4, 4, 4, 5, 7, 8]\n\n\nMax Heap기본적으로 heapq는 min heap(최소힙)을 지원하는데, 아래 예제와 같이 tuple안에 실제 값의 음수값과 실제 값을 넣어 max heap(최대힙)과 같이 구현할 수 있습니다.\n12345678from heapq import *nums = [2, 4, 1, 7, 3, 8, 5, 4, 4, 4]heap = []for num in nums:    heappush(heap, (-num, num))print([v for i, v in heap]) # [8, 4, 7, 4, 4, 1, 5, 2, 4, 3]\n\n\n# References\nBinary Heap Tree implementation in Python\n6. 힙 정렬\u001d(Heap sort)\n\n\n# 마무리heap에 대해 직접 구현 해보고, python 내장함수 heapq를 이용해보기도 하였습니다. push와 pop이 빈번하며 최솟값과 최댓값을 필요로 하는 경우 heap을 떠올려 유용하게 사용하면 좋을 것 같습니다.\n","dateCreated":"2020-06-04T17:01:24+09:00","dateModified":"2020-06-04T21:35:05+09:00","datePublished":"2020-06-04T17:01:24+09:00","description":"Python의 Heqpq에 대해 알아보도록 하겠습니다.","headline":"Python Heapq","image":["https://source.unsplash.com/150x150/?counter"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-heapq/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-heapq/","keywords":"Program Language | Python","thumbnailUrl":"https://source.unsplash.com/150x150/?counter"}</script>
+    <meta name="description" content="Python의 Heqpq에 대해 알아보도록 하겠습니다.">
+<meta name="keywords" content="Program Language | Python">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Python Heapq">
+<meta property="og:url" content="https:&#x2F;&#x2F;nero.devstory.co.kr&#x2F;post&#x2F;pl-python-heapq&#x2F;index.html">
+<meta property="og:site_name" content="🐈 Nero&#39;s Blog">
+<meta property="og:description" content="Python의 Heqpq에 대해 알아보도록 하겠습니다.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-06-04T12:35:05.880Z">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://nero.devstory.co.kr/assets/images/profile.jpeg">
+    
+    
+        <meta property="og:image" content="https://source.unsplash.com/150x150/?counter">
+        <meta class="swiftype" name="image" data-type="enum" content="https://source.unsplash.com/150x150/?counter">
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-obdxtyhfxlxqw4x0ch6jz6v6g3k2u9dfime53skog7bkcsub7fklwxxjzwll.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151594285-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151594285-1');
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            🐈 Nero&#39;s Blog
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="Open the link: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="Read more about the author">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+                </a>
+                <h4 class="sidebar-profile-name">Nero</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="Home">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="Categories">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="Tags">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="Archives">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer" title="portfolio">
+                    
+                        <i class="sidebar-button-icon fas fa-briefcase" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">portfolio</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/nero-angela/" target="_blank" rel="external nofollow noopener noreferrer" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Python Heapq
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-04T17:01:24+09:00">
+	
+		    Jun 04, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Program-Language/">Program Language</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+
+            <!-- NERO :: Add TOC -->
+            <hr class="nero-toc-line">
+            <blockquote>
+                <strong>목차</strong>
+            </blockquote>
+            <ol class="nero-toc"><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Heap"><span class="nero-toc-text"># Heap</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Heap의-종류"><span class="nero-toc-text">Heap의 종류</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Heap의-특징"><span class="nero-toc-text">Heap의 특징</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Heap-sort"><span class="nero-toc-text">Heap sort</span></a></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Heap-구현"><span class="nero-toc-text">Heap 구현</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#Heapq"><span class="nero-toc-text"># Heapq</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Methods"><span class="nero-toc-text">Methods</span></a><ol class="nero-toc-child"><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#heappush-heap-item"><span class="nero-toc-text">heappush(heap, item)</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#heappop-heap"><span class="nero-toc-text">heappop(heap)</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#heappushpop-heap-item"><span class="nero-toc-text">heappushpop(heap, item)</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#heapify-x"><span class="nero-toc-text">heapify(x)</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#heapreplace-heap-item"><span class="nero-toc-text">heapreplace(heap, item)</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#merge-iterables-key-None-reverse-False"><span class="nero-toc-text">merge(*iterables, key=None, reverse=False)</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#nlargest-n-iterable-key-None"><span class="nero-toc-text">nlargest(n, iterable, key=None)</span></a></li><li class="nero-toc-item nero-toc-level-3"><a class="nero-toc-link" href="#nsmallest-n-iterable-key-None"><span class="nero-toc-text">nsmallest(n, iterable, key=None)</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-2"><a class="nero-toc-link" href="#Max-Heap"><span class="nero-toc-text">Max Heap</span></a></li></ol></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#References"><span class="nero-toc-text"># References</span></a></li><li class="nero-toc-item nero-toc-level-1"><a class="nero-toc-link" href="#마무리"><span class="nero-toc-text"># 마무리</span></a></li></ol>
+            <hr class="nero-toc-line">
+            <style>
+                .nero-toc-line {
+                    margin: 0;
+                }
+
+                .nero-toc-item {
+                    list-style-type: none;
+                }
+
+                .nero-toc {
+                    padding: 6px 20px;
+                }
+            </style>
+            <!-- NERO -->
+            
+
+
+            <p>Python의 <code>Heqpq</code>에 대해 알아보도록 하겠습니다.<br><a id="more"></a></p>
+<hr>
+<h1 id="Heap"><a href="#Heap" class="headerlink" title="# Heap"></a># Heap</h1><p><code>Heapq</code>를 알기 위해선 자료구조 <code>Heap</code>을 알아야합니다. <a href="https://ko.wikipedia.org/wiki/%ED%9E%99_(%EC%9E%90%EB%A3%8C_%EA%B5%AC%EC%A1%B0)" target="_blank" rel="external nofollow noopener noreferrer">위키백과</a>에서 정의하는 <code>Heap</code>은 다음과 같습니다.</p>
+<blockquote>
+<p><strong>힙(heap)</strong>은 <u>최댓값</u> 및 <u>최솟값</u>을 찾아내는 연산을 빠르게 하기 위해 고안된 <strong>완전이진트리(complete binary tree)</strong>를 기본으로 한 자료구조(tree-based structure)로서 다음과 같은 힙 속성(property)을 만족한다. A가 B의 부모노드(parent node) 이면, A의 키(key)값과 B의 키값 사이에는 대소관계가 성립한다.</p>
+</blockquote>
+<hr>
+<h2 id="Heap의-종류"><a href="#Heap의-종류" class="headerlink" title="Heap의 종류"></a>Heap의 종류</h2><ul>
+<li><p>Max Heap (최대 힙)</p>
+<ul>
+<li>key(부모) &gt;= key(자식)</li>
+<li>Root에 <strong>최댓값</strong>이 위치</li>
+</ul>
+</li>
+<li><p>Min Heap (최소 힙)</p>
+<ul>
+<li>key(부모) &lt;= key(자식)</li>
+<li>Root에 <strong>최솟값</strong>이 위치</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="Heap의-특징"><a href="#Heap의-특징" class="headerlink" title="Heap의 특징"></a>Heap의 특징</h2><p><strong>Heap</strong>은 최댓값과 최솟값을 쉽게 구하기 위한 자료구조로, 배열을 <code>Heap</code>의 형태로 정렬 하는 과정을 <code>heapify</code>라 부르며 완전 이진트리 구조이기 때문에 <code>O(log(n))</code>의 시간 복잡도를 가집니다.</p>
+<p><code>heapify</code>는 상향식과 하향식 두 가지 방법이 존재하며 자세한 방법은 <a href="https://www.youtube.com/watch?v=WYAUQO7hk4I" target="_blank" rel="external nofollow noopener noreferrer">Binary Heap Tree implementation in Python</a> 영상을 참고해주세요.</p>
+<hr>
+<h2 id="Heap-sort"><a href="#Heap-sort" class="headerlink" title="Heap sort"></a>Heap sort</h2><p>이러한 <code>Heap</code>의 특징을 이용한 정렬이 바로 <code>Heap Sort(힙정렬)</code>인데, 전체 <code>n</code>개의 노드 중 절반의 노드에 대해서만 <code>heapify</code>를 반복하면 되기 때문에 <code>(n/2) * log(n)</code>의 시간복잡도를 가지나 <code>log(n)</code>이 <code>n/2</code>보다 작기 때문에 사실상 <code>O(n)</code>의 속도를 가집니다. (공식적으로는 <code>O(nlog(n))</code>의 시간복잡도를 가진다고 표현합니다.)</p>
+<blockquote>
+<p>✔︎ heap sort의 특징</p>
+</blockquote>
+<ul>
+<li>Quick Sort보다 안정적이게 <code>O(nlog(n))</code>의 시간복잡도를 보장함</li>
+<li>메모리상으로 병합 정렬보다 효율적임</li>
+</ul>
+<hr>
+<h2 id="Heap-구현"><a href="#Heap-구현" class="headerlink" title="Heap 구현"></a>Heap 구현</h2><p>Python을 이용하여 <code>Heap</code>을 구현해보도록 하겠습니다. <code>Heap</code>은 바로 다음과 같은 규칙을 이용하면 배열을 이용하여 쉽게 구현할 수 있습니다.</p>
+<figure class="highlight python"><figcaption><span>배열은 index가 0부터 시작하는 것을 고려해서 봐주세요.</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index(left child) = <span class="number">2</span> * index(parent) + <span class="number">1</span></span><br><span class="line">index(right child) = <span class="number">2</span> * index(parent) + <span class="number">2</span></span><br><span class="line">index(parent) = (index(child) - <span class="number">1</span>)//<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>위와 같은 규칙을 이용하여 최대힙(max heap)을 구현해보도록 하겠습니다. 자세한 설명은 <a href="https://www.youtube.com/watch?v=WYAUQO7hk4I" target="_blank" rel="external nofollow noopener noreferrer">Binary Heap Tree implementation in Python</a>를 참고해주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MaxHeap</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.heap = []</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">print_heap</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(self.heap)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_parent</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> i<span class="number">-1</span>)//<span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_left_child</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>*i+<span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_right_child</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>*i+<span class="number">2</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">has_parent</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.get_parent(i) &gt;= <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">has_left_child</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.get_left_child(i) &lt; len(self.heap)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">has_right_child</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.get_right_child(i) &lt; len(self.heap)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">swap</span><span class="params">(self, i, j)</span>:</span></span><br><span class="line">        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert_key</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        self.heap.append(key)</span><br><span class="line">        self.heapify_up(len(self.heap)<span class="number">-1</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">heapify_up</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> self.has_parent(i) <span class="keyword">and</span> self.heap[i] &gt; self.heap[self.get_parent(i)]:</span><br><span class="line">            self.swap(i, self.get_parent(i))</span><br><span class="line">            i = self.get_parent(i)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete_root</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(self.heap) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        last_index = len(self.heap)<span class="number">-1</span></span><br><span class="line">        self.swap(<span class="number">0</span>, last_index)</span><br><span class="line">        root = self.heap.pop()</span><br><span class="line">        self.heapify_down(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">heapify_down</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> self.has_left_child(i):</span><br><span class="line">            max_child_index = self.get_max_child_index(i)</span><br><span class="line">            <span class="keyword">if</span> max_child_index == <span class="number">-1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> self.heap[i] &lt; self.heap[max_child_index]:</span><br><span class="line">                self.swap(i, max_child_index)</span><br><span class="line">                i = max_child_index</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_max_child_index</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.has_left_child(i):</span><br><span class="line">            left_c = self.get_left_child(i)</span><br><span class="line">            <span class="keyword">if</span> self.has_right_child(i):</span><br><span class="line">                right_c = self.get_right_child(i)</span><br><span class="line">                <span class="keyword">if</span> self.heap[left_c] &gt; self.heap[right_c]:</span><br><span class="line">                    <span class="keyword">return</span> left_c</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">return</span> right_c</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">max_heap = MaxHeap()</span><br><span class="line"></span><br><span class="line">array = [<span class="number">45</span>, <span class="number">99</span>, <span class="number">63</span>, <span class="number">27</span>, <span class="number">29</span>, <span class="number">57</span>, <span class="number">42</span>, <span class="number">35</span>, <span class="number">12</span>, <span class="number">24</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># build max heap</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    max_heap.insert_key(i)</span><br><span class="line">    </span><br><span class="line">max_heap.print_heap() <span class="comment"># [99, 45, 63, 35, 29, 57, 42, 27, 12, 24]</span></span><br><span class="line">max_heap.insert_key(<span class="number">50</span>) <span class="comment"># [99, 50, 63, 35, 45, 57, 42, 27, 12, 24, 29]</span></span><br><span class="line">max_heap.delete_root() <span class="comment"># [63, 50, 57, 35, 45, 29, 42, 27, 12, 24]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Heapq"><a href="#Heapq" class="headerlink" title="# Heapq"></a># Heapq</h1><p>Python에 내장된 <code>heapq</code>라는 heap queue algorithm 모듈을 이용하면 손쉽게 <code>heap</code>을 사용할 수 있습니다. 아래와같이 import를 하여 사용하시면 됩니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><p>다음으로 <code>heapq</code>의 내장 함수들에 대해서 설명하도록 하겠습니다.</p>
+<hr>
+<h3 id="heappush-heap-item"><a href="#heappush-heap-item" class="headerlink" title="heappush(heap, item)"></a>heappush(heap, item)</h3><p><code>heappush</code>는 <code>heap</code>에 요소를 추가합니다. 첫 번째 인자로 <code>heap</code>을 넣는 것에 주의해야합니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums)     <span class="comment"># [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]</span></span><br><span class="line">heappush(nums, <span class="number">6</span>) <span class="comment"># [1, 3, 2, 4, 4, 8, 5, 4, 7, 4, 6]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="heappop-heap"><a href="#heappop-heap" class="headerlink" title="heappop(heap)"></a>heappop(heap)</h3><p><code>heappop</code>은 <code>root</code>에 있는 요소를 꺼내어 반환합니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">6</span>]</span><br><span class="line">heappop(nums) <span class="comment"># 1</span></span><br><span class="line">print(nums)   <span class="comment"># [2, 3, 5, 4, 4, 8, 6, 4, 7, 4]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="heappushpop-heap-item"><a href="#heappushpop-heap-item" class="headerlink" title="heappushpop(heap, item)"></a>heappushpop(heap, item)</h3><p><code>heappushpop</code>은 <code>heap</code>에 요소를 추가한 뒤 <code>root</code>에 있는 요소를 꺼내어 반환합니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums)                <span class="comment"># [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]</span></span><br><span class="line">print(heappushpop(nums, <span class="number">10</span>)) <span class="comment"># 1</span></span><br><span class="line">print(nums)                  <span class="comment"># [2, 3, 5, 4, 4, 8, 10, 4, 7, 4]</span></span><br></pre></td></tr></table></figure>
+
+<p>아래 코드는 <code>0</code>을 <code>push</code>하는 경우 <code>root</code>에 <code>0</code>이 들어가기 때문에 <code>pop</code>을 하는 경우 <code>0</code>이 그대로 나오는 것을 확인할 수 있습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums)                <span class="comment"># [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]</span></span><br><span class="line">print(heappushpop(nums, <span class="number">0</span>))  <span class="comment"># 0</span></span><br><span class="line">print(nums)                  <span class="comment"># [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="heapify-x"><a href="#heapify-x" class="headerlink" title="heapify(x)"></a>heapify(x)</h3><p>다음과 같이 배열을 <code>heapify</code> 함수에 전달하면 <code>min heap(최소힙)</code>을 변환합니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums) <span class="comment"># [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="heapreplace-heap-item"><a href="#heapreplace-heap-item" class="headerlink" title="heapreplace(heap, item)"></a>heapreplace(heap, item)</h3><p><code>heapreplace</code>는 <code>heappushpop</code>과 달리 <code>pop</code>을 먼저 수행한 뒤 <code>push</code>를 수행합니다. 따라서 <code>0</code>이 가장 작은 값 임에도 불구하고 <code>pop</code>먼저 수행하기 때문에 <code>1</code>이 나오고, <code>0</code>이 <code>push</code> 됩니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums)                <span class="comment"># [1, 3, 2, 4, 4, 8, 5, 4, 7, 4]</span></span><br><span class="line">print(heapreplace(nums, <span class="number">0</span>))  <span class="comment"># 1</span></span><br><span class="line">print(nums)                  <span class="comment"># [0, 3, 2, 4, 4, 8, 5, 4, 7, 4]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="merge-iterables-key-None-reverse-False"><a href="#merge-iterables-key-None-reverse-False" class="headerlink" title="merge(*iterables, key=None, reverse=False)"></a>merge(*iterables, key=None, reverse=False)</h3><p><code>merge</code>는 정렬된 배열들을 합치는 함수입니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums1 = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>]</span><br><span class="line">nums2 = [<span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>]</span><br><span class="line">nums1.sort()              <span class="comment"># [1, 2, 4, 7]</span></span><br><span class="line">nums2.sort()              <span class="comment"># [3, 4, 5, 8]</span></span><br><span class="line">list(merge(nums1, nums2)) <span class="comment"># [1, 2, 3, 4, 4, 5, 7, 8]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="nlargest-n-iterable-key-None"><a href="#nlargest-n-iterable-key-None" class="headerlink" title="nlargest(n, iterable, key=None)"></a>nlargest(n, iterable, key=None)</h3><p><code>n</code>번 째로 큰 값은 <code>max heap(최대힙)</code>을 이용하여 아래와 같이 구현할 수 있습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heap = []</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">    heappush(heap, (-num, num))</span><br><span class="line"></span><br><span class="line">n = <span class="number">3</span></span><br><span class="line"><span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">    answer = heappop(heap)[<span class="number">1</span>]</span><br><span class="line">    n -= <span class="number">1</span></span><br><span class="line">answer <span class="comment"># 5</span></span><br></pre></td></tr></table></figure>
+
+<p>하지만 <code>heapq</code>의 내장함수인 <code>nlargest</code>를 이용하면 다음과 같이 구현할 수 있습니다. <code>nlargest</code>는 배열을 반환하며, 결과값의 마지막 요소가 <code>n</code>번 째로 큰 값입니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums)</span><br><span class="line">nlargest(<span class="number">3</span>, nums) <span class="comment"># [8, 7, 5]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="nsmallest-n-iterable-key-None"><a href="#nsmallest-n-iterable-key-None" class="headerlink" title="nsmallest(n, iterable, key=None)"></a>nsmallest(n, iterable, key=None)</h3><p><code>n</code>번 째로 작은 값을 <code>heapify</code>와 <code>heappop</code>을 이용하여 아래와 같이 구현할 수 있습니다.</p>
+<figure class="highlight python"><figcaption><span>10개의 데이터 중 10번째로 작은 값은 8입니다.</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> * </span><br><span class="line"></span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums)</span><br><span class="line"></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line"><span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">    answer = heappop(nums)</span><br><span class="line">    n -= <span class="number">1</span></span><br><span class="line">answer <span class="comment"># 8</span></span><br></pre></td></tr></table></figure>
+
+<p>하지만 <code>heapq</code>의 내장함수인 <code>nsmallest</code>를 이용하면 다음과 같이 구현할 수 있습니다. <code>nsmallest</code>는 배열을 반환하며, 결과값의 마지막 요소가 <code>n</code>번 째로 작은 값입니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heapify(nums)</span><br><span class="line">nsmallest(<span class="number">10</span>, nums) <span class="comment"># [1, 2, 3, 4, 4, 4, 4, 5, 7, 8]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Max-Heap"><a href="#Max-Heap" class="headerlink" title="Max Heap"></a>Max Heap</h2><p>기본적으로 <code>heapq</code>는 <code>min heap(최소힙)</code>을 지원하는데, 아래 예제와 같이 <code>tuple</code>안에 실제 값의 음수값과 실제 값을 넣어 <code>max heap(최대힙)</code>과 같이 구현할 수 있습니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">nums = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">heap = []</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">    heappush(heap, (-num, num))</span><br><span class="line"></span><br><span class="line">print([v <span class="keyword">for</span> i, v <span class="keyword">in</span> heap]) <span class="comment"># [8, 4, 7, 4, 4, 1, 5, 2, 4, 3]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="References"><a href="#References" class="headerlink" title="# References"></a># References</h1><ul>
+<li><a href="https://www.youtube.com/watch?v=WYAUQO7hk4I" target="_blank" rel="external nofollow noopener noreferrer">Binary Heap Tree implementation in Python</a></li>
+<li><a href="https://millionairedeveloper.tistory.com/57" target="_blank" rel="external nofollow noopener noreferrer">6. 힙 정렬(Heap sort)</a></li>
+</ul>
+<hr>
+<h1 id="마무리"><a href="#마무리" class="headerlink" title="# 마무리"></a># 마무리</h1><p><code>heap</code>에 대해 직접 구현 해보고, python 내장함수 <code>heapq</code>를 이용해보기도 하였습니다. <code>push</code>와 <code>pop</code>이 빈번하며 최솟값과 최댓값을 필요로 하는 경우 <code>heap</code>을 떠올려 유용하게 사용하면 좋을 것 같습니다.</p>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">TAGGED IN</span><br>
+            
+    <a class="tag tag--primary tag--small t-link" href="/tags/Program-Language-Python/" rel="tag">Program Language | Python</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-more-spicy/" data-tooltip="알고리즘 | 더 맵게" aria-label="PREVIOUS: 알고리즘 | 더 맵게">
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-stocks-price/" data-tooltip="알고리즘 | 주식가격" aria-label="NEXT: 알고리즘 | 주식가격">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-heapq/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-heapq/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+        
+        
+    </div>
+</article>
+<!-- utterances comment -->
+
+  <script src="https://utteranc.es/client.js" repo="nero-angela/nero-angela.github.io" label="🐈" theme="github-light" crossorigin="anonymous" issue-term="pathname" async>
+  </script>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Nero. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-more-spicy/" data-tooltip="알고리즘 | 더 맵게" aria-label="PREVIOUS: 알고리즘 | 더 맵게">
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a class="post-action-btn btn btn--default tooltip--top" href="/post/algo-programmers-stocks-price/" data-tooltip="알고리즘 | 주식가격" aria-label="NEXT: 알고리즘 | 주식가격">
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-heapq/" title="Share on Facebook" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-heapq/" title="Share on Twitter" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://nero.devstory.co.kr/post/pl-python-heapq/" aria-label="Share on Facebook" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://nero.devstory.co.kr/post/pl-python-heapq/" aria-label="Share on Twitter" rel="external nofollow noopener noreferrer">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpeg" alt="Author&#39;s picture">
+        
+            <h4 id="about-card-name">Nero</h4>
+        
+            <div id="about-card-bio"><p><a href="https://github.com/nero-angela" target="_blank" rel="external nofollow noopener noreferrer">Github</a> / <a href="http://devstory.co.kr" target="_blank" rel="external nofollow noopener noreferrer">Porfolio</a></p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Seoul/Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-xlcannty8wrynf04v4dh7hcgfzx2k6czhfx7thc7jompljugisz9y4q9pfjq.min.js"></script>
+<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+    
+
+
+
+
+    </body>
+</html>
