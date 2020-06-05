@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-01/</loc>
+        <lastmod>2020-06-05T09:16:10.407Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/post/algo-baekjoon-print-star/</loc>
         <lastmod>2020-06-05T05:25:35.977Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -186,14 +194,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-gentle-map/</loc>
         <lastmod>2020-05-26T05:39:19.258Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-01/</loc>
-        <lastmod>2020-05-26T05:39:17.050Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
