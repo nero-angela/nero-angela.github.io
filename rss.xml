@@ -8,23 +8,8 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Thu, 04 Jun 2020 12:47:33 GMT</pubDate>
+    <pubDate>Thu, 04 Jun 2020 12:35:05 GMT</pubDate>
     <generator>http://hexo.io/</generator>
-    
-    <item>
-      <title>알고리즘 | 더 맵게</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</guid>
-      <pubDate>Thu, 04 Jun 2020 12:35:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “더 맵게”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/#disqus_thread</comments>
-    </item>
     
     <item>
       <title>Python Heapq</title>
@@ -39,81 +24,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/pl-python-heapq/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 주식가격</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</guid>
-      <pubDate>Wed, 03 Jun 2020 05:54:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “주식가격”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 쇠막대기</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</guid>
-      <pubDate>Tue, 02 Jun 2020 06:46:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 프린터</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-printer/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-printer/</guid>
-      <pubDate>Mon, 01 Jun 2020 14:10:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “기능개발”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-printer/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 기능개발</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-function-development/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-function-development/</guid>
-      <pubDate>Sun, 31 May 2020 12:16:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “기능개발”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-function-development/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 다리를 지나는 트럭</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</guid>
-      <pubDate>Sat, 30 May 2020 08:42:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “다리를 지나는 트럭”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/#disqus_thread</comments>
     </item>
     
     <item>
@@ -147,51 +57,6 @@
     </item>
     
     <item>
-      <title>알고리즘 | 탑</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-tower/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-tower/</guid>
-      <pubDate>Sat, 30 May 2020 03:29:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “탑”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-tower/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 별 찍기</title>
-      <link>https://nero.devstory.co.kr/post/algo-baekjoon-print-star/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-baekjoon-print-star/</guid>
-      <pubDate>Thu, 28 May 2020 16:08:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;백준의 알고리즘 문제 “별 찍기”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-baekjoon-print-star/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 베스트 앨범</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-best-album/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-best-album/</guid>
-      <pubDate>Wed, 27 May 2020 08:29:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “베스트 앨범”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-best-album/#disqus_thread</comments>
-    </item>
-    
-    <item>
       <title>Python Reduce()</title>
       <link>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</link>
       <guid>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</guid>
@@ -204,51 +69,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/pl-python-functools-reduce/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 위장</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-camouflage/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-camouflage/</guid>
-      <pubDate>Wed, 27 May 2020 04:44:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “위장”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-camouflage/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 전화번호 목록</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-phone-book/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-phone-book/</guid>
-      <pubDate>Wed, 27 May 2020 04:07:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “전화번호 목록”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-phone-book/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 완주하지 못한 선수</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-marathon/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-marathon/</guid>
-      <pubDate>Tue, 26 May 2020 12:34:28 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “완주하지 못한 선수”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-marathon/#disqus_thread</comments>
     </item>
     
     <item>
@@ -309,6 +129,186 @@
       
       
       <comments>https://nero.devstory.co.kr/post/pj-endpoint-detector/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>딥러닝으로 문서 분류기 만들기</title>
+      <link>https://nero.devstory.co.kr/post/pj-devblog-classifier/</link>
+      <guid>https://nero.devstory.co.kr/post/pj-devblog-classifier/</guid>
+      <pubDate>Tue, 18 Feb 2020 12:44:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Daily Devblog 서비스를 위한 개발 문서 분류기를 개발한 이야기를 공유합니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pj-devblog-classifier/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>1부. 딥러닝을 이용하여 더욱 현실감 있는 AR 앱 만들기</title>
+      <link>https://nero.devstory.co.kr/post/pj-too-real-01/</link>
+      <guid>https://nero.devstory.co.kr/post/pj-too-real-01/</guid>
+      <pubDate>Wed, 25 Dec 2019 07:44:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;딥러닝을 이용하여 더욱 현실감 있는 AR 어플리케이션을 개발한 이야기를 공유합니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pj-too-real-01/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>2부. ARKit을 이용하여 iOS AR앱 만들기</title>
+      <link>https://nero.devstory.co.kr/post/pj-too-real-02/</link>
+      <guid>https://nero.devstory.co.kr/post/pj-too-real-02/</guid>
+      <pubDate>Tue, 24 Dec 2019 07:44:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;ARKit을 이용하여 현실감 있는 iOS AR 어플리케이션 개발 내용을 공유합니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pj-too-real-02/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>3부. Custom YOLO v3 모델 만들기</title>
+      <link>https://nero.devstory.co.kr/post/pj-too-real-03/</link>
+      <guid>https://nero.devstory.co.kr/post/pj-too-real-03/</guid>
+      <pubDate>Mon, 23 Dec 2019 07:44:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;실시간 객체 탐지 모델인 YOLO 모델을 학습하는 방법에 대해 공유합니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pj-too-real-03/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>4부. CoreML을 이용하여 iOS에 YOLO v3 모델 탑재하기</title>
+      <link>https://nero.devstory.co.kr/post/pj-too-real-04/</link>
+      <guid>https://nero.devstory.co.kr/post/pj-too-real-04/</guid>
+      <pubDate>Sun, 22 Dec 2019 07:44:28 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;CoreML을 이용하여 iOS 어플리케이션에 YOLO v3 모델을 탑재하는 방법에 대해 공유합니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pj-too-real-04/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Itertools</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-itertools/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-itertools/</guid>
+      <pubDate>Sat, 09 Nov 2019 09:47:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;이번 포스팅에서는 Python 2.7과 3.5부터 탑재된 &lt;code&gt;itertools&lt;/code&gt;의 유용하고 자주 쓸만한 함수들을 익혀보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-itertools/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>알고리즘 | 더 맵게</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</guid>
+      <pubDate>Mon, 04 Jun 2018 12:35:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “더 맵게”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>알고리즘 | 주식가격</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</guid>
+      <pubDate>Sun, 03 Jun 2018 05:54:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “주식가격”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>알고리즘 | 쇠막대기</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</guid>
+      <pubDate>Sat, 02 Jun 2018 06:46:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>알고리즘 | 프린터</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-printer/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-printer/</guid>
+      <pubDate>Fri, 01 Jun 2018 14:10:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “기능개발”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-printer/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>알고리즘 | 기능개발</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-function-development/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-function-development/</guid>
+      <pubDate>Thu, 31 May 2018 12:16:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “기능개발”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-function-development/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>알고리즘 | 다리를 지나는 트럭</title>
+      <link>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</link>
+      <guid>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</guid>
+      <pubDate>Wed, 30 May 2018 08:42:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;프로그래머스의 알고리즘 문제 “다리를 지나는 트럭”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/#disqus_thread</comments>
     </item>
     
   </channel>
