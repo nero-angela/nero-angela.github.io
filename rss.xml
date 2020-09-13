@@ -8,8 +8,23 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Thu, 04 Jun 2020 12:35:05 GMT</pubDate>
+    <pubDate>Sun, 13 Sep 2020 15:34:28 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>오픈소스 컨트리뷰톤 후기</title>
+      <link>https://nero.devstory.co.kr/post/flutter-open-source-contributhon/</link>
+      <guid>https://nero.devstory.co.kr/post/flutter-open-source-contributhon/</guid>
+      <pubDate>Sun, 13 Sep 2020 12:43:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;6주간 오픈소스 컨트리뷰톤에 참여했던 경험을 공유합니다. 🏃‍♂️🏃‍♀️&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/flutter-open-source-contributhon/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>Python Heapq</title>
@@ -27,7 +42,7 @@
     </item>
     
     <item>
-      <title>Python Collections Deque()</title>
+      <title>Python Collections Deque</title>
       <link>https://nero.devstory.co.kr/post/pl-python-collections-deque/</link>
       <guid>https://nero.devstory.co.kr/post/pl-python-collections-deque/</guid>
       <pubDate>Sat, 30 May 2020 07:56:00 GMT</pubDate>
@@ -57,7 +72,7 @@
     </item>
     
     <item>
-      <title>Python Reduce()</title>
+      <title>Python Reduce</title>
       <link>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</link>
       <guid>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</guid>
       <pubDate>Wed, 27 May 2020 07:35:24 GMT</pubDate>
@@ -72,7 +87,7 @@
     </item>
     
     <item>
-      <title>Python Sort()</title>
+      <title>Python Sort</title>
       <link>https://nero.devstory.co.kr/post/pl-python-sort/</link>
       <guid>https://nero.devstory.co.kr/post/pl-python-sort/</guid>
       <pubDate>Tue, 26 May 2020 05:41:24 GMT</pubDate>
@@ -87,7 +102,7 @@
     </item>
     
     <item>
-      <title>Python Collections Counter()</title>
+      <title>Python Collections Counter</title>
       <link>https://nero.devstory.co.kr/post/pl-python-collections-counter/</link>
       <guid>https://nero.devstory.co.kr/post/pl-python-collections-counter/</guid>
       <pubDate>Tue, 26 May 2020 02:47:24 GMT</pubDate>
@@ -294,21 +309,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/algo-programmers-function-development/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>알고리즘 | 다리를 지나는 트럭</title>
-      <link>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</link>
-      <guid>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</guid>
-      <pubDate>Wed, 30 May 2018 08:42:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;프로그래머스의 알고리즘 문제 “다리를 지나는 트럭”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/#disqus_thread</comments>
     </item>
     
   </channel>

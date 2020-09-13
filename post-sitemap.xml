@@ -8,8 +8,48 @@
     </url>
 
     <url>
+        <loc>https://nero.devstory.co.kr/post/flutter-open-source-contributhon/</loc>
+        <lastmod>2020-09-13T15:34:28.773Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-01/</loc>
-        <lastmod>2020-06-05T09:16:10.407Z</lastmod>
+        <lastmod>2020-09-13T09:02:04.524Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-collections-counter/</loc>
+        <lastmod>2020-09-13T06:12:13.088Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</loc>
+        <lastmod>2020-09-13T06:12:09.267Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-collections-deque/</loc>
+        <lastmod>2020-09-13T06:11:59.835Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/post/pl-python-sort/</loc>
+        <lastmod>2020-09-13T06:11:49.837Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -120,32 +160,8 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-collections-deque/</loc>
-        <lastmod>2020-05-30T07:56:10.060Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://nero.devstory.co.kr/post/pl-python-timeit/</loc>
         <lastmod>2020-05-30T07:16:04.916Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-sort/</loc>
-        <lastmod>2020-05-30T06:37:17.186Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-collections-counter/</loc>
-        <lastmod>2020-05-30T06:37:01.620Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -162,14 +178,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-03/</loc>
         <lastmod>2020-05-28T10:33:18.769Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</loc>
-        <lastmod>2020-05-27T07:38:32.568Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
