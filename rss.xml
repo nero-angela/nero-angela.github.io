@@ -8,7 +8,7 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Sun, 13 Sep 2020 16:17:32 GMT</pubDate>
+    <pubDate>Sun, 13 Sep 2020 16:22:10 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -27,13 +27,13 @@
     </item>
     
     <item>
-      <title>Vue.js &amp; Firebase 기반 지도 제작 웹사이트 만들기</title>
+      <title>지도 제작 웹사이트 GentleMap</title>
       <link>https://nero.devstory.co.kr/post/pj-gentle-map/</link>
       <guid>https://nero.devstory.co.kr/post/pj-gentle-map/</guid>
       <pubDate>Thu, 30 Apr 2020 06:02:28 GMT</pubDate>
       <description>
       
-        &lt;p&gt;주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션 &lt;a href=&quot;https://gentlemap.devstory.co.kr/&quot; target=&quot;_blank&quot; rel=&quot;external nofollow noopener noreferrer&quot;&gt;GentleMap&lt;/a&gt;을 개발한 이야기를 공유합니다.&lt;br&gt;
+        &lt;p&gt;Vue.js &amp;amp; Firebase 기반으로 주소가 담긴 Excel 파일을 파싱하여 지도를 만들어주는 반응형 웹 어플리케이션 &lt;a href=&quot;https://gentlemap.devstory.co.kr/&quot; target=&quot;_blank&quot; rel=&quot;external nofollow noopener noreferrer&quot;&gt;GentleMap&lt;/a&gt;을 개발한 이야기를 공유합니다.&lt;br&gt;
       
       </description>
       

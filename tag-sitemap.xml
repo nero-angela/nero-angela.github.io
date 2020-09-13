@@ -3,15 +3,22 @@
 
 
     <url>
-        <loc>https://nero.devstory.co.kr/tags/Open-Sorce-Contributhon/</loc>
-        <lastmod>2020-09-13T16:17:32.632Z</lastmod>
+        <loc>https://nero.devstory.co.kr/tags/Flutter-Open-Sorce-Contributhon/</loc>
+        <lastmod>2020-09-13T16:22:10.043Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://nero.devstory.co.kr/tags/Flutter/</loc>
-        <lastmod>2020-09-13T16:17:32.632Z</lastmod>
+        <lastmod>2020-09-13T16:22:10.043Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Project-Gentle-Map/</loc>
+        <lastmod>2020-09-13T16:20:21.319Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -47,13 +54,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/tags/Project-Endpoint-Detector/</loc>
         <lastmod>2020-05-26T05:39:21.338Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Project-Gentle-Map/</loc>
-        <lastmod>2020-05-26T05:39:19.258Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
