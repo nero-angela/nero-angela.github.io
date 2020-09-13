@@ -4,14 +4,28 @@
 
     <url>
         <loc>https://nero.devstory.co.kr/tags/Open-Sorce-Contributhon/</loc>
-        <lastmod>2020-09-13T15:34:28.773Z</lastmod>
+        <lastmod>2020-09-13T15:39:59.514Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://nero.devstory.co.kr/tags/Flutter/</loc>
-        <lastmod>2020-09-13T15:34:28.773Z</lastmod>
+        <lastmod>2020-09-13T15:39:59.514Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Program-Language-Python/</loc>
+        <lastmod>2020-09-13T15:39:02.472Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nero.devstory.co.kr/tags/Algorithm/</loc>
+        <lastmod>2020-09-13T15:38:01.869Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -19,20 +33,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/tags/Project-Too-Real/</loc>
         <lastmod>2020-09-13T09:02:04.524Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Program-Language-Python/</loc>
-        <lastmod>2020-09-13T06:12:13.088Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Algorithm/</loc>
-        <lastmod>2020-06-05T05:25:35.977Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

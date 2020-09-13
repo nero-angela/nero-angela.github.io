@@ -8,7 +8,7 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>Nero&#39;s Devstory</description>
-    <pubDate>Sun, 13 Sep 2020 15:34:28 GMT</pubDate>
+    <pubDate>Sun, 13 Sep 2020 15:39:59 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -24,96 +24,6 @@
       
       
       <comments>https://nero.devstory.co.kr/post/flutter-open-source-contributhon/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Python Heapq</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-heapq/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-heapq/</guid>
-      <pubDate>Thu, 04 Jun 2020 08:01:24 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Python의 &lt;code&gt;Heqpq&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pl-python-heapq/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Python Collections Deque</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-collections-deque/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-collections-deque/</guid>
-      <pubDate>Sat, 30 May 2020 07:56:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Python 2.4부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;deque&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pl-python-collections-deque/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Python Timeit</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-timeit/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-timeit/</guid>
-      <pubDate>Sat, 30 May 2020 06:52:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Python &lt;code&gt;timeit&lt;/code&gt;를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pl-python-timeit/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Python Reduce</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</guid>
-      <pubDate>Wed, 27 May 2020 07:35:24 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Python의 &lt;code&gt;functools&lt;/code&gt;의 &lt;code&gt;reduce()&lt;/code&gt; 함수에 대해서 알아보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pl-python-functools-reduce/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Python Sort</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-sort/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-sort/</guid>
-      <pubDate>Tue, 26 May 2020 05:41:24 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Python의 &lt;code&gt;sort()&lt;/code&gt;에 대해서 알아보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pl-python-sort/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Python Collections Counter</title>
-      <link>https://nero.devstory.co.kr/post/pl-python-collections-counter/</link>
-      <guid>https://nero.devstory.co.kr/post/pl-python-collections-counter/</guid>
-      <pubDate>Tue, 26 May 2020 02:47:24 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;Python 2.7과 3.5부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
-      
-      </description>
-      
-      
-      <comments>https://nero.devstory.co.kr/post/pl-python-collections-counter/#disqus_thread</comments>
     </item>
     
     <item>
@@ -225,7 +135,7 @@
       <title>Python Itertools</title>
       <link>https://nero.devstory.co.kr/post/pl-python-itertools/</link>
       <guid>https://nero.devstory.co.kr/post/pl-python-itertools/</guid>
-      <pubDate>Sat, 09 Nov 2019 09:47:24 GMT</pubDate>
+      <pubDate>Tue, 09 Nov 1971 09:47:24 GMT</pubDate>
       <description>
       
         &lt;p&gt;이번 포스팅에서는 Python 2.7과 3.5부터 탑재된 &lt;code&gt;itertools&lt;/code&gt;의 유용하고 자주 쓸만한 함수들을 익혀보도록 하겠습니다.&lt;br&gt;
@@ -237,10 +147,100 @@
     </item>
     
     <item>
+      <title>Python Heapq</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-heapq/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-heapq/</guid>
+      <pubDate>Fri, 04 Jun 1971 08:01:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python의 &lt;code&gt;Heqpq&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-heapq/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Collections Deque</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-collections-deque/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-collections-deque/</guid>
+      <pubDate>Sun, 30 May 1971 07:56:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python 2.4부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;deque&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-collections-deque/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Timeit</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-timeit/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-timeit/</guid>
+      <pubDate>Sun, 30 May 1971 06:52:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python &lt;code&gt;timeit&lt;/code&gt;를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-timeit/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Reduce</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-functools-reduce/</guid>
+      <pubDate>Thu, 27 May 1971 07:35:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python의 &lt;code&gt;functools&lt;/code&gt;의 &lt;code&gt;reduce()&lt;/code&gt; 함수에 대해서 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-functools-reduce/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Sort</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-sort/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-sort/</guid>
+      <pubDate>Wed, 26 May 1971 05:41:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python의 &lt;code&gt;sort()&lt;/code&gt;에 대해서 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-sort/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Python Collections Counter</title>
+      <link>https://nero.devstory.co.kr/post/pl-python-collections-counter/</link>
+      <guid>https://nero.devstory.co.kr/post/pl-python-collections-counter/</guid>
+      <pubDate>Wed, 26 May 1971 02:47:24 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;Python 2.7과 3.5부터 탑재된 &lt;code&gt;collections&lt;/code&gt;의 &lt;code&gt;Counter&lt;/code&gt;에 대해 알아보도록 하겠습니다.&lt;br&gt;
+      
+      </description>
+      
+      
+      <comments>https://nero.devstory.co.kr/post/pl-python-collections-counter/#disqus_thread</comments>
+    </item>
+    
+    <item>
       <title>알고리즘 | 더 맵게</title>
       <link>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</link>
       <guid>https://nero.devstory.co.kr/post/algo-programmers-more-spicy/</guid>
-      <pubDate>Mon, 04 Jun 2018 12:35:00 GMT</pubDate>
+      <pubDate>Thu, 04 Jun 1970 12:35:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;프로그래머스의 알고리즘 문제 “더 맵게”를 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
@@ -255,7 +255,7 @@
       <title>알고리즘 | 주식가격</title>
       <link>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</link>
       <guid>https://nero.devstory.co.kr/post/algo-programmers-stocks-price/</guid>
-      <pubDate>Sun, 03 Jun 2018 05:54:00 GMT</pubDate>
+      <pubDate>Wed, 03 Jun 1970 05:54:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;프로그래머스의 알고리즘 문제 “주식가격”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
@@ -270,7 +270,7 @@
       <title>알고리즘 | 쇠막대기</title>
       <link>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</link>
       <guid>https://nero.devstory.co.kr/post/algo-programmers-iron-bar/</guid>
-      <pubDate>Sat, 02 Jun 2018 06:46:00 GMT</pubDate>
+      <pubDate>Tue, 02 Jun 1970 06:46:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;프로그래머스의 알고리즘 문제 “쇠막대기”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
@@ -285,7 +285,7 @@
       <title>알고리즘 | 프린터</title>
       <link>https://nero.devstory.co.kr/post/algo-programmers-printer/</link>
       <guid>https://nero.devstory.co.kr/post/algo-programmers-printer/</guid>
-      <pubDate>Fri, 01 Jun 2018 14:10:00 GMT</pubDate>
+      <pubDate>Mon, 01 Jun 1970 14:10:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;프로그래머스의 알고리즘 문제 “기능개발”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;
@@ -300,7 +300,7 @@
       <title>알고리즘 | 기능개발</title>
       <link>https://nero.devstory.co.kr/post/algo-programmers-function-development/</link>
       <guid>https://nero.devstory.co.kr/post/algo-programmers-function-development/</guid>
-      <pubDate>Thu, 31 May 2018 12:16:00 GMT</pubDate>
+      <pubDate>Sun, 31 May 1970 12:16:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;프로그래머스의 알고리즘 문제 “기능개발”을 Python3를 이용하여 풀어보도록 하겠습니다.&lt;br&gt;

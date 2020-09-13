@@ -18,7 +18,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.\n\n# Timeit\ntimeit은 작은 코드의 실행시간을 측정하는 내장 모듈입니다.\n\n\nHow to usetimeit을 사용하시려면 아래와 같이 import를 해주세요.\n1from timeit import timeit\n\nstmt는 측정하려는 코드 조각을 문자열 형태로 넣으면 됩니다.\n1timeit(stmt='pass', setup='pass', timer=&lt;default timer&gt;, number=1000000)\n\nstmt : 측정하려는 코드 조각을 문자열 형태로 넣습니다.\nsetup : stmt 코드가 실행되기 위해 선행 코드들을 문자열 형태로 넣습니다.\ntimer : 플랫폼 별 다양한 타이머를 설정합니다. time.clock이 1/100sec로 1/60sec인 time.time 보다 정확합니다.\nnumber : 반복 횟수를 지정합니다.\n\n\nExample간단하게 list.pop(0)와 deque.popleft()의 실행 시간을 timeit을 이용하여 측정해보겠습니다. 문자열로 전달해야하는 stmt나 setup의 코드가 긴 경우 &quot;&quot;&quot;triple quetes&quot;&quot;&quot;를 이용하시면 됩니다.\n1234setup = \"\"\"a=[i for i in range(10**7)]\"\"\"timeit.timeit('a.pop(0)', setup=setup, number=1) # 0.03873537702020258\n\n123456setup = \"\"\"from collections import dequea = deque([i for i in range(10**7)])\"\"\"timeit.timeit('a.popleft()', setup=setup, number=1) # 6.488000508397818e-06\n\nsetup에서 선언하지 않은 변수나 설정은 stmt에서 인식하지 못합니다.\n","dateCreated":"2020-05-30T15:52:00+09:00","dateModified":"2020-05-30T16:16:04+09:00","datePublished":"2020-05-30T15:52:00+09:00","description":"Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.","headline":"Python Timeit","image":["https://source.unsplash.com/150x150/?time"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-timeit/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-timeit/","keywords":"Program Language | Python","thumbnailUrl":"https://source.unsplash.com/150x150/?time"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg"},"articleBody":"Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.\n\n# Timeit\ntimeit은 작은 코드의 실행시간을 측정하는 내장 모듈입니다.\n\n\nHow to usetimeit을 사용하시려면 아래와 같이 import를 해주세요.\n1from timeit import timeit\n\nstmt는 측정하려는 코드 조각을 문자열 형태로 넣으면 됩니다.\n1timeit(stmt='pass', setup='pass', timer=&lt;default timer&gt;, number=1000000)\n\n\nstmt : 측정하려는 코드 조각을 문자열 형태로 넣습니다.\nsetup : stmt 코드가 실행되기 위해 선행 코드들을 문자열 형태로 넣습니다.\ntimer : 플랫폼 별 다양한 타이머를 설정합니다. time.clock이 1/100sec로 1/60sec인 time.time 보다 정확합니다.\nnumber : 반복 횟수를 지정합니다.\n\n\nExample간단하게 list.pop(0)와 deque.popleft()의 실행 시간을 timeit을 이용하여 측정해보겠습니다. 문자열로 전달해야하는 stmt나 setup의 코드가 긴 경우 &quot;&quot;&quot;triple quetes&quot;&quot;&quot;를 이용하시면 됩니다.\n1234setup = \"\"\"a=[i for i in range(10**7)]\"\"\"timeit.timeit('a.pop(0)', setup=setup, number=1) # 0.03873537702020258\n\n123456setup = \"\"\"from collections import dequea = deque([i for i in range(10**7)])\"\"\"timeit.timeit('a.popleft()', setup=setup, number=1) # 6.488000508397818e-06\n\nsetup에서 선언하지 않은 변수나 설정은 stmt에서 인식하지 못합니다.\n","dateCreated":"1971-05-30T15:52:00+09:00","dateModified":"2020-09-14T00:39:02+09:00","datePublished":"1971-05-30T15:52:00+09:00","description":"Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.","headline":"Python Timeit","image":["https://source.unsplash.com/150x150/?time"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://nero.devstory.co.kr/post/pl-python-timeit/"},"publisher":{"@type":"Organization","name":"Nero","sameAs":["https://github.com/nero-angela","http://devstory.co.kr","https://www.linkedin.com/in/nero-angela/"],"image":"profile.jpeg","logo":{"@type":"ImageObject","url":"profile.jpeg"}},"url":"https://nero.devstory.co.kr/post/pl-python-timeit/","keywords":"Program Language | Python","thumbnailUrl":"https://source.unsplash.com/150x150/?time"}</script>
     <meta name="description" content="Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.">
 <meta name="keywords" content="Program Language | Python">
 <meta property="og:type" content="blog">
@@ -27,7 +27,7 @@
 <meta property="og:site_name" content="🐈 Nero&#39;s Blog">
 <meta property="og:description" content="Python timeit를 이용하여 코드의 실행시간을 측정하는 방법을 대해 알아보겠습니다.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-05-30T07:16:04.916Z">
+<meta property="og:updated_time" content="2020-09-13T15:39:02.472Z">
 <meta name="twitter:card" content="summary">
     
     
@@ -217,9 +217,9 @@
     
     
         <div class="post-meta">
-    <time datetime="2020-05-30T15:52:00+09:00">
+    <time datetime="1971-05-30T15:52:00+09:00">
 	
-		    May 30, 2020
+		    May 30, 1971
     	
     </time>
     
@@ -273,6 +273,7 @@
 
 <p><code>stmt</code>는 측정하려는 코드 조각을 <strong>문자열</strong> 형태로 넣으면 됩니다.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timeit(stmt=<span class="string">'pass'</span>, setup=<span class="string">'pass'</span>, timer=&lt;default timer&gt;, number=<span class="number">1000000</span>)</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>stmt : 측정하려는 코드 조각을 <strong>문자열</strong> 형태로 넣습니다.</li>
 <li>setup : <code>stmt</code> 코드가 실행되기 위해 선행 코드들을 <strong>문자열</strong> 형태로 넣습니다.</li>
