@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>https://nero.devstory.co.kr/tags/Project-Too-Real/</loc>
+        <lastmod>2020-10-02T02:13:28.924Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/tags/Flutter-Open-Sorce-Contributhon/</loc>
         <lastmod>2020-09-30T02:23:28.519Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -33,13 +40,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/tags/Project-Gentle-Map/</loc>
         <lastmod>2020-09-13T16:20:21.319Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/tags/Project-Too-Real/</loc>
-        <lastmod>2020-09-13T09:02:04.524Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
