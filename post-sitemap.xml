@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
+        <lastmod>2020-10-02T02:22:28.090Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-03/</loc>
         <lastmod>2020-10-02T02:13:28.924Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -168,7 +176,7 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/algo-programmers-tower/</loc>
+        <loc>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</loc>
         <lastmod>2020-09-13T15:37:59.930Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -176,7 +184,7 @@
     </url>
 
     <url>
-        <loc>https://nero.devstory.co.kr/post/algo-programmers-truck-passing-a-bridge/</loc>
+        <loc>https://nero.devstory.co.kr/post/algo-programmers-tower/</loc>
         <lastmod>2020-09-13T15:37:59.930Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -210,14 +218,6 @@
     <url>
         <loc>https://nero.devstory.co.kr/post/pj-too-real-02/</loc>
         <lastmod>2020-05-26T05:39:14.522Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nero.devstory.co.kr/post/pj-too-real-04/</loc>
-        <lastmod>2020-05-26T05:39:01.187Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
