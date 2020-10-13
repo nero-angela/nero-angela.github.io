@@ -287,6 +287,14 @@
 <h2 id="Recursive"><a href="#Recursive" class="headerlink" title="Recursive"></a>Recursive</h2><p><a href="https://ko.wikipedia.org/wiki/%ED%94%84%EB%9E%99%ED%83%88" target="_blank" rel="external nofollow noopener noreferrer">프랙탈</a> 도형 문제로 재귀함수를 이용하여 만들 수 있습니다. 행렬을 <code>[&#39;***&#39;, &#39;* *&#39;, &#39;***&#39;]</code>와 같이 각 원소가 한 행이 되도록 배열에 담고 <code>zip()</code> 함수와 재귀를 이용하여 구현하였습니다.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">"*"</span>]</span><br><span class="line">    n //= <span class="number">3</span></span><br><span class="line">    x = solution(n)</span><br><span class="line">    a = [i + j + k <span class="keyword">for</span> i, j, k <span class="keyword">in</span> zip(x, x, x)]</span><br><span class="line">    b = [i + j + k <span class="keyword">for</span> i, j, k <span class="keyword">in</span> zip(x, [<span class="string">" "</span>*n]*n, x)]</span><br><span class="line">    <span class="keyword">return</span> a + b + a</span><br><span class="line"></span><br><span class="line">print(<span class="string">'\n'</span>.join(solution(int(input()))))</span><br></pre></td></tr></table></figure>
 
+
+            <!-- NERO adsense -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- horizontal ads -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2282734164072819" data-ad-slot="9741238045" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
